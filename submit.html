@@ -397,8 +397,13 @@ function tierColor20(s) {
 }
 
 /* ============== STAR RATING ============== */
-function starsHtml(dimKey, subKey, current) {
-  let html = `<div class="flex justify-between items-center max-w-[320px] mx-auto mb-3" data-star-group="${dimKey}_${subKey}">`;
+function starsHtml(dimKey, subKey, current, anchor5, anchor1) {
+  let html = '';
+  html += `<div class="flex items-start gap-2 max-w-[360px] mx-auto mb-4 px-1">
+    <span class="material-symbols-outlined text-score-high shrink-0" style="font-size:18px">thumb_up</span>
+    <span class="font-caption text-caption text-score-high leading-snug">${anchor5 || 'Excellent'}</span>
+  </div>`;
+  html += `<div class="flex justify-between items-center max-w-[320px] mx-auto mb-4" data-star-group="${dimKey}_${subKey}">`;
   for (let i = 1; i <= 5; i++) {
     const filled = i <= current;
     html += `<button type="button" onclick="rateStar('${dimKey}','${subKey}',${i})"
@@ -409,7 +414,10 @@ function starsHtml(dimKey, subKey, current) {
     </button>`;
   }
   html += '</div>';
-  html += '<div class="flex justify-between max-w-[320px] mx-auto px-1 text-text-caption font-caption text-caption"><span>Poor</span><span>Excellent</span></div>';
+  html += `<div class="flex items-start gap-2 max-w-[360px] mx-auto px-1">
+    <span class="material-symbols-outlined text-score-low shrink-0" style="font-size:18px">thumb_down</span>
+    <span class="font-caption text-caption text-score-low leading-snug">${anchor1 || 'Poor'}</span>
+  </div>`;
   return html;
 }
 
@@ -759,9 +767,9 @@ function renderDimension(dimIdx) {
 
       <div class="flex-grow flex flex-col items-center justify-center text-center py-8">
         <h2 class="font-headline-lg text-headline-lg text-primary mb-2">${sub.label}</h2>
-        <p class="font-body-md text-body-md text-text-caption max-w-sm mx-auto mb-10">${sub.hint}</p>
+        <p class="font-body-md text-body-md text-text-caption max-w-sm mx-auto mb-8">${sub.desc}</p>
 
-        ${starsHtml(dim.key, sub.key, rating.stars)}
+        ${starsHtml(dim.key, sub.key, rating.stars, sub.anchor5, sub.anchor1)}
 
         <div class="w-full max-w-[360px] mx-auto mt-8" id="comment-area">
           ${isLow ? '<p class="font-caption text-caption text-score-low mb-2">Brands use low-score feedback to make changes</p>' : ''}
