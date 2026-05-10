@@ -336,41 +336,26 @@
 
 <script src="brands.js"></script>
 <script>
-  const DIM_DETAILS = {
-    "Brand.com Standards": {
-      what: "How brand.com presents and behaves on its own digital surface.",
-      subs: ["Sale & Outlet Sections", "Triggered Discount Popups", "Flash Sale Frequency", "Promotional Calendar Sharing"]
-    },
-    "Pricing Standards": {
-      what: "MAP enforcement and pricing discipline across the channel beyond brand.com.",
-      subs: ["Unauthorized Reseller Policing", "Authorized Reseller Compliance", "MAP Violation Response Time", "Wholesale Price Stability"]
-    },
-    "Shop Local Support": {
-      what: "How brand.com routes customers to the retailers carrying the brand.",
-      subs: ["Product Page Local Buy", "Top Nav Dealer Locator", "Store Finder Quality", "Buy-Local CTAs"]
-    },
-    "Shop Floor Support": {
-      what: "Brand investment in the people and the partnership that drive in-store sell-through.",
-      subs: ["Co-op Marketing Programs", "Mobile Incentives & Education", "In-Store Clinics & Events", "Rep & Merchandising Support"]
-    },
-    "Pro Deal Standards": {
-      what: "Discipline on internal discount programs that affect retail customer flow.",
-      subs: ["Pro Deal Eligibility", "Annual Purchase Caps", "Insider Discount Controls", "Showroom Misuse Prevention"]
-    }
+  const DIM_WHATS = {
+    website: "How brand.com presents and behaves on its own digital surface.",
+    pricing: "MAP enforcement and pricing discipline across the channel beyond brand.com.",
+    local:   "Brand actively routing customers to the retailers carrying it.",
+    floor:   "Brand investment in the people and the partnership that drive in-store sell-through.",
+    pro:     "Discipline on internal discount programs that affect retail customer flow."
   };
 
   document.getElementById("dim-sections").innerHTML = DIMENSIONS.map(d => {
-    const detail = DIM_DETAILS[d.name];
+    const subs = DIMENSION_SUBS[d.key] || [];
     return `
       <div class="border border-border-hairline rounded bg-surface-card p-card-padding scroll-mt-24" id="dim-${d.key}">
         <div class="flex items-start justify-between gap-4 mb-3">
           <h3 class="font-headline-md text-headline-md text-primary m-0">${d.name}</h3>
           <span class="font-label-caps text-label-caps bg-surface-container text-on-surface-variant px-2 py-1 rounded-full whitespace-nowrap">0 – 20</span>
         </div>
-        <p class="font-body-md text-body-md text-on-surface-variant mb-4"><strong>What it measures.</strong> ${detail.what}</p>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-4"><strong>What it measures.</strong> ${DIM_WHATS[d.key]}</p>
         <p class="font-label-caps text-label-caps text-text-caption uppercase mb-2">Sub-components (each rated 1–5 stars)</p>
         <ul class="font-body-md text-body-md text-on-surface-variant list-disc pl-6 flex flex-col gap-1">
-          ${detail.subs.map(s => `<li>${s}</li>`).join("")}
+          ${subs.map(s => `<li>${s.label}</li>`).join("")}
         </ul>
       </div>
     `;

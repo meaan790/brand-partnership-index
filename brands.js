@@ -2,63 +2,63 @@
 // Loaded as a plain script (no modules) so both static HTML pages can use it.
 
 window.DIMENSIONS = [
-  { key: "website", name: "Brand.com Standards", short: "Brand.com", blurb: "brand.com behavior" },
-  { key: "pricing", name: "Pricing Standards",   short: "Pricing",   blurb: "MAP enforcement" },
-  { key: "local",   name: "Shop Local Support",  short: "Local",     blurb: "demand routing" },
-  { key: "floor",   name: "Shop Floor Support",  short: "Floor",     blurb: "investment in staff" },
-  { key: "pro",     name: "Pro Deal Standards",  short: "Pro",       blurb: "discount channel discipline" }
+  { key: "website", name: "Website Standards",   short: "Website",  blurb: "brand.com behavior" },
+  { key: "pricing", name: "Pricing Standards",   short: "Pricing",  blurb: "MAP enforcement" },
+  { key: "local",   name: "Shop Local Support",  short: "Local",    blurb: "demand routing" },
+  { key: "floor",   name: "Shop Floor Support",  short: "Floor",    blurb: "investment in staff" },
+  { key: "pro",     name: "Pro Deal Standards",  short: "Pro",      blurb: "discount channel discipline" }
 ];
 
 window.DIMENSION_SUBS = {
   website: [
-    { key: "sale_outlet",      label: "Sale & Outlet Sections",      hint: "Permanent sale tabs, outlet links, or markdown grids on brand.com.",
+    { key: "sale_outlet",    label: "Sale & Outlet Sections",    hint: "Whether brand.com keeps its surface free of permanent sale tabs, outlet links, or markdown grids that compete with retailer pricing. 5 stars = clean .com. 1 star = aggressive permanent sale real estate.",
       prompt: "e.g., Brand runs a permanent 40% outlet section that undercuts our floor price\u2026" },
-    { key: "triggered_popups", label: "Triggered Discount Popups",   hint: "Sign-up popups and cart-abandonment discounts targeting individual visitors.",
+    { key: "visitor_popups", label: "Visitor Discount Popups",   hint: "Whether brand.com avoids aggressive sign-up popups and cart-abandonment discounts targeting individual visitors. 5 stars = no discount popups. 1 star = aggressive popups.",
       prompt: "e.g., 15% sign-up popup for every new visitor, plus 20% abandoned-cart emails\u2026" },
-    { key: "flash_sale",       label: "Flash Sale Frequency",        hint: "How often brand.com runs short, time-limited promotional pricing.",
+    { key: "flash_cadence",  label: "Flash Sale Cadence",        hint: "How often brand.com runs short, time-limited promotional pricing that undercuts retailer windows. 5 stars = rare or none. 1 star = constant.",
       prompt: "e.g., Weekly flash sales every Friday that drive customers away from stores\u2026" },
-    { key: "promo_cal",        label: "Promotional Calendar Sharing", hint: "Whether brand.com promotional calendars are shared with retailers in advance.",
-      prompt: "e.g., We never see their promo calendar \u2014 sales surprise us every time\u2026" }
+    { key: "dtc_cashback",   label: "DTC Cashback Promotions",   hint: "Whether brand.com runs cashback offers redeemable only at its own checkout, capturing demand that could have routed to retail. 5 stars = brand avoids DTC-only cashback. 1 star = aggressive .com-only cashback.",
+      prompt: "e.g., Brand offers permanent 10% Rakuten cashback, making their DTC price always lower than our shelf price\u2026" }
   ],
   pricing: [
-    { key: "unauthorized_policing", label: "Unauthorized Reseller Policing", hint: "Active MAP enforcement on Amazon, marketplaces, and gray-market sellers.",
+    { key: "unauthorized_policing", label: "Unauthorized Reseller Policing", hint: "Active MAP enforcement on Amazon, marketplaces, and gray-market sellers. 5 stars = vigilant policing. 1 star = unenforced.",
       prompt: "e.g., Amazon listings consistently 15% below MAP and gray-market sellers go unchecked\u2026" },
-    { key: "reseller_comp",         label: "Authorized Reseller Compliance", hint: "Pricing consistency across approved retail partners.",
+    { key: "reseller_comp",         label: "Authorized Reseller Compliance", hint: "Pricing consistency maintained across approved retail partners. 5 stars = consistent pricing across the network. 1 star = pricing chaos across resellers.",
       prompt: "e.g., Online-only retailers undercut brick-and-mortar by 10\u201320%\u2026" },
-    { key: "map_response",          label: "MAP Violation Response Time",    hint: "Speed at which the brand acts on flagged price violations.",
+    { key: "map_response",          label: "MAP Violation Response",         hint: "Speed at which the brand acts on flagged price violations. 5 stars = response within days. 1 star = no response or weeks.",
       prompt: "e.g., We reported a violation in March and it\u2019s still live in June\u2026" },
-    { key: "price_stable",          label: "Wholesale Price Stability",      hint: "Mid-season pricing changes, MSRP shifts, and pricing surprises.",
+    { key: "price_stable",          label: "Wholesale Price Stability",      hint: "Pricing predictability without mid-season changes, MSRP shifts, or surprises. 5 stars = stable, predictable pricing. 1 star = constant changes.",
       prompt: "e.g., Wholesale cost went up mid-season with no advance notice\u2026" }
   ],
   local: [
-    { key: "page_local_buy", label: "Product Page Local Buy",  hint: "Real-time retailer inventory and dealer link on each product page.",
+    { key: "local_stock",       label: "Local Stock on Product Pages", hint: "Real-time retailer inventory shown on each product page, with a buy-from-this-store option. 5 stars = present and accurate. 1 star = absent.",
       prompt: "e.g., Brand.com shows no retailer stock or \u2018find in store\u2019 link on product pages\u2026" },
-    { key: "nav_locator",    label: "Top Nav Dealer Locator",  hint: "\u201cFind a retailer\u201d link in the brand.com top navigation.",
+    { key: "finder_visibility", label: "Store Finder Visibility",      hint: "\u201cFind a retailer\u201d presence in primary navigation, footer, and contextual placements throughout brand.com. 5 stars = prominent. 1 star = buried or absent.",
       prompt: "e.g., Dealer locator is buried three clicks deep in the footer\u2026" },
-    { key: "finder_quality", label: "Store Finder Quality",    hint: "Search, filtering, and accuracy of the retailer-locator experience.",
+    { key: "dealer_accuracy",   label: "Dealer Database Accuracy",     hint: "Quality of the underlying retailer database: searchable, filterable, current, accurate to actual stocking partners. 5 stars = clean and current. 1 star = stale or wrong.",
       prompt: "e.g., Store finder shows closed locations and wrong phone numbers\u2026" },
-    { key: "buy_local_cta",  label: "Buy-Local CTAs",          hint: "Visibility and prominence of \u201cbuy at a local shop\u201d calls to action.",
-      prompt: "e.g., Zero mention of buying local \u2014 every CTA is \u2018add to cart\u2019\u2026" }
+    { key: "cashback_routing",  label: "Cashback Routing to Retail",   hint: "Brand-funded cashback campaigns that drive consumer demand to retail doors with verified redemption. 5 stars = active, well-funded. 1 star = none.",
+      prompt: "e.g., Brand runs 15% Rakuten cashback on DTC but offers zero equivalent incentive for buying in-store\u2026" }
   ],
   floor: [
-    { key: "coop_marketing",    label: "Co-op Marketing Programs",      hint: "Brand-funded marketing dollars made available to retailers, with clear allocation and accountability.",
+    { key: "coop_marketing",    label: "Co-op Marketing Programs",      hint: "Brand-funded marketing dollars made available to retailers, with clear allocation and accountability. 5 stars = generous and accountable. 1 star = absent or opaque.",
       prompt: "e.g., Brand offers 3% co-op but the claim process is so complex nobody uses it\u2026" },
-    { key: "mobile_incentives", label: "Mobile Incentives & Education", hint: "Sales rewards and product education the brand delivers to associates on their phones, accessible on the shop floor.",
+    { key: "mobile_incentives", label: "Mobile Incentives & Education", hint: "Sales rewards and product education delivered to associates on their phones, accessible on the shop floor. 5 stars = active mobile-first programs. 1 star = none.",
       prompt: "e.g., Great app-based training with SPIFs, but only works on iOS\u2026" },
-    { key: "clinics_events",    label: "In-Store Clinics & Events",     hint: "Physical brand-led product education and consumer events delivered at retail locations.",
+    { key: "clinics_events",    label: "In-Store Clinics & Events",     hint: "Physical brand-led product education and consumer events delivered at retail locations. 5 stars = regular and well-attended. 1 star = never.",
       prompt: "e.g., Brand hasn\u2019t run a clinic or demo in our store for over a year\u2026" },
-    { key: "rep_merch",         label: "Rep & Merchandising Support",   hint: "Brand sales rep visits, POS displays, signage, and in-store visual materials.",
+    { key: "rep_merch",         label: "Rep & Merchandising Support",   hint: "Brand sales rep visits, POS displays, signage, and in-store visual materials. 5 stars = active rep cadence with strong materials. 1 star = no presence.",
       prompt: "e.g., Rep visits quarterly with new samples and always refreshes our endcap\u2026" }
   ],
   pro: [
-    { key: "eligibility",       label: "Pro Deal Eligibility",       hint: "Tightness of who qualifies for industry and professional discounts.",
+    { key: "eligibility",      label: "Pro Deal Eligibility",      hint: "Tightness of who qualifies for industry and professional discounts. 5 stars = strict gating, verified industry only. 1 star = open to anyone with an email.",
       prompt: "e.g., Anyone with a social media account seems to get pro pricing\u2026" },
-    { key: "purchase_caps",     label: "Annual Purchase Caps",       hint: "Limits on how much a single pro deal account can purchase at discount each year.",
+    { key: "purchase_caps",    label: "Annual Purchase Caps",      hint: "Limits on how much a single pro deal account can purchase at discount each year. 5 stars = strict per-user caps enforced. 1 star = no limits.",
       prompt: "e.g., No visible cap \u2014 pro athletes buy dozens of units at 50% off\u2026" },
-    { key: "insider_controls",  label: "Insider Discount Controls",  hint: "Caps and enforcement on friends-and-family and employee discount channels.",
+    { key: "insider_controls", label: "Insider Discount Controls", hint: "Caps and enforcement on friends-and-family and employee discount channels. 5 stars = controlled and enforced. 1 star = unpoliced.",
       prompt: "e.g., F&F codes get shared on Reddit and employee store is wide open\u2026" },
-    { key: "showroom",          label: "Showroom Misuse Prevention", hint: "Active steps to discourage retail showrooming for pro deal online purchase.",
-      prompt: "e.g., Customers try on in our store then buy direct with a pro code\u2026" }
+    { key: "discount_depth",   label: "Pro Deal Discount Depth",   hint: "Whether pro deal pricing stays at or above the retailer\u2019s wholesale cost. 5 stars = pro deal stays at or above wholesale. 1 star = pro deal undercuts the retailer\u2019s own buying cost.",
+      prompt: "e.g., Pro deal users buying at 50% off MSRP while our wholesale is 55% of MSRP\u2026" }
   ]
 };
 
@@ -101,7 +101,7 @@ window.BRANDS = [
 
 // Generic statements written in "We" voice so they read naturally for any claimed brand.
 window.STATEMENT_TEMPLATES = {
-  "Brand.com Standards": "We hold the line on brand.com behavior. No flash sales, no liquidation banners, and our DTC PDPs link to local stockists when in-stock inventory exists within 50 miles of the shopper.",
+  "Website Standards": "We hold the line on brand.com behavior. No flash sales, no liquidation banners, and our DTC PDPs link to local stockists when in-stock inventory exists within 50 miles of the shopper.",
   "Pricing Standards":  "We hold MAP across all wholesale partners and police violations within 48 hours. Our dedicated team monitors online pricing daily to ensure a level playing field for our specialty accounts.",
   "Shop Local Support": "Every retailer locator search routes traffic to specialty accounts before our own DTC checkout. We measure routed sessions weekly and share the dashboard with our top accounts quarterly.",
   "Shop Floor Support": "Tech reps visit every Tier 1 and Tier 2 account at least twice a season. We fund staff training, sample programs, and clinic stipends for any shop running an in-store event.",
