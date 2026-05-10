@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Brands · Brand Partnership Index</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <meta property="og:title" content="Brand Partnership Index — Brands">
+    <meta property="og:description" content="How the wholesale channel reviews its brand partners. Transparent, independent ratings across five partnership standards.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Brand Partnership Index">
+    <meta name="twitter:description" content="How the wholesale channel reviews its brand partners.">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Source+Serif+4:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .material-symbols-outlined[data-weight="fill"] { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary": "#7e5700", "outline": "#75777d", "on-secondary-container": "#785300",
+          "surface-bright": "#fbf8fa", "on-error-container": "#93000a", "tertiary-fixed-dim": "#e2c19d",
+          "on-tertiary-container": "#9b7f5f", "primary-container": "#101c2f", "tertiary": "#000000",
+          "surface-container-high": "#eae7e9", "surface-variant": "#e4e2e4",
+          "score-high": "#3F7556", "score-mid-high": "#E8C547", "score-mid": "#D97A35", "score-low": "#B23B33",
+          "text-main": "#181A1F", "background": "#fbf8fa", "on-surface-variant": "#45474c",
+          "on-tertiary": "#ffffff", "border-hairline": "#E4E2DA", "on-tertiary-fixed-variant": "#594327",
+          "on-secondary-fixed": "#281900", "on-primary-container": "#78849c", "surface-dim": "#dcd9db",
+          "on-tertiary-fixed": "#291802", "tertiary-fixed": "#ffddb8", "primary-fixed-dim": "#bbc7e0",
+          "inverse-on-surface": "#f3f0f2", "error": "#ba1a1a", "tertiary-container": "#291802",
+          "surface-container": "#f0edef", "secondary-fixed-dim": "#f3be65", "surface-container-low": "#f5f3f5",
+          "on-primary": "#ffffff", "on-secondary": "#ffffff", "primary-fixed": "#d7e3fd",
+          "on-surface": "#1b1b1d", "inverse-surface": "#303032", "inverse-primary": "#bbc7e0",
+          "primary": "#000000", "outline-variant": "#c5c6cd", "on-primary-fixed": "#101c2f",
+          "on-background": "#1b1b1d", "link-endvr": "#7C4DFF", "error-container": "#ffdad6",
+          "surface-container-lowest": "#ffffff", "surface-container-highest": "#e4e2e4",
+          "secondary-fixed": "#ffdeac", "on-secondary-fixed-variant": "#604100", "surface-card": "#FFFFFF",
+          "background-paper": "#FAFAF7", "text-caption": "#6E7480", "on-error": "#ffffff",
+          "on-primary-fixed-variant": "#3c475c", "surface-tint": "#535f75", "secondary-container": "#ffc96f",
+          "surface": "#fbf8fa"
+        },
+        borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+        spacing: { "gutter": "24px", "margin-desktop": "40px", "card-padding": "24px", "margin-mobile": "16px", "unit": "4px", "section-gap": "80px" },
+        fontFamily: {
+          "headline-lg": ["Source Serif 4"], "data-tabular": ["Inter"], "caption": ["Inter"],
+          "display-lg": ["Source Serif 4"], "body-md": ["Inter"], "body-lg": ["Inter"],
+          "label-caps": ["Inter"], "headline-md": ["Source Serif 4"]
+        },
+        fontSize: {
+          "headline-lg": ["32px", { lineHeight: "1.3", fontWeight: "600" }],
+          "data-tabular": ["14px", { lineHeight: "1.2", fontWeight: "600" }],
+          "caption": ["13px", { lineHeight: "1.4", letterSpacing: "0.01em", fontWeight: "400" }],
+          "display-lg": ["48px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+          "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+          "body-lg": ["18px", { lineHeight: "1.7", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "700" }],
+          "headline-md": ["24px", { lineHeight: "1.4", fontWeight: "600" }]
+        }
+      }
+    }
+  };
+</script>
+</head>
+<body class="bg-background-paper text-text-main font-body-md antialiased min-h-screen flex flex-col">
+
+<nav class="bg-background dark:bg-background w-full top-0 sticky border-b border-border-hairline dark:border-outline-variant z-50">
+  <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-[1280px] mx-auto">
+    <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary dark:text-on-background" href="index.html">Brand Partnership Index</a>
+    <ul class="hidden md:flex gap-6 items-center">
+      <li><a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer transition-opacity active:opacity-70" href="index.html">Leaderboard</a></li>
+      <li><a class="text-primary font-bold border-b-2 border-primary pb-1 cursor-pointer transition-opacity active:opacity-70" href="brands.html">Brands</a></li>
+      <li><a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer transition-opacity active:opacity-70" href="compare.html">Compare</a></li>
+    </ul>
+    <div class="hidden md:flex items-center gap-4">
+      <a href="submit.html" class="font-body-md text-body-md bg-primary text-on-primary px-4 py-2 rounded hover:opacity-90 transition-opacity active:scale-[0.98]">Review a Brand</a>
+      <a href="signin.html" class="font-body-md text-body-md text-primary hover:opacity-70 transition-opacity">Sign In</a>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 text-primary" aria-label="Open menu">
+      <span class="material-symbols-outlined text-[28px]">menu</span>
+    </button>
+  </div>
+</nav>
+<div id="mobile-menu" class="fixed inset-0 z-[100] bg-background hidden flex-col">
+  <div class="flex justify-between items-center px-margin-mobile py-4 border-b border-border-hairline">
+    <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary" href="index.html">Brand Partnership Index</a>
+    <button id="mobile-menu-close" class="flex items-center justify-center w-10 h-10 text-primary" aria-label="Close menu">
+      <span class="material-symbols-outlined text-[28px]">close</span>
+    </button>
+  </div>
+  <div class="flex flex-col gap-2 px-margin-mobile py-6">
+    <a href="index.html" class="text-body-lg font-body-lg py-3 text-on-surface-variant hover:text-primary transition-colors">Leaderboard</a>
+    <a href="brands.html" class="text-body-lg font-body-lg py-3 text-primary font-bold">Brands</a>
+    <a href="compare.html" class="text-body-lg font-body-lg py-3 text-on-surface-variant hover:text-primary transition-colors">Compare</a>
+    <hr class="border-border-hairline my-2">
+    <a href="submit.html" class="text-body-lg font-body-lg bg-primary text-on-primary px-4 py-3 rounded text-center hover:opacity-90 transition-opacity">Review a Brand</a>
+    <a href="signin.html" class="text-body-lg font-body-lg py-3 text-primary text-center hover:opacity-70 transition-opacity">Sign In</a>
+  </div>
+</div>
+
+<main class="flex-grow">
+  <!-- Hero -->
+  <section class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop pt-12 pb-8">
+    <div class="max-w-3xl">
+      <span class="font-label-caps text-label-caps text-text-caption uppercase">Browse</span>
+      <h1 class="font-display-lg text-display-lg text-text-main mt-2 mb-4">All brands in the index.</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">Filter by category, search by name, or sort by score, momentum, or recency. Click any brand to open their full profile.</p>
+    </div>
+  </section>
+
+  <!-- Search & Filter Bar -->
+  <div class="bg-background-paper sticky top-[73px] z-40 border-b border-border-hairline py-4">
+    <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div class="relative w-full md:w-64">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-caption">search</span>
+        <input id="search" class="w-full pl-10 pr-4 py-2 border border-border-hairline rounded bg-surface-card font-body-md text-body-md text-text-main focus:outline-none focus:border-primary transition-colors" placeholder="Find a brand" type="text">
+      </div>
+      <div id="category-chips" class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 hide-scrollbar"></div>
+      <div class="w-full md:w-auto flex justify-end">
+        <select id="sort" class="border-none bg-transparent font-caption text-caption text-text-main font-bold cursor-pointer focus:ring-0">
+          <option value="score">Sort: Overall score</option>
+          <option value="movers">Sort: Biggest movers</option>
+          <option value="reviews">Sort: Most reviewed</option>
+          <option value="alpha">Sort: A → Z</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
+    <div id="result-summary" class="font-caption text-caption text-text-caption mb-4"></div>
+    <div id="brand-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter"></div>
+    <div id="empty-state" class="hidden border border-dashed border-border-hairline rounded p-12 text-center">
+      <p class="font-headline-md text-headline-md text-text-main mb-2">No brands match.</p>
+      <p class="font-body-md text-body-md text-on-surface-variant">Try a different category or clear your search.</p>
+    </div>
+  </div>
+
+  <!-- Bottom CTA -->
+  <section class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop pb-16">
+    <div class="border border-border-hairline rounded bg-surface-card p-8 md:p-12 text-center">
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-3">Don't see a brand you carry?</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-lg mx-auto mb-6">Be the first to rate them. Your review adds them to the index and gives them actionable feedback on how to better support specialty retail.</p>
+      <a href="submit.html" class="inline-block bg-primary text-on-primary font-semibold px-8 py-3 rounded hover:opacity-90 transition-opacity active:scale-[0.98] text-lg">Review a Brand</a>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-surface-container-low border-t border-border-hairline mt-auto">
+  <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Explore</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Leaderboard</a></li>
+          <li><a href="brands.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Brands</a></li>
+          <li><a href="compare.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Compare</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Participate</h4>
+        <ul class="space-y-2">
+          <li><a href="submit.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Review a Brand</a></li>
+          <li><a href="signin.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Sign In</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Learn</h4>
+        <ul class="space-y-2">
+          <li><a href="methodology.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Methodology</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Brand Partnership Index</h4>
+        <p class="text-sm text-on-surface-variant">Transparent, independent ratings of how brands support specialty retail.</p>
+      </div>
+    </div>
+    <div class="border-t border-border-hairline pt-6 text-center">
+      <p class="text-xs text-on-surface-variant">&copy; 2026 Brand Partnership Index. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="brands.js"></script>
+<script>
+  const CATEGORIES = ["All", "Outdoor", "Running", "Surf", "Action Sports", "Bike", "Ski"];
+  let activeCategory = "All";
+  let searchQuery = "";
+  let sortMode = "score";
+
+  function renderChips() {
+    document.getElementById("category-chips").innerHTML = CATEGORIES.map(c => {
+      const active = c === activeCategory;
+      const base = "px-4 py-1.5 rounded-full font-caption text-caption whitespace-nowrap cursor-pointer transition-colors";
+      return `<button data-cat="${c}" class="chip ${base} ${active ? "bg-primary text-on-primary" : "border border-border-hairline text-text-main hover:bg-surface-variant"}">${c}</button>`;
+    }).join("");
+    document.querySelectorAll(".chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeCategory = btn.dataset.cat;
+        renderChips();
+        renderGrid();
+      });
+    });
+  }
+
+  function changeNumeric(c) { return parseInt(c, 10) || 0; }
+
+  function filteredBrands() {
+    let list = BRANDS.slice();
+    if (activeCategory !== "All") {
+      list = list.filter(b => b.categories.includes(activeCategory));
+    }
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter(b => b.name.toLowerCase().includes(q));
+    }
+    if (sortMode === "score") list.sort((a, b) => b.score - a.score);
+    else if (sortMode === "movers") list.sort((a, b) => Math.abs(changeNumeric(b.change)) - Math.abs(changeNumeric(a.change)));
+    else if (sortMode === "reviews") list.sort((a, b) => b.reviews - a.reviews);
+    else if (sortMode === "alpha") list.sort((a, b) => a.name.localeCompare(b.name));
+    return list;
+  }
+
+  function cardHtml(b) {
+    const top = topDim(b.dims);
+    return `
+      <a href="brand.html?brand=${encodeURIComponent(b.name)}"
+         class="border border-border-hairline rounded bg-surface-card p-5 flex flex-col gap-4 hover:border-primary transition-colors group">
+        <div class="flex items-start justify-between gap-3">
+          ${brandLogoHtml(b, "w-14 h-14", "text-[28px]")}
+          <span class="${tierBg100(b.score)} px-3 py-1 rounded font-data-tabular text-data-tabular shrink-0">${b.score}</span>
+        </div>
+        <div>
+          <h3 class="font-headline-md text-headline-md text-primary group-hover:underline m-0">${b.name}</h3>
+          <p class="font-caption text-caption text-text-caption mt-1">${b.categories.join(" · ")}</p>
+        </div>
+        <div class="flex items-center justify-between border-t border-border-hairline pt-3 mt-auto">
+          <div class="flex flex-col">
+            <span class="font-label-caps text-label-caps text-text-caption uppercase">Top standard</span>
+            <span class="font-caption text-caption text-text-main truncate">${top.name}</span>
+          </div>
+          <div class="flex flex-col items-end">
+            <span class="font-data-tabular text-data-tabular ${tierText(top.score)}">${top.score}/20</span>
+            <span class="font-caption text-caption ${changeClass(b.change)}">${b.change}</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-text-caption font-caption text-caption">
+          <span>${b.reviews} review${b.reviews === 1 ? "" : "s"}</span>
+          <span>${b.claimed ? "Claimed" : "Unclaimed"}</span>
+        </div>
+      </a>
+    `;
+  }
+
+  function renderGrid() {
+    const list = filteredBrands();
+    const grid = document.getElementById("brand-grid");
+    const empty = document.getElementById("empty-state");
+    document.getElementById("result-summary").textContent =
+      `${list.length} of ${BRANDS.length} brands` +
+      (activeCategory !== "All" ? ` in ${activeCategory}` : "") +
+      (searchQuery ? ` matching "${searchQuery}"` : "");
+    if (list.length === 0) {
+      grid.innerHTML = "";
+      grid.classList.add("hidden");
+      empty.classList.remove("hidden");
+    } else {
+      grid.classList.remove("hidden");
+      empty.classList.add("hidden");
+      grid.innerHTML = list.map(cardHtml).join("");
+    }
+  }
+
+  document.getElementById("search").addEventListener("input", (e) => {
+    searchQuery = e.target.value.trim();
+    renderGrid();
+  });
+  document.getElementById("sort").addEventListener("change", (e) => {
+    sortMode = e.target.value;
+    renderGrid();
+  });
+
+  renderChips();
+  renderGrid();
+</script>
+<script>
+(function(){
+  const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),close=document.getElementById('mobile-menu-close');
+  if(!btn||!menu||!close)return;
+  btn.addEventListener('click',()=>{menu.classList.remove('hidden');menu.classList.add('flex');});
+  close.addEventListener('click',()=>{menu.classList.add('hidden');menu.classList.remove('flex');});
+})();
+</script>
+
+</body>
+</html>

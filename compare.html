@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Compare · Brand Partnership Index</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <meta property="og:title" content="Brand Partnership Index — Compare">
+    <meta property="og:description" content="How the wholesale channel reviews its brand partners. Transparent, independent ratings across five partnership standards.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Brand Partnership Index">
+    <meta name="twitter:description" content="How the wholesale channel reviews its brand partners.">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Source+Serif+4:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .material-symbols-outlined[data-weight="fill"] { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary": "#7e5700", "outline": "#75777d", "on-secondary-container": "#785300",
+          "surface-bright": "#fbf8fa", "on-error-container": "#93000a", "tertiary-fixed-dim": "#e2c19d",
+          "on-tertiary-container": "#9b7f5f", "primary-container": "#101c2f", "tertiary": "#000000",
+          "surface-container-high": "#eae7e9", "surface-variant": "#e4e2e4",
+          "score-high": "#3F7556", "score-mid-high": "#E8C547", "score-mid": "#D97A35", "score-low": "#B23B33",
+          "text-main": "#181A1F", "background": "#fbf8fa", "on-surface-variant": "#45474c",
+          "on-tertiary": "#ffffff", "border-hairline": "#E4E2DA", "on-tertiary-fixed-variant": "#594327",
+          "on-secondary-fixed": "#281900", "on-primary-container": "#78849c", "surface-dim": "#dcd9db",
+          "on-tertiary-fixed": "#291802", "tertiary-fixed": "#ffddb8", "primary-fixed-dim": "#bbc7e0",
+          "inverse-on-surface": "#f3f0f2", "error": "#ba1a1a", "tertiary-container": "#291802",
+          "surface-container": "#f0edef", "secondary-fixed-dim": "#f3be65", "surface-container-low": "#f5f3f5",
+          "on-primary": "#ffffff", "on-secondary": "#ffffff", "primary-fixed": "#d7e3fd",
+          "on-surface": "#1b1b1d", "inverse-surface": "#303032", "inverse-primary": "#bbc7e0",
+          "primary": "#000000", "outline-variant": "#c5c6cd", "on-primary-fixed": "#101c2f",
+          "on-background": "#1b1b1d", "link-endvr": "#7C4DFF", "error-container": "#ffdad6",
+          "surface-container-lowest": "#ffffff", "surface-container-highest": "#e4e2e4",
+          "secondary-fixed": "#ffdeac", "on-secondary-fixed-variant": "#604100", "surface-card": "#FFFFFF",
+          "background-paper": "#FAFAF7", "text-caption": "#6E7480", "on-error": "#ffffff",
+          "on-primary-fixed-variant": "#3c475c", "surface-tint": "#535f75", "secondary-container": "#ffc96f",
+          "surface": "#fbf8fa"
+        },
+        borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+        spacing: { "gutter": "24px", "margin-desktop": "40px", "card-padding": "24px", "margin-mobile": "16px", "unit": "4px", "section-gap": "80px" },
+        fontFamily: {
+          "headline-lg": ["Source Serif 4"], "data-tabular": ["Inter"], "caption": ["Inter"],
+          "display-lg": ["Source Serif 4"], "body-md": ["Inter"], "body-lg": ["Inter"],
+          "label-caps": ["Inter"], "headline-md": ["Source Serif 4"]
+        },
+        fontSize: {
+          "headline-lg": ["32px", { lineHeight: "1.3", fontWeight: "600" }],
+          "data-tabular": ["14px", { lineHeight: "1.2", fontWeight: "600" }],
+          "caption": ["13px", { lineHeight: "1.4", letterSpacing: "0.01em", fontWeight: "400" }],
+          "display-lg": ["48px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+          "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+          "body-lg": ["18px", { lineHeight: "1.7", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "700" }],
+          "headline-md": ["24px", { lineHeight: "1.4", fontWeight: "600" }]
+        }
+      }
+    }
+  };
+</script>
+</head>
+<body class="bg-background-paper text-text-main font-body-md antialiased min-h-screen flex flex-col">
+
+<nav class="bg-background w-full top-0 sticky border-b border-border-hairline z-50">
+  <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-[1280px] mx-auto">
+    <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary" href="index.html">Brand Partnership Index</a>
+    <ul class="hidden md:flex gap-6 items-center">
+      <li><a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="index.html">Leaderboard</a></li>
+      <li><a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="brands.html">Brands</a></li>
+      <li><a class="text-primary font-bold border-b-2 border-primary pb-1 cursor-pointer" href="compare.html">Compare</a></li>
+    </ul>
+    <div class="hidden md:flex items-center gap-4">
+      <a href="submit.html" class="font-body-md text-body-md bg-primary text-on-primary px-4 py-2 rounded hover:opacity-90 transition-opacity active:scale-[0.98]">Review a Brand</a>
+      <a href="signin.html" class="font-body-md text-body-md text-primary hover:opacity-70 transition-opacity">Sign In</a>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 text-primary" aria-label="Open menu">
+      <span class="material-symbols-outlined text-[28px]">menu</span>
+    </button>
+  </div>
+</nav>
+<div id="mobile-menu" class="fixed inset-0 z-[100] bg-background hidden flex-col">
+  <div class="flex justify-between items-center px-margin-mobile py-4 border-b border-border-hairline">
+    <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary" href="index.html">Brand Partnership Index</a>
+    <button id="mobile-menu-close" class="flex items-center justify-center w-10 h-10 text-primary" aria-label="Close menu">
+      <span class="material-symbols-outlined text-[28px]">close</span>
+    </button>
+  </div>
+  <div class="flex flex-col gap-2 px-margin-mobile py-6">
+    <a href="index.html" class="text-body-lg font-body-lg py-3 text-on-surface-variant hover:text-primary transition-colors">Leaderboard</a>
+    <a href="brands.html" class="text-body-lg font-body-lg py-3 text-on-surface-variant hover:text-primary transition-colors">Brands</a>
+    <a href="compare.html" class="text-body-lg font-body-lg py-3 text-primary font-bold">Compare</a>
+    <hr class="border-border-hairline my-2">
+    <a href="submit.html" class="text-body-lg font-body-lg bg-primary text-on-primary px-4 py-3 rounded text-center hover:opacity-90 transition-opacity">Review a Brand</a>
+    <a href="signin.html" class="text-body-lg font-body-lg py-3 text-primary text-center hover:opacity-70 transition-opacity">Sign In</a>
+  </div>
+</div>
+
+<main class="flex-grow max-w-[1280px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
+
+  <section class="max-w-3xl mb-12">
+    <span class="font-label-caps text-label-caps text-text-caption uppercase">Compare</span>
+    <h1 class="font-display-lg text-display-lg text-text-main mt-2 mb-4">Lay brands side by side.</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Pick up to three brands. We'll show overall and per-dimension scores in a single view, with the best on each row highlighted.</p>
+  </section>
+
+  <!-- Picker row -->
+  <div id="picker-row" class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-12"></div>
+
+  <!-- Comparison table -->
+  <div id="comparison" class="border border-border-hairline rounded bg-surface-card overflow-x-auto"></div>
+
+  <!-- Highlights -->
+  <div id="highlights" class="mt-12"></div>
+
+</main>
+
+<footer class="bg-surface-container-low border-t border-border-hairline mt-auto">
+  <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Explore</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Leaderboard</a></li>
+          <li><a href="brands.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Brands</a></li>
+          <li><a href="compare.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Compare</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Participate</h4>
+        <ul class="space-y-2">
+          <li><a href="submit.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Review a Brand</a></li>
+          <li><a href="signin.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Sign In</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Learn</h4>
+        <ul class="space-y-2">
+          <li><a href="methodology.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Methodology</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Brand Partnership Index</h4>
+        <p class="text-sm text-on-surface-variant">Transparent, independent ratings of how brands support specialty retail.</p>
+      </div>
+    </div>
+    <div class="border-t border-border-hairline pt-6 text-center">
+      <p class="text-xs text-on-surface-variant">&copy; 2026 Brand Partnership Index. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="brands.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const initial = [
+    params.get("a") || "Brooks",
+    params.get("b") || "Hoka",
+    params.get("c") || "Patagonia"
+  ];
+  const slots = initial.map(name => getBrandByName(name) ? name : null);
+
+  function brandOptionsHtml(selectedName) {
+    return `<option value="">— Select brand —</option>` +
+      BRANDS.map(b => `<option value="${b.name}" ${b.name === selectedName ? "selected" : ""}>${b.name}</option>`).join("");
+  }
+
+  function pickerCardHtml(slotIdx) {
+    const name = slots[slotIdx];
+    const brand = name ? getBrandByName(name) : null;
+    if (!brand) {
+      return `
+        <div class="border border-dashed border-border-hairline rounded bg-surface-card p-card-padding flex flex-col items-center justify-center gap-3 min-h-[160px]">
+          <span class="material-symbols-outlined text-text-caption text-[32px]">add_circle</span>
+          <select data-slot="${slotIdx}" class="brand-select border border-border-hairline rounded px-3 py-2 font-body-md focus:outline-none focus:border-primary">
+            ${brandOptionsHtml(null)}
+          </select>
+        </div>
+      `;
+    }
+    return `
+      <div class="border border-border-hairline rounded bg-surface-card p-card-padding flex flex-col gap-3">
+        <div class="flex items-start justify-between gap-3">
+          ${brandLogoHtml(brand, "w-14 h-14", "text-[28px]")}
+          <button data-slot="${slotIdx}" class="remove-btn font-caption text-caption text-text-caption hover:text-score-low transition-colors flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">close</span> Remove
+          </button>
+        </div>
+        <a href="brand.html?brand=${encodeURIComponent(brand.name)}" class="font-headline-md text-headline-md text-primary hover:underline">${brand.name}</a>
+        <select data-slot="${slotIdx}" class="brand-select border border-border-hairline rounded px-3 py-2 font-body-md focus:outline-none focus:border-primary">
+          ${brandOptionsHtml(brand.name)}
+        </select>
+        <div class="flex items-center justify-between border-t border-border-hairline pt-3">
+          <span class="${tierBg100(brand.score)} px-3 py-1 rounded font-data-tabular text-data-tabular">${brand.score}</span>
+          <span class="font-data-tabular text-data-tabular ${changeClass(brand.change)}">${brand.change} vs last year</span>
+        </div>
+      </div>
+    `;
+  }
+
+  function comparisonHtml() {
+    const picked = slots.map(n => n ? getBrandByName(n) : null);
+    const filled = picked.filter(Boolean);
+    if (filled.length < 2) {
+      return `
+        <div class="p-12 text-center">
+          <p class="font-headline-md text-headline-md text-text-main mb-2">Add at least two brands to compare.</p>
+          <p class="font-body-md text-body-md text-on-surface-variant">Use the dropdowns above. You can pre-fill the URL with <code>?a=Brooks&b=Hoka&c=Patagonia</code>.</p>
+        </div>
+      `;
+    }
+
+    const headerCols = picked.map((b, i) => {
+      if (!b) return `<div class="p-4 text-text-caption font-caption text-caption">Slot ${i + 1} empty</div>`;
+      return `
+        <div class="p-4 border-l border-border-hairline">
+          <a href="brand.html?brand=${encodeURIComponent(b.name)}" class="flex items-center gap-3 hover:underline">
+            ${brandLogoHtml(b, "w-10 h-10", "text-base")}
+            <span class="font-body-md text-body-md font-bold text-primary">${b.name}</span>
+          </a>
+        </div>
+      `;
+    }).join("");
+
+    // Overall row
+    const overallScores = picked.map(b => b ? b.score : null);
+    const maxOverall = Math.max(...overallScores.filter(s => s !== null));
+    const overallCols = picked.map(b => {
+      if (!b) return `<div class="p-4 border-l border-border-hairline text-text-caption">—</div>`;
+      const isBest = b.score === maxOverall && filled.length > 1;
+      return `
+        <div class="p-4 border-l border-border-hairline flex items-center gap-2">
+          <span class="${tierBg100(b.score)} px-3 py-1 rounded font-data-tabular text-data-tabular">${b.score}</span>
+          ${isBest ? `<span class="material-symbols-outlined text-score-high text-[18px]" data-weight="fill" title="Best of compared brands">check_circle</span>` : ""}
+        </div>
+      `;
+    }).join("");
+
+    // Per-dimension rows
+    const dimRows = DIMENSIONS.map((d, i) => {
+      const scores = picked.map(b => b ? b.dims[i] : null);
+      const max = Math.max(...scores.filter(s => s !== null));
+      const cells = picked.map(b => {
+        if (!b) return `<div class="p-4 border-l border-border-hairline text-text-caption">—</div>`;
+        const isBest = b.dims[i] === max && filled.length > 1;
+        return `
+          <div class="p-4 border-l border-border-hairline flex items-center gap-2">
+            <span class="${tierBg(b.dims[i])} px-2 py-1 rounded font-data-tabular text-data-tabular">${b.dims[i]}/20</span>
+            ${isBest ? `<span class="material-symbols-outlined text-score-high text-[18px]" data-weight="fill" title="Best on this dimension">check_circle</span>` : ""}
+          </div>
+        `;
+      }).join("");
+      return `
+        <div class="grid grid-cols-[200px_repeat(3,1fr)] border-t border-border-hairline">
+          <div class="p-4 bg-surface-container-low">
+            <div class="font-data-tabular text-data-tabular text-text-main">${d.name}</div>
+            <div class="font-caption text-caption text-text-caption">${d.blurb}</div>
+          </div>
+          ${cells}
+        </div>
+      `;
+    }).join("");
+
+    // Reviews row
+    const reviewsCols = picked.map(b => {
+      if (!b) return `<div class="p-4 border-l border-border-hairline text-text-caption">—</div>`;
+      return `<div class="p-4 border-l border-border-hairline font-caption text-caption text-text-main">${b.reviews} verified review${b.reviews === 1 ? "" : "s"}</div>`;
+    }).join("");
+
+    // Mobile: stacked brand cards
+    const mobileCards = picked.map(b => {
+      if (!b) return '';
+      const dimList = DIMENSIONS.map((d, i) => {
+        const isBest = b.dims[i] === Math.max(...picked.filter(Boolean).map(x => x.dims[i])) && filled.length > 1;
+        return `
+          <div class="flex items-center justify-between py-2 border-b border-border-hairline last:border-b-0">
+            <span class="font-data-tabular text-data-tabular text-text-main">${d.name}</span>
+            <div class="flex items-center gap-2">
+              <span class="${tierBg(b.dims[i])} px-2 py-1 rounded font-data-tabular text-data-tabular">${b.dims[i]}/20</span>
+              ${isBest ? `<span class="material-symbols-outlined text-score-high text-[18px]" data-weight="fill">check_circle</span>` : ""}
+            </div>
+          </div>`;
+      }).join("");
+      const isBestOverall = b.score === maxOverall && filled.length > 1;
+      return `
+        <div class="border border-border-hairline rounded bg-surface-card p-card-padding">
+          <div class="flex items-center gap-3 mb-4">
+            ${brandLogoHtml(b, "w-10 h-10", "text-base")}
+            <a href="brand.html?brand=${encodeURIComponent(b.name)}" class="font-body-md text-body-md font-bold text-primary hover:underline">${b.name}</a>
+          </div>
+          <div class="flex items-center gap-2 mb-4 pb-3 border-b border-border-hairline">
+            <span class="font-data-tabular text-data-tabular text-text-caption">Overall</span>
+            <span class="${tierBg100(b.score)} px-3 py-1 rounded font-data-tabular text-data-tabular">${b.score}</span>
+            ${isBestOverall ? `<span class="material-symbols-outlined text-score-high text-[18px]" data-weight="fill">check_circle</span>` : ""}
+          </div>
+          ${dimList}
+          <div class="pt-3 mt-2 font-caption text-caption text-text-main">${b.reviews} verified review${b.reviews === 1 ? "" : "s"}</div>
+        </div>`;
+    }).join("");
+
+    return `
+      <!-- Mobile: stacked cards -->
+      <div class="md:hidden flex flex-col gap-4 p-4">${mobileCards}</div>
+      <!-- Desktop: table layout -->
+      <div class="hidden md:block">
+        <div class="grid grid-cols-[200px_repeat(3,1fr)] bg-surface-container-low">
+          <div class="p-4">
+            <span class="font-label-caps text-label-caps text-text-caption uppercase">Brand</span>
+          </div>
+          ${headerCols}
+        </div>
+        <div class="grid grid-cols-[200px_repeat(3,1fr)] border-t border-border-hairline">
+          <div class="p-4 bg-surface-container-low">
+            <div class="font-data-tabular text-data-tabular text-text-main">Overall</div>
+            <div class="font-caption text-caption text-text-caption">0–100</div>
+          </div>
+          ${overallCols}
+        </div>
+        ${dimRows}
+        <div class="grid grid-cols-[200px_repeat(3,1fr)] border-t border-border-hairline">
+          <div class="p-4 bg-surface-container-low">
+            <div class="font-data-tabular text-data-tabular text-text-main">Reviews</div>
+          </div>
+          ${reviewsCols}
+        </div>
+      </div>
+    `;
+  }
+
+  function highlightsHtml() {
+    const picked = slots.map(n => n ? getBrandByName(n) : null).filter(Boolean);
+    if (picked.length < 2) return "";
+
+    // Find the brand that wins on the most dimensions.
+    const wins = picked.map(b => ({ brand: b, count: 0 }));
+    DIMENSIONS.forEach((_, i) => {
+      const max = Math.max(...picked.map(b => b.dims[i]));
+      picked.forEach((b, j) => { if (b.dims[i] === max) wins[j].count += 1; });
+    });
+    const sorted = wins.slice().sort((a, b) => b.count - a.count);
+    const leader = sorted[0];
+
+    return `
+      <div class="border border-border-hairline rounded bg-surface-card p-card-padding">
+        <h2 class="font-headline-md text-headline-md text-primary mb-3">Highlights</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">
+          <strong class="text-primary">${leader.brand.name}</strong> wins on
+          <strong>${leader.count}</strong> of ${DIMENSIONS.length} dimensions in this comparison,
+          with an overall score of <strong>${leader.brand.score}/100</strong>.
+        </p>
+      </div>
+    `;
+  }
+
+  function render() {
+    const pickerEl = document.getElementById("picker-row");
+    pickerEl.innerHTML = [0, 1, 2].map(pickerCardHtml).join("");
+    document.getElementById("comparison").innerHTML = comparisonHtml();
+    document.getElementById("highlights").innerHTML = highlightsHtml();
+
+    pickerEl.querySelectorAll(".brand-select").forEach(sel => {
+      sel.addEventListener("change", (e) => {
+        const idx = Number(e.target.dataset.slot);
+        slots[idx] = e.target.value || null;
+        render();
+      });
+    });
+    pickerEl.querySelectorAll(".remove-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const idx = Number(e.currentTarget.dataset.slot);
+        slots[idx] = null;
+        render();
+      });
+    });
+  }
+
+  render();
+</script>
+<script>
+(function(){
+  const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),close=document.getElementById('mobile-menu-close');
+  if(!btn||!menu||!close)return;
+  btn.addEventListener('click',()=>{menu.classList.remove('hidden');menu.classList.add('flex');});
+  close.addEventListener('click',()=>{menu.classList.add('hidden');menu.classList.remove('flex');});
+})();
+</script>
+
+</body>
+</html>

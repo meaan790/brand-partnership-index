@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Brand Profile · Brand Partnership Index</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <meta property="og:title" content="Brand Partnership Index — Brand Profile">
+    <meta property="og:description" content="How the wholesale channel reviews its brand partners. Transparent, independent ratings across five partnership standards.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Brand Partnership Index">
+    <meta name="twitter:description" content="How the wholesale channel reviews its brand partners.">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .material-symbols-outlined[data-weight="fill"] {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  body {
+    background-color: #FAFAF7;
+    color: #1b1b1d;
+  }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary": "#7e5700",
+          "outline": "#75777d",
+          "on-secondary-container": "#785300",
+          "surface-bright": "#fbf8fa",
+          "on-error-container": "#93000a",
+          "tertiary-fixed-dim": "#e2c19d",
+          "on-tertiary-container": "#9b7f5f",
+          "primary-container": "#101c2f",
+          "tertiary": "#000000",
+          "surface-container-high": "#eae7e9",
+          "surface-variant": "#e4e2e4",
+          "score-high": "#3F7556",
+          "score-mid-high": "#E8C547",
+          "score-mid": "#D97A35",
+          "score-low": "#B23B33",
+          "text-main": "#181A1F",
+          "background": "#fbf8fa",
+          "on-surface-variant": "#45474c",
+          "on-tertiary": "#ffffff",
+          "border-hairline": "#E4E2DA",
+          "on-tertiary-fixed-variant": "#594327",
+          "on-secondary-fixed": "#281900",
+          "on-primary-container": "#78849c",
+          "surface-dim": "#dcd9db",
+          "on-tertiary-fixed": "#291802",
+          "tertiary-fixed": "#ffddb8",
+          "primary-fixed-dim": "#bbc7e0",
+          "inverse-on-surface": "#f3f0f2",
+          "error": "#ba1a1a",
+          "tertiary-container": "#291802",
+          "surface-container": "#f0edef",
+          "secondary-fixed-dim": "#f3be65",
+          "surface-container-low": "#f5f3f5",
+          "on-primary": "#ffffff",
+          "on-secondary": "#ffffff",
+          "primary-fixed": "#d7e3fd",
+          "on-surface": "#1b1b1d",
+          "inverse-surface": "#303032",
+          "inverse-primary": "#bbc7e0",
+          "primary": "#000000",
+          "outline-variant": "#c5c6cd",
+          "on-primary-fixed": "#101c2f",
+          "on-background": "#1b1b1d",
+          "link-endvr": "#7C4DFF",
+          "error-container": "#ffdad6",
+          "surface-container-lowest": "#ffffff",
+          "surface-container-highest": "#e4e2e4",
+          "secondary-fixed": "#ffdeac",
+          "on-secondary-fixed-variant": "#604100",
+          "surface-card": "#FFFFFF",
+          "background-paper": "#FAFAF7",
+          "text-caption": "#6E7480",
+          "on-error": "#ffffff",
+          "on-primary-fixed-variant": "#3c475c",
+          "surface-tint": "#535f75",
+          "secondary-container": "#ffc96f",
+          "surface": "#fbf8fa"
+        },
+        borderRadius: {
+          "DEFAULT": "0.5rem",
+          "lg": "0.75rem",
+          "xl": "1rem",
+          "full": "9999px"
+        },
+        spacing: {
+          "gutter": "24px",
+          "margin-desktop": "40px",
+          "card-padding": "24px",
+          "margin-mobile": "16px",
+          "unit": "4px",
+          "section-gap": "80px"
+        },
+        fontFamily: {
+          "headline-lg": ["Source Serif 4"],
+          "data-tabular": ["Inter"],
+          "caption": ["Inter"],
+          "display-lg": ["Source Serif 4"],
+          "body-md": ["Inter"],
+          "body-lg": ["Inter"],
+          "label-caps": ["Inter"],
+          "headline-md": ["Source Serif 4"]
+        },
+        fontSize: {
+          "headline-lg": ["32px", { lineHeight: "1.3", fontWeight: "600" }],
+          "data-tabular": ["14px", { lineHeight: "1.2", fontWeight: "600" }],
+          "caption": ["13px", { lineHeight: "1.4", letterSpacing: "0.01em", fontWeight: "400" }],
+          "display-lg": ["48px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+          "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+          "body-lg": ["18px", { lineHeight: "1.7", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "700" }],
+          "headline-md": ["24px", { lineHeight: "1.4", fontWeight: "600" }]
+        }
+      }
+    }
+  };
+</script>
+</head>
+<body class="font-body-md bg-background-paper text-on-background min-h-screen flex flex-col antialiased">
+
+<!-- TopNavBar -->
+<nav class="bg-background dark:bg-background w-full top-0 sticky border-b border-border-hairline dark:border-outline-variant z-50">
+  <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-[1280px] mx-auto">
+    <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary dark:text-on-background" href="index.html">Brand Partnership Index</a>
+    <ul class="hidden md:flex gap-6 items-center">
+      <li><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-on-background transition-colors cursor-pointer transition-opacity active:opacity-70" href="index.html">Leaderboard</a></li>
+      <li><a class="text-primary dark:text-on-background font-bold border-b-2 border-primary pb-1 cursor-pointer transition-opacity active:opacity-70" href="brands.html">Brands</a></li>
+      <li><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-on-background transition-colors cursor-pointer transition-opacity active:opacity-70" href="compare.html">Compare</a></li>
+    </ul>
+    <div class="hidden md:flex items-center gap-4">
+      <a href="submit.html" class="font-body-md text-body-md bg-primary text-on-primary px-4 py-2 rounded hover:opacity-90 transition-opacity active:scale-[0.98]">Review a Brand</a>
+      <a href="signin.html" class="font-body-md text-body-md text-primary dark:text-on-background hover:opacity-70 transition-opacity">Sign In</a>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 text-primary" aria-label="Open menu">
+      <span class="material-symbols-outlined text-[28px]">menu</span>
+    </button>
+  </div>
+</nav>
+<!-- Mobile menu overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-[100] bg-background hidden flex-col">
+  <div class="flex justify-between items-center px-margin-mobile py-4 border-b border-border-hairline">
+    <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary" href="index.html">Brand Partnership Index</a>
+    <button id="mobile-menu-close" class="flex items-center justify-center w-10 h-10 text-primary" aria-label="Close menu">
+      <span class="material-symbols-outlined text-[28px]">close</span>
+    </button>
+  </div>
+  <div class="flex flex-col gap-2 px-margin-mobile py-6">
+    <a href="index.html" class="text-body-lg font-body-lg py-3 text-on-surface-variant hover:text-primary transition-colors">Leaderboard</a>
+    <a href="brands.html" class="text-body-lg font-body-lg py-3 text-primary font-bold hover:text-primary transition-colors">Brands</a>
+    <a href="compare.html" class="text-body-lg font-body-lg py-3 text-on-surface-variant hover:text-primary transition-colors">Compare</a>
+    <hr class="border-border-hairline my-2">
+    <a href="submit.html" class="text-body-lg font-body-lg bg-primary text-on-primary px-4 py-3 rounded text-center hover:opacity-90 transition-opacity">Review a Brand</a>
+    <a href="signin.html" class="text-body-lg font-body-lg py-3 text-primary text-center hover:opacity-70 transition-opacity">Sign In</a>
+  </div>
+</div>
+
+<main id="page-main" class="flex-grow max-w-[1280px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
+  <!-- rendered by JS -->
+</main>
+
+<footer class="bg-surface-container-low border-t border-border-hairline mt-auto">
+  <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Explore</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Leaderboard</a></li>
+          <li><a href="brands.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Brands</a></li>
+          <li><a href="compare.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Compare</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Participate</h4>
+        <ul class="space-y-2">
+          <li><a href="submit.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Review a Brand</a></li>
+          <li><a href="signin.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Sign In</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Learn</h4>
+        <ul class="space-y-2">
+          <li><a href="methodology.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Methodology</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Brand Partnership Index</h4>
+        <p class="text-sm text-on-surface-variant">Transparent, independent ratings of how brands support specialty retail.</p>
+      </div>
+    </div>
+    <div class="border-t border-border-hairline pt-6 text-center">
+      <p class="text-xs text-on-surface-variant">&copy; 2026 Brand Partnership Index. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="brands.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get("brand") || "Brooks";
+  const brand = getBrandByName(requested) || BRANDS[0];
+
+  document.title = `${brand.name} · Brand Partnership Index`;
+
+  const main = document.getElementById("page-main");
+
+  function categoryPills(brand) {
+    return brand.categories.map(c => `
+      <span class="font-label-caps text-label-caps bg-surface-container px-3 py-1.5 rounded-full text-on-surface-variant border border-border-hairline uppercase">${c}</span>
+    `).join("");
+  }
+
+  function dimensionCards(brand) {
+    return DIMENSIONS.map((d, i) => {
+      const score = brand.dims[i];
+      const dist = genDist(score, brand.reviews);
+      const max = Math.max(...dist);
+      const buckets = ["1–4", "5–8", "9–12", "13–16", "17–20"];
+      return `
+        <div class="bg-surface-card border border-border-hairline p-4 rounded flex flex-col justify-between">
+          <div class="flex justify-between items-start mb-4 gap-2">
+            <h4 class="font-data-tabular text-data-tabular text-on-surface-variant leading-tight">${d.name}</h4>
+            <span class="font-data-tabular text-data-tabular ${tierBg(score)} px-2 py-1 rounded shrink-0">${score}/20</span>
+          </div>
+          <div class="flex items-end justify-between mt-4 border-t border-border-hairline pt-3">
+            <div class="flex gap-1 items-end h-8" aria-label="Score distribution across ${brand.reviews} reviews">
+              ${dist.map((count, j) => {
+                const isModal = count === max;
+                const heightPct = Math.max(8, Math.round((count / max) * 100));
+                return `<div class="w-2 ${isModal ? tierBar(score) : "bg-surface-container-high"}" style="height:${heightPct}%" title="${buckets[j]}: ${count} reviews"></div>`;
+              }).join("")}
+            </div>
+            <span class="font-caption text-caption text-text-caption">${brand.reviews} reviews</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function selfReportClaimed(brand) {
+    const tabs = DIMENSIONS.map((d, i) => `
+      <button type="button"
+              class="self-tab font-data-tabular text-data-tabular pb-3 px-4 whitespace-nowrap border-b-2 ${i === 0 ? "text-primary border-primary" : "text-text-caption border-transparent hover:text-primary"}"
+              data-key="${d.name}">${d.short}</button>
+    `).join("");
+    return `
+      <div class="lg:col-span-8 bg-surface-card border border-border-hairline rounded flex flex-col">
+        <div class="flex border-b border-border-hairline px-6 pt-4 overflow-x-auto hide-scrollbar" id="self-report-tabs">${tabs}</div>
+        <div class="p-card-padding">
+          <h4 class="font-label-caps text-label-caps text-text-caption mb-3 uppercase">Brand Statement</h4>
+          <p class="font-body-lg text-body-lg text-on-surface" id="self-report-text"></p>
+          <div class="mt-6 flex items-center gap-2 text-caption font-caption text-text-caption">
+            <span class="material-symbols-outlined text-[16px]">update</span>
+            <span>Last updated: April 2026</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function selfReportUnclaimed(brand) {
+    return `
+      <div id="claim" class="lg:col-span-8 bg-surface-card border border-border-hairline rounded p-card-padding flex flex-col items-start gap-4 scroll-mt-24">
+        <span class="font-label-caps text-label-caps bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-full border border-border-hairline">BRAND UNCLAIMED</span>
+        <h4 class="font-headline-md text-headline-md text-primary m-0">${brand.name} hasn't claimed this brand yet.</h4>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+          Scores on this page come from verified retailer reviews. ${brand.name}'s public statements on Brand.com Standards, Pricing, Shop Local Support, Shop Floor Support, and Pro Deal Standards will appear here once a representative claims the brand.
+        </p>
+        <div class="flex flex-wrap gap-3 mt-2">
+          <a href="signin.html?type=brand" class="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-on-surface transition-colors inline-block">
+            Claim this Brand
+          </a>
+          <a href="submit.html?brand=${encodeURIComponent(brand.name)}&type=edit" class="bg-transparent text-primary font-data-tabular text-data-tabular px-6 py-3 rounded border border-border-hairline hover:bg-surface-container transition-colors inline-block">
+            Suggest an edit
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  function commitments(brand) {
+    // Claimed brands: derive from score (better partners commit to more pledges).
+    // Unclaimed brands: 0 of 4 — they haven't formally pledged anything.
+    let pledgedCount = 0;
+    if (brand.claimed) {
+      if (brand.score >= 80) pledgedCount = 4;
+      else if (brand.score >= 70) pledgedCount = 3;
+      else if (brand.score >= 60) pledgedCount = 2;
+      else if (brand.score >= 50) pledgedCount = 1;
+    }
+    const items = PLEDGES.map((p, i) => {
+      const checked = i < pledgedCount;
+      return `
+        <div class="flex items-center gap-3 p-3 ${checked ? "bg-surface-container-low" : "bg-background-paper opacity-60"} border border-border-hairline rounded">
+          <span class="material-symbols-outlined ${checked ? "text-score-high" : "text-text-caption"}" ${checked ? `data-weight="fill"` : ""}>${checked ? "check_circle" : "radio_button_unchecked"}</span>
+          <span class="font-data-tabular text-data-tabular ${checked ? "text-primary" : "text-text-caption"}">${p}</span>
+        </div>
+      `;
+    }).join("");
+    return `
+      <div class="lg:col-span-4 bg-surface-card border border-border-hairline p-card-padding rounded">
+        <div class="flex items-end justify-between mb-6">
+          <h3 class="font-headline-md text-headline-md text-primary m-0">Public Commitments</h3>
+          <span class="font-caption text-caption text-text-caption">${pledgedCount} of ${PLEDGES.length}</span>
+        </div>
+        <div class="flex flex-col gap-3">${items}</div>
+      </div>
+    `;
+  }
+
+  function reviewCardHtml(r, brandName) {
+    const overall = r.dimScores.reduce((a, b) => a + b, 0);
+    const dimBadges = DIMENSIONS.map((d, i) => `
+      <span class="text-[10px] ${tierBg(r.dimScores[i])} px-2 py-1 rounded font-data-tabular">${d.short} ${r.dimScores[i]}/20</span>
+    `).join("");
+
+    const responseHtml = r.response ? `
+      <div class="bg-surface-container-low border border-border-hairline p-4 rounded ml-4 md:ml-8 mt-4">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="font-label-caps text-label-caps text-primary">${brandName} Representative</span>
+          <span class="font-caption text-caption text-text-caption">${r.response.ago}</span>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant">${r.response.body}</p>
+      </div>
+    ` : "";
+
+    const overallColor = overall >= 80 ? "text-score-high" : overall >= 65 ? "text-on-surface" : "text-score-low";
+
+    return `
+      <div class="bg-surface-card border border-border-hairline p-card-padding rounded ml-0 md:ml-12 relative">
+        <div class="absolute left-0 top-0 bottom-0 w-1 ${tierBar(overall / 5)} rounded-l"></div>
+        <div class="flex justify-between items-start mb-4 gap-4">
+          <div class="flex flex-col gap-1">
+            <div class="flex items-center gap-2">
+              <span class="font-label-caps text-label-caps text-primary">${r.retailer}, ${r.location}</span>
+              <span class="material-symbols-outlined text-[16px] text-score-high">verified</span>
+            </div>
+            <span class="font-caption text-caption text-text-caption">${r.ago}</span>
+          </div>
+          <div class="flex flex-col items-end">
+            <span class="font-data-tabular text-[18px] font-bold ${overallColor}">${overall}<span class="text-text-caption text-[12px] font-normal">/100</span></span>
+            <span class="font-caption text-caption text-text-caption">overall</span>
+          </div>
+        </div>
+        <div class="flex gap-1 flex-wrap mb-4">${dimBadges}</div>
+        <p class="font-body-lg text-body-lg text-on-surface italic">"${r.quote}"</p>
+        ${responseHtml}
+      </div>
+    `;
+  }
+
+  function reviews(brand) {
+    // Adapt the templates' first dimScore to roughly track the brand's overall tier.
+    // Keeps the relative shape but shifts the absolute numbers so they don't read
+    // as a glowing review for a low-scoring brand.
+    const target = brand.score / 5;
+    const cards = REVIEW_TEMPLATES.map((tpl) => {
+      const sourceAvg = tpl.dimScores.reduce((a, b) => a + b, 0) / tpl.dimScores.length;
+      const shift = target - sourceAvg;
+      const adjusted = {
+        ...tpl,
+        dimScores: tpl.dimScores.map(s => Math.max(1, Math.min(20, Math.round(s + shift))))
+      };
+      return reviewCardHtml(adjusted, brand.name);
+    }).join("");
+    return `
+      <section class="mb-16">
+        <div class="flex justify-between items-end mb-6 border-b border-border-hairline pb-4">
+          <h3 class="font-headline-md text-headline-md text-primary m-0">Verified Reviews</h3>
+          <span class="font-data-tabular text-data-tabular text-text-caption">Sort by: <strong class="text-primary cursor-pointer border-b border-primary">Most Helpful</strong></span>
+        </div>
+        <div class="flex flex-col gap-6" id="reviews-list">${cards}</div>
+        <div class="mt-8 flex justify-center">
+          <button id="load-more-reviews" type="button" class="bg-transparent text-primary font-data-tabular text-data-tabular px-6 py-3 rounded border border-border-hairline hover:bg-surface-container transition-colors">
+            Load More Reviews
+          </button>
+        </div>
+      </section>
+    `;
+  }
+
+  function claimPanelHtml(brand) {
+    if (!brand.claimed) return "";
+    return `
+      <section id="claim" class="mb-16 scroll-mt-24">
+        <div class="bg-surface-card border border-border-hairline p-card-padding rounded">
+          <div class="flex items-start justify-between mb-4 flex-wrap gap-4">
+            <div>
+              <span class="font-label-caps text-label-caps bg-score-high text-white px-3 py-1.5 rounded-full">CLAIMED</span>
+              <h3 class="font-headline-md text-headline-md text-primary mt-3">Edit ${brand.name}'s profile</h3>
+              <p class="font-caption text-caption text-text-caption mt-1">Verified brand representatives can update statements, respond to reviews, and manage public commitments.</p>
+            </div>
+            <a href="brand-dashboard.html" class="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-on-surface transition-colors inline-block">Open Brand Dashboard</a>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function claimFormHtml(brand) {
+    if (brand.claimed) return "";
+    return `
+      <section id="claim-form" class="mb-16 scroll-mt-24">
+        <div class="bg-surface-card border border-border-hairline p-card-padding rounded">
+          <span class="font-label-caps text-label-caps bg-primary text-on-primary px-3 py-1.5 rounded-full">CLAIM REQUEST</span>
+          <h3 class="font-headline-md text-headline-md text-primary mt-3">Claim ${brand.name}'s Brand</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-1 max-w-2xl">Verify that you represent ${brand.name} and start managing this brand. We'll cross-check your work email against the brand's domain and confirm via a secondary contact at the company.</p>
+          <form class="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-6 max-w-3xl" onsubmit="event.preventDefault(); document.getElementById('claim-thanks').classList.remove('hidden');">
+            <label class="flex flex-col gap-1">
+              <span class="font-label-caps text-label-caps text-text-caption">YOUR NAME</span>
+              <input type="text" required class="border border-border-hairline rounded px-3 py-2 font-body-md focus:outline-none focus:border-primary" placeholder="Jamie Singh">
+            </label>
+            <label class="flex flex-col gap-1">
+              <span class="font-label-caps text-label-caps text-text-caption">ROLE</span>
+              <input type="text" required class="border border-border-hairline rounded px-3 py-2 font-body-md focus:outline-none focus:border-primary" placeholder="VP, Wholesale">
+            </label>
+            <label class="flex flex-col gap-1 md:col-span-2">
+              <span class="font-label-caps text-label-caps text-text-caption">WORK EMAIL (must match @${brand.domain})</span>
+              <input type="email" required class="border border-border-hairline rounded px-3 py-2 font-body-md focus:outline-none focus:border-primary" placeholder="jamie@${brand.domain}">
+            </label>
+            <div class="md:col-span-2 flex items-center gap-3 mt-2">
+              <button type="submit" class="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-on-surface transition-colors">Submit claim request</button>
+              <span id="claim-thanks" class="hidden font-caption text-caption text-score-high inline-flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]" data-weight="fill">check_circle</span>
+                Request received. We'll be in touch within 2 business days.
+              </span>
+            </div>
+          </form>
+        </div>
+      </section>
+    `;
+  }
+
+  // Build the page
+  main.innerHTML = `
+    <nav class="font-caption text-caption text-text-caption mb-8 flex items-center gap-2">
+      <a href="index.html" class="hover:text-primary transition-colors">Leaderboard</a>
+      <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+      <a href="brands.html" class="hover:text-primary transition-colors">${brand.categories[0]}</a>
+      <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+      <span class="text-text-main">${brand.name}</span>
+    </nav>
+
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap items-stretch">
+      <div class="lg:col-span-8 flex flex-col gap-6">
+        <div class="flex items-start gap-6">
+          ${brandLogoHtml(brand, "w-32 h-32", "text-[64px]")}
+          <div class="flex flex-col gap-3">
+            <h1 class="font-display-lg text-display-lg text-primary m-0">${brand.name}</h1>
+            <div class="flex flex-wrap gap-2">${categoryPills(brand)}</div>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2">${brand.description || ""}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 mt-2">
+          <a href="${brand.claimed ? 'brand-dashboard.html' : 'signin.html?type=brand'}" class="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-on-surface transition-colors border border-primary inline-block">
+            ${brand.claimed ? "Edit Profile" : "Claim Your Brand"}
+          </a>
+          <button id="follow-btn" type="button" class="bg-transparent text-primary font-data-tabular text-data-tabular px-6 py-3 rounded border border-border-hairline hover:bg-surface-container transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">add</span> <span>Follow Brand</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="lg:col-span-4 bg-surface-card border border-border-hairline p-card-padding rounded flex flex-col justify-between min-h-[240px]">
+        <div>
+          <h2 class="font-label-caps text-label-caps text-text-caption mb-4 uppercase">Overall Partnership Score</h2>
+          <div class="flex items-baseline gap-4">
+            <span class="font-display-lg text-[72px] leading-none ${tierText(brand.score / 5)} font-bold">${brand.score}</span>
+            <div class="flex flex-col">
+              <span class="font-data-tabular text-data-tabular ${changeClass(brand.change)} flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">${brand.change.startsWith("-") ? "arrow_downward" : "arrow_upward"}</span> ${brand.change}
+              </span>
+              <span class="font-caption text-caption text-text-caption">vs last year</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 flex items-end justify-between border-t border-border-hairline pt-4">
+          <div class="flex flex-col gap-1">
+            <span class="font-data-tabular text-data-tabular text-primary">${brand.reviews} Reviews</span>
+            <span class="font-caption text-caption text-text-caption">Verified Retailers</span>
+          </div>
+          <svg class="w-24 h-10" preserveAspectRatio="none" viewBox="0 0 80 24">
+            <polyline fill="none" stroke="${strokeColor(brand.score)}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              points="0,${brand.spark[0]} 26,${brand.spark[1]} 53,${brand.spark[2]} 80,${brand.spark[3]}"></polyline>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-section-gap">
+      <div class="flex items-end justify-between mb-6 border-b border-border-hairline pb-2">
+        <h3 class="font-headline-md text-headline-md text-primary m-0">Dimension Breakdown</h3>
+        <span class="font-caption text-caption text-text-caption">Each scored 0–20. Bars show score distribution across all retailer reviews.</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-gutter">${dimensionCards(brand)}</div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
+      ${brand.claimed ? selfReportClaimed(brand) : selfReportUnclaimed(brand)}
+      ${commitments(brand)}
+    </section>
+
+    ${reviews(brand)}
+    ${claimPanelHtml(brand)}
+    ${claimFormHtml(brand)}
+  `;
+
+  // Follow Brand toggle
+  const followBtn = document.getElementById("follow-btn");
+  if (followBtn) {
+    let following = false;
+    followBtn.addEventListener("click", () => {
+      following = !following;
+      const icon = followBtn.querySelector(".material-symbols-outlined");
+      const label = followBtn.querySelector("span:last-child");
+      icon.textContent = following ? "check" : "add";
+      label.textContent = following ? "Following" : "Follow Brand";
+      followBtn.classList.toggle("bg-surface-container", following);
+    });
+  }
+
+  // Load More Reviews — append a deterministic shuffle of the same templates
+  const loadMoreBtn = document.getElementById("load-more-reviews");
+  if (loadMoreBtn) {
+    let extraPages = 0;
+    loadMoreBtn.addEventListener("click", () => {
+      extraPages += 1;
+      const list = document.getElementById("reviews-list");
+      const cards = REVIEW_TEMPLATES.map((tpl, idx) => {
+        const sourceAvg = tpl.dimScores.reduce((a, b) => a + b, 0) / tpl.dimScores.length;
+        const target = brand.score / 5 - extraPages;
+        const shift = target - sourceAvg;
+        const adjusted = {
+          ...tpl,
+          ago: extraPages === 1 ? "3 months ago" : "6 months ago",
+          dimScores: tpl.dimScores.map(s => Math.max(1, Math.min(20, Math.round(s + shift)))),
+          response: undefined
+        };
+        return reviewCardHtml(adjusted, brand.name);
+      }).join("");
+      list.insertAdjacentHTML("beforeend", cards);
+      if (extraPages >= 2) {
+        loadMoreBtn.textContent = "No more reviews";
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.classList.add("opacity-50", "cursor-not-allowed");
+      }
+    });
+  }
+
+  // Self-report tab interactivity (only present for claimed brands)
+  if (brand.claimed) {
+    const tabsEl = document.getElementById("self-report-tabs");
+    const textEl = document.getElementById("self-report-text");
+    function setActiveTab(name) {
+      tabsEl.querySelectorAll(".self-tab").forEach(btn => {
+        const active = btn.dataset.key === name;
+        btn.classList.toggle("text-primary", active);
+        btn.classList.toggle("border-primary", active);
+        btn.classList.toggle("text-text-caption", !active);
+        btn.classList.toggle("border-transparent", !active);
+      });
+      textEl.textContent = `"${STATEMENT_TEMPLATES[name]}"`;
+    }
+    tabsEl.querySelectorAll(".self-tab").forEach(btn => {
+      btn.addEventListener("click", () => setActiveTab(btn.dataset.key));
+    });
+    setActiveTab(DIMENSIONS[0].name);
+  }
+
+  (function(){
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const close = document.getElementById('mobile-menu-close');
+    if(!btn||!menu||!close) return;
+    btn.addEventListener('click', ()=>{ menu.classList.remove('hidden'); menu.classList.add('flex'); });
+    close.addEventListener('click', ()=>{ menu.classList.add('hidden'); menu.classList.remove('flex'); });
+  })();
+</script>
+
+</body>
+</html>

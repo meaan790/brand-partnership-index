@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Brand Partnership Index</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <meta property="og:title" content="Brand Partnership Index — Leaderboard">
+    <meta property="og:description" content="How the wholesale channel reviews its brand partners. Transparent, independent ratings across five partnership standards.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Brand Partnership Index">
+    <meta name="twitter:description" content="How the wholesale channel reviews its brand partners.">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Source+Serif+4:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .material-symbols-outlined[data-weight="fill"] {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .tooltip { position: relative; display: inline-flex; cursor: help; }
+  .tooltip .tooltiptext {
+    visibility: hidden; width: 140px; background-color: #303032; color: #fff;
+    text-align: center; border-radius: 4px; padding: 8px;
+    position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -70px;
+    opacity: 0; transition: opacity 0.2s;
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400;
+    line-height: 1.4; white-space: normal; text-transform: none; pointer-events: none;
+  }
+  .tooltip .tooltiptext::after {
+    content: ""; position: absolute; top: 100%; left: 50%; margin-left: -4px;
+    border-width: 4px; border-style: solid;
+    border-color: #303032 transparent transparent transparent;
+  }
+  .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+
+  .brand-row[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+  .chevron { transition: transform 0.2s ease; }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary": "#7e5700",
+          "outline": "#75777d",
+          "on-secondary-container": "#785300",
+          "surface-bright": "#fbf8fa",
+          "on-error-container": "#93000a",
+          "tertiary-fixed-dim": "#e2c19d",
+          "on-tertiary-container": "#9b7f5f",
+          "primary-container": "#101c2f",
+          "tertiary": "#000000",
+          "surface-container-high": "#eae7e9",
+          "surface-variant": "#e4e2e4",
+          "score-high": "#3F7556",
+          "score-mid-high": "#E8C547",
+          "score-mid": "#D97A35",
+          "score-low": "#B23B33",
+          "text-main": "#181A1F",
+          "background": "#fbf8fa",
+          "on-surface-variant": "#45474c",
+          "on-tertiary": "#ffffff",
+          "border-hairline": "#E4E2DA",
+          "on-tertiary-fixed-variant": "#594327",
+          "on-secondary-fixed": "#281900",
+          "on-primary-container": "#78849c",
+          "surface-dim": "#dcd9db",
+          "on-tertiary-fixed": "#291802",
+          "tertiary-fixed": "#ffddb8",
+          "primary-fixed-dim": "#bbc7e0",
+          "inverse-on-surface": "#f3f0f2",
+          "error": "#ba1a1a",
+          "tertiary-container": "#291802",
+          "surface-container": "#f0edef",
+          "secondary-fixed-dim": "#f3be65",
+          "surface-container-low": "#f5f3f5",
+          "on-primary": "#ffffff",
+          "on-secondary": "#ffffff",
+          "primary-fixed": "#d7e3fd",
+          "on-surface": "#1b1b1d",
+          "inverse-surface": "#303032",
+          "inverse-primary": "#bbc7e0",
+          "primary": "#000000",
+          "outline-variant": "#c5c6cd",
+          "on-primary-fixed": "#101c2f",
+          "on-background": "#1b1b1d",
+          "link-endvr": "#7C4DFF",
+          "error-container": "#ffdad6",
+          "surface-container-lowest": "#ffffff",
+          "surface-container-highest": "#e4e2e4",
+          "secondary-fixed": "#ffdeac",
+          "on-secondary-fixed-variant": "#604100",
+          "surface-card": "#FFFFFF",
+          "background-paper": "#FAFAF7",
+          "text-caption": "#6E7480",
+          "on-error": "#ffffff",
+          "on-primary-fixed-variant": "#3c475c",
+          "surface-tint": "#535f75",
+          "secondary-container": "#ffc96f",
+          "surface": "#fbf8fa"
+        },
+        borderRadius: {
+          "DEFAULT": "0.5rem",
+          "lg": "0.75rem",
+          "xl": "1rem",
+          "full": "9999px"
+        },
+        spacing: {
+          "gutter": "24px",
+          "margin-desktop": "40px",
+          "card-padding": "24px",
+          "margin-mobile": "16px",
+          "unit": "4px",
+          "section-gap": "80px"
+        },
+        fontFamily: {
+          "headline-lg": ["Source Serif 4"],
+          "data-tabular": ["Inter"],
+          "caption": ["Inter"],
+          "display-lg": ["Source Serif 4"],
+          "body-md": ["Inter"],
+          "body-lg": ["Inter"],
+          "label-caps": ["Inter"],
+          "headline-md": ["Source Serif 4"]
+        },
+        fontSize: {
+          "headline-lg": ["32px", { lineHeight: "1.3", fontWeight: "600" }],
+          "data-tabular": ["14px", { lineHeight: "1.2", fontWeight: "600" }],
+          "caption": ["13px", { lineHeight: "1.4", letterSpacing: "0.01em", fontWeight: "400" }],
+          "display-lg": ["48px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+          "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+          "body-lg": ["18px", { lineHeight: "1.7", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "700" }],
+          "headline-md": ["24px", { lineHeight: "1.4", fontWeight: "600" }]
+        }
+      }
+    }
+  };
+</script>
+</head>
+<body class="bg-background-paper text-text-main font-body-md antialiased min-h-screen flex flex-col">
+
+<!-- TopNavBar -->
+<nav class="bg-background dark:bg-background w-full top-0 sticky border-b border-border-hairline dark:border-outline-variant z-50">
+  <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-[1280px] mx-auto">
+    <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary dark:text-on-background" href="index.html">Brand Partnership Index</a>
+    <ul class="hidden md:flex gap-6 items-center">
+      <li><a class="text-primary dark:text-on-background font-bold border-b-2 border-primary pb-1 cursor-pointer transition-opacity active:opacity-70" href="index.html">Leaderboard</a></li>
+      <li><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-on-background transition-colors cursor-pointer transition-opacity active:opacity-70" href="brands.html">Brands</a></li>
+      <li><a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-on-background transition-colors cursor-pointer transition-opacity active:opacity-70" href="compare.html">Compare</a></li>
+    </ul>
+    <div class="hidden md:flex items-center gap-4">
+      <a href="submit.html" class="font-body-md text-body-md bg-primary text-on-primary px-4 py-2 rounded hover:opacity-90 transition-opacity active:scale-[0.98]">Review a Brand</a>
+      <a href="signin.html" class="font-body-md text-body-md text-primary dark:text-on-background hover:opacity-70 transition-opacity">Sign In</a>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 text-primary" aria-label="Open menu">
+      <span class="material-symbols-outlined text-[28px]">menu</span>
+    </button>
+  </div>
+</nav>
+<div id="mobile-menu" class="fixed inset-0 z-[100] bg-background hidden flex-col">
+  <div class="flex justify-between items-center px-margin-mobile py-4 border-b border-border-hairline">
+    <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary" href="index.html">Brand Partnership Index</a>
+    <button id="mobile-menu-close" class="flex items-center justify-center w-10 h-10 text-primary" aria-label="Close menu">
+      <span class="material-symbols-outlined text-[28px]">close</span>
+    </button>
+  </div>
+  <div class="flex flex-col gap-2 px-margin-mobile py-6">
+    <a href="index.html" class="text-body-lg font-body-lg py-3 text-primary font-bold">Leaderboard</a>
+    <a href="brands.html" class="text-body-lg font-body-lg py-3 text-on-surface-variant hover:text-primary transition-colors">Brands</a>
+    <a href="compare.html" class="text-body-lg font-body-lg py-3 text-on-surface-variant hover:text-primary transition-colors">Compare</a>
+    <hr class="border-border-hairline my-2">
+    <a href="submit.html" class="text-body-lg font-body-lg bg-primary text-on-primary px-4 py-3 rounded text-center hover:opacity-90 transition-opacity">Review a Brand</a>
+    <a href="signin.html" class="text-body-lg font-body-lg py-3 text-primary text-center hover:opacity-70 transition-opacity">Sign In</a>
+  </div>
+</div>
+
+<main class="flex-grow">
+  <!-- Hero Section -->
+  <section class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+    <div class="max-w-3xl mb-12">
+      <h1 class="font-display-lg text-display-lg text-text-main mb-6">How the wholesale channel reviews its brand partners.</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">Specialty retailers rate brands across five partnership standards. Brands track their scores and improve. Transparent, independent, anonymous.</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter border-t border-b border-border-hairline py-8">
+      <div class="flex flex-col border-r border-border-hairline pr-gutter">
+        <span class="font-label-caps text-label-caps text-text-caption uppercase">Avg Score</span>
+        <span class="font-headline-lg text-headline-lg mt-2">64</span>
+        <span class="font-caption text-caption text-text-caption mt-1">across all categories</span>
+      </div>
+      <div class="flex flex-col md:border-r border-border-hairline md:pr-gutter pl-0 md:pl-gutter">
+        <span class="font-label-caps text-label-caps text-text-caption uppercase">Change</span>
+        <span class="font-headline-lg text-headline-lg mt-2 text-score-high">+5.2</span>
+        <span class="font-caption text-caption text-text-caption mt-1">since Q4</span>
+      </div>
+      <div class="flex flex-col border-r border-border-hairline pr-gutter pl-0 md:pl-gutter mt-8 md:mt-0">
+        <span class="font-label-caps text-label-caps text-text-caption uppercase">Brands</span>
+        <span class="font-headline-lg text-headline-lg mt-2">48</span>
+        <span class="font-caption text-caption text-text-caption mt-1">actively tracked</span>
+      </div>
+      <div class="flex flex-col pl-0 md:pl-gutter mt-8 md:mt-0">
+        <span class="font-label-caps text-label-caps text-text-caption uppercase">Reviews</span>
+        <span class="font-headline-lg text-headline-lg mt-2">312</span>
+        <span class="font-caption text-caption text-text-caption mt-1">verified retailers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
+    <h2 class="font-headline-md text-headline-md text-primary text-center mb-8">How it works</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="text-center p-6">
+        <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
+        <h3 class="font-body-lg font-semibold mb-2">Retailers Review</h3>
+        <p class="text-on-surface-variant text-sm">Verified specialty retailers review their brand partners across five partnership standards.</p>
+      </div>
+      <div class="text-center p-6">
+        <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
+        <h3 class="font-body-lg font-semibold mb-2">Scores Update</h3>
+        <p class="text-on-surface-variant text-sm">Brand scores update publicly as new reviews are submitted. Recent reviews carry more weight.</p>
+      </div>
+      <div class="text-center p-6">
+        <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
+        <h3 class="font-body-lg font-semibold mb-2">Brands Improve</h3>
+        <p class="text-on-surface-variant text-sm">Brands claim their brand, see detailed feedback, and track their wholesale partnership score.</p>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="submit.html" class="inline-block bg-primary text-on-primary font-semibold px-8 py-3 rounded hover:opacity-90 transition-opacity active:scale-[0.98] text-lg">Review a Brand</a>
+      <p class="text-on-surface-variant text-sm mt-3">Are you a brand? <a href="signin.html" class="text-primary hover:underline">Claim Your Brand</a></p>
+    </div>
+  </section>
+
+  <!-- Search & Filter Bar -->
+  <div class="bg-background-paper sticky top-[73px] z-40 border-b border-border-hairline py-4">
+    <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div class="relative w-full md:w-64">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-caption">search</span>
+        <input class="w-full pl-10 pr-4 py-2 border border-border-hairline rounded bg-surface-card font-body-md text-body-md text-text-main focus:outline-none focus:border-primary transition-colors" placeholder="Find a brand" type="text">
+      </div>
+      <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 hide-scrollbar">
+        <button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-caption text-caption whitespace-nowrap">All</button>
+        <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption whitespace-nowrap hover:bg-surface-variant transition-colors">Outdoor</button>
+        <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption whitespace-nowrap hover:bg-surface-variant transition-colors">Surf</button>
+        <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption whitespace-nowrap hover:bg-surface-variant transition-colors">Action Sports</button>
+        <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption whitespace-nowrap hover:bg-surface-variant transition-colors">Bike</button>
+        <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption whitespace-nowrap hover:bg-surface-variant transition-colors">Ski</button>
+        <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption whitespace-nowrap hover:bg-surface-variant transition-colors">Running</button>
+      </div>
+      <div class="w-full md:w-auto flex justify-end">
+        <select id="sort" class="border-none bg-transparent font-caption text-caption text-text-main font-bold cursor-pointer focus:ring-0">
+          <option value="score">Overall score</option>
+          <option value="movers">Biggest movers</option>
+          <option value="recent">Recently reviewed</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Area -->
+  <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
+
+    <!-- Leaderboard Table Container -->
+    <div class="w-full overflow-x-auto mb-16">
+      <div class="min-w-[1000px] border border-border-hairline bg-surface-card rounded">
+        <!-- Header -->
+        <div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-hairline bg-surface-container-low font-label-caps text-label-caps text-text-caption uppercase items-end">
+          <div class="col-span-1 pb-1">Rank</div>
+          <div class="col-span-3 pb-1">Brand</div>
+          <div class="col-span-1 text-center pb-1">Score</div>
+          <div class="col-span-5 flex flex-col items-center">
+            <div class="w-full text-center mb-3">BRAND PARTNERSHIP STANDARDS (EACH OUT OF 20)</div>
+            <div class="grid grid-cols-5 gap-1 w-full text-[10px] text-center font-bold text-text-caption">
+              <div class="tooltip flex flex-col items-center justify-end leading-tight px-1 pb-1">
+                <span>Brand.com</span><span>Standards</span>
+                <span class="tooltiptext">brand.com behavior</span>
+              </div>
+              <div class="tooltip flex flex-col items-center justify-end leading-tight px-1 pb-1">
+                <span>Pricing</span><span>Standards</span>
+                <span class="tooltiptext">MAP enforcement</span>
+              </div>
+              <div class="tooltip flex flex-col items-center justify-end leading-tight px-1 pb-1">
+                <span>Shop Local</span><span>Support</span>
+                <span class="tooltiptext">demand routing</span>
+              </div>
+              <div class="tooltip flex flex-col items-center justify-end leading-tight px-1 pb-1">
+                <span>Shop Floor</span><span>Support</span>
+                <span class="tooltiptext">investment in staff</span>
+              </div>
+              <div class="tooltip flex flex-col items-center justify-end leading-tight px-1 pb-1">
+                <span>Pro Deal</span><span>Standards</span>
+                <span class="tooltiptext">discount channel discipline</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1 text-center pb-1">Trend</div>
+          <div class="col-span-1 text-right pb-1">Change</div>
+        </div>
+
+        <!-- Rows rendered from data -->
+        <div id="brand-rows"></div>
+
+        <!-- Show more -->
+        <div class="px-6 py-4 flex justify-center items-center hover:bg-background-paper transition-colors cursor-pointer border-t border-border-hairline">
+          <button id="show-more-btn" class="font-body-md text-body-md font-bold text-primary hover:opacity-70 transition-opacity flex items-center gap-2">
+            <span>Show more brands</span>
+            <span class="material-symbols-outlined text-xl">expand_more</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Movers Band -->
+    <div class="mb-16">
+      <h2 class="font-headline-md text-headline-md mb-6 border-b border-border-hairline pb-2">Biggest Movers</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter" id="movers"></div>
+    </div>
+
+    <!-- Recent Reviews -->
+    <div class="mb-16">
+      <h2 class="font-headline-md text-headline-md mb-6 border-b border-border-hairline pb-2">Recent Reviews</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter" id="recent-reviews"></div>
+    </div>
+
+    <!-- CTAs Band -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-8">
+      <div class="border border-border-hairline p-8 md:p-12 rounded bg-surface-card flex flex-col items-start justify-center">
+        <h3 class="font-headline-lg text-headline-lg mb-4">I'm a retailer. Review a brand you carry.</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6">Contribute your experience to the index. Your review is anonymous and helps improve brand practices.</p>
+        <a href="submit.html" class="bg-primary text-on-primary px-6 py-3 rounded font-bold font-body-md hover:bg-surface-tint transition-colors inline-block">Review a Brand</a>
+      </div>
+      <div class="border border-border-hairline p-8 md:p-12 rounded bg-surface-card flex flex-col items-start justify-center">
+        <h3 class="font-headline-lg text-headline-lg mb-4">I'm a brand. Claim Your Brand.</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6">Access detailed analytics, respond to aggregate feedback, and view benchmark data against competitors.</p>
+        <a href="brand.html?brand=Brooks#claim" class="border border-border-hairline text-primary bg-transparent px-6 py-3 rounded font-bold font-body-md hover:bg-surface-variant transition-colors inline-block">Claim Your Brand</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="bg-surface-container-low border-t border-border-hairline mt-auto">
+  <div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Explore</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Leaderboard</a></li>
+          <li><a href="brands.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Brands</a></li>
+          <li><a href="compare.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Compare</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Participate</h4>
+        <ul class="space-y-2">
+          <li><a href="submit.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Review a Brand</a></li>
+          <li><a href="signin.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Sign In</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Learn</h4>
+        <ul class="space-y-2">
+          <li><a href="methodology.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Methodology</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-body-md font-semibold text-primary mb-3">Brand Partnership Index</h4>
+        <p class="text-sm text-on-surface-variant">Transparent, independent ratings of how brands support specialty retail.</p>
+      </div>
+    </div>
+    <div class="border-t border-border-hairline pt-6 text-center">
+      <p class="text-xs text-on-surface-variant">&copy; 2026 Brand Partnership Index. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="brands.js"></script>
+<script>
+  // Mobile menu
+  (function(){
+    const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),close=document.getElementById('mobile-menu-close');
+    if(!btn||!menu||!close)return;
+    btn.addEventListener('click',()=>{menu.classList.remove('hidden');menu.classList.add('flex');});
+    close.addEventListener('click',()=>{menu.classList.add('hidden');menu.classList.remove('flex');});
+  })();
+
+  // Leaderboard state
+  let lbFilter = "All";
+  let lbSearch = "";
+  let lbSort = "score";
+  let lbExpanded = false;
+  const LB_PAGE = 10;
+
+  function changeNumeric(c) { return parseInt(c, 10) || 0; }
+
+  function rowMarkup(b, rank) {
+    const isTop = rank === 1;
+    const dimsHtml = b.dims.map(d =>
+      `<div class="h-6 ${tierBg(d)} rounded flex items-center justify-center">${d}/20</div>`
+    ).join("");
+    const summary = autoSummary(b);
+    const headerLabel = b.summary ? "Top Performance Summary" : "Performance Summary";
+    const brandHref = `brand.html?brand=${encodeURIComponent(b.name)}`;
+
+    return `
+      <div class="brand-row-wrapper border-b border-border-hairline ${isTop ? "bg-surface-bright relative z-10 shadow-sm" : ""}">
+        <div class="brand-row grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-background-paper transition-colors cursor-pointer"
+             role="button" tabindex="0" aria-expanded="false" data-rank="${rank}">
+          <div class="col-span-1 font-data-tabular text-data-tabular text-text-caption">${rank}</div>
+          <div class="col-span-3 flex items-center gap-3 min-w-0">
+            ${brandLogoHtml(b, "w-10 h-10", "text-base")}
+            <a href="${brandHref}" class="brand-link font-body-md text-body-md font-bold truncate hover:underline ${isTop ? "text-primary" : "text-text-main"}">${b.name}</a>
+          </div>
+          <div class="col-span-1 flex justify-center">
+            <span class="${tierBg100(b.score)} px-3 py-1 rounded font-data-tabular text-data-tabular">${b.score}</span>
+          </div>
+          <div class="col-span-5 grid grid-cols-5 gap-1 font-data-tabular text-[10px]">
+            ${dimsHtml}
+          </div>
+          <div class="col-span-1 flex justify-center items-center">
+            <svg class="w-20 h-6" preserveAspectRatio="none" viewBox="0 0 80 24">
+              <polyline fill="none" stroke="${strokeColor(b.score)}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                points="0,${b.spark[0]} 26,${b.spark[1]} 53,${b.spark[2]} 80,${b.spark[3]}"></polyline>
+            </svg>
+          </div>
+          <div class="col-span-1 text-right font-data-tabular text-data-tabular ${changeClass(b.change)}">
+            <span class="inline-flex items-center justify-end gap-1">
+              <span>${b.change}</span>
+              <span class="chevron material-symbols-outlined text-base text-text-caption">expand_more</span>
+            </span>
+          </div>
+        </div>
+        <div class="brand-detail hidden px-6 pb-6 pt-2 ml-14 border-t border-border-hairline mx-6 mt-2 flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <span class="font-caption text-caption text-text-caption">Based on <strong class="text-primary-container">${b.reviews} reviews</strong> from verified retailers.</span>
+            <a href="${brandHref}" class="font-caption text-caption text-primary font-bold hover:underline inline-flex items-center gap-1">
+              View full profile
+              <span class="material-symbols-outlined text-base">arrow_forward</span>
+            </a>
+          </div>
+          <div class="bg-background-paper p-5 rounded-lg border border-border-hairline text-body-md font-body-md">
+            <h4 class="font-bold text-primary-container mb-2">${headerLabel}</h4>
+            <p class="text-on-surface-variant">${summary}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  const container = document.getElementById("brand-rows");
+  const showMoreBtn = document.querySelector('#show-more-btn');
+
+  function getFiltered() {
+    let list = [...BRANDS];
+    if (lbFilter !== "All") list = list.filter(b => b.categories && b.categories.some(c => c.toLowerCase() === lbFilter.toLowerCase()));
+    if (lbSearch) list = list.filter(b => b.name.toLowerCase().includes(lbSearch.toLowerCase()));
+    if (lbSort === "score") list.sort((a, b) => b.score - a.score);
+    else if (lbSort === "movers") list.sort((a, b) => Math.abs(changeNumeric(b.change)) - Math.abs(changeNumeric(a.change)));
+    else if (lbSort === "recent") list.sort((a, b) => b.reviews - a.reviews);
+    return list;
+  }
+
+  function renderLeaderboard() {
+    const filtered = getFiltered();
+    const limit = lbExpanded ? filtered.length : Math.min(LB_PAGE, filtered.length);
+    container.innerHTML = filtered.slice(0, limit).map((b, i) => rowMarkup(b, i + 1)).join("");
+    bindRowEvents();
+    if (showMoreBtn) {
+      if (filtered.length <= LB_PAGE) {
+        showMoreBtn.closest('.px-6').style.display = 'none';
+      } else {
+        showMoreBtn.closest('.px-6').style.display = '';
+        showMoreBtn.querySelector('span:first-child').textContent = lbExpanded ? 'Show fewer brands' : 'Show more brands';
+        showMoreBtn.querySelector('.material-symbols-outlined').textContent = lbExpanded ? 'expand_less' : 'expand_more';
+      }
+    }
+  }
+
+  function toggleRow(row) {
+    const detail = row.parentElement.querySelector(".brand-detail");
+    const expanded = row.getAttribute("aria-expanded") === "true";
+    row.setAttribute("aria-expanded", String(!expanded));
+    detail.classList.toggle("hidden");
+  }
+
+  function bindRowEvents() {
+    container.querySelectorAll(".brand-row").forEach(row => {
+      row.addEventListener("click", (e) => {
+        if (e.target.closest("a")) return;
+        toggleRow(row);
+      });
+      row.addEventListener("keydown", (e) => {
+        if (e.target.closest("a")) return;
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleRow(row); }
+      });
+    });
+  }
+
+  // Search
+  document.querySelector('.relative.w-full input[placeholder="Find a brand"]').addEventListener('input', (e) => {
+    lbSearch = e.target.value.trim();
+    renderLeaderboard();
+  });
+
+  // Category filter buttons
+  document.querySelectorAll('.flex.gap-2.overflow-x-auto button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.flex.gap-2.overflow-x-auto button').forEach(b => {
+        b.classList.remove('bg-primary','text-on-primary');
+        b.classList.add('border','border-border-hairline','text-text-main');
+      });
+      btn.classList.add('bg-primary','text-on-primary');
+      btn.classList.remove('border','border-border-hairline','text-text-main');
+      lbFilter = btn.textContent.trim();
+      renderLeaderboard();
+    });
+  });
+
+  // Sort dropdown
+  document.getElementById('sort').addEventListener('change', (e) => {
+    lbSort = e.target.value;
+    renderLeaderboard();
+  });
+
+  // Show more / fewer
+  if (showMoreBtn) {
+    showMoreBtn.addEventListener('click', () => { lbExpanded = !lbExpanded; renderLeaderboard(); });
+  }
+
+  renderLeaderboard();
+
+  // ---------------------------------------------------------------- Movers
+  const MOVER_BLURBS = {
+    "Hoka":      "Removed brand.com sale tab and increased margins on core models.",
+    "KEEN":      "Improved B2B inventory availability and enforced stricter MAP policies.",
+    "Brooks":    "Tightened MAP enforcement and expanded shop floor rep coverage.",
+    "Patagonia": "Tightened pro-deal qualifications and improved local demand routing."
+  };
+
+  const moversBrands = ["Hoka", "KEEN", "Brooks", "Patagonia"]
+    .map(name => getBrandByName(name))
+    .filter(Boolean);
+
+  document.getElementById("movers").innerHTML = moversBrands.map(b => `
+    <a href="brand.html?brand=${encodeURIComponent(b.name)}"
+       class="border border-border-hairline p-5 rounded bg-surface-card flex flex-col gap-3 hover:border-primary transition-colors group">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3 min-w-0">
+          ${brandLogoHtml(b, "w-10 h-10", "text-base")}
+          <span class="font-body-md text-body-md font-bold text-text-main truncate group-hover:underline">${b.name}</span>
+        </div>
+        <span class="${b.change.startsWith("+") ? "bg-score-mid-high text-on-surface" : "bg-score-low text-white"} px-2 py-1 rounded text-xs font-bold shrink-0">${b.change}</span>
+      </div>
+      <p class="font-caption text-caption text-on-surface-variant mt-2 border-t border-border-hairline pt-3">${MOVER_BLURBS[b.name]}</p>
+    </a>
+  `).join("");
+
+  // ---------------------------------------------------------- Recent Reviews
+  // Recent retailer reviews. Per-dimension scores are individual-level (0-20).
+  const RECENT_REVIEWS = [
+    {
+      brand: "YETI", retailer: "Mountain Sports Shop", location: "Boulder, CO", ago: "2 hours ago",
+      dimScores: [18, 19, 16, 18, 15],
+      quote: "Incredible MAP enforcement. We never have to worry about competing with massive online discounts. They respect the specialty retailer."
+    },
+    {
+      brand: "Brooks", retailer: "Runners Roost", location: "Austin, TX", ago: "5 hours ago",
+      dimScores: [17, 18, 19, 20, 16],
+      quote: "Best in class for shop floor support. Their tech reps are always available and our staff loves selling their product because of the education."
+    },
+    {
+      brand: "Salomon", retailer: "Alpine Ascents", location: "Seattle, WA", ago: "1 day ago",
+      dimScores: [14, 15, 12, 16, 9],
+      quote: "Great product but their pro-deal program is completely undisciplined. Half my local customers have a discount code from somewhere."
+    },
+    {
+      brand: "Hoka", retailer: "Footzone", location: "Bend, OR", ago: "2 days ago",
+      dimScores: [19, 18, 16, 15, 14],
+      quote: "Massive improvement this year. They cleaned up their DTC sales tab and are finally routing online demand back to local shops effectively."
+    }
+  ];
+
+  document.getElementById("recent-reviews").innerHTML = RECENT_REVIEWS.map(r => {
+    const b = getBrandByName(r.brand);
+    if (!b) return "";
+    const badges = DIMENSIONS.map((d, i) => `
+      <span class="text-[10px] ${tierBg(r.dimScores[i])} px-2 py-1 rounded font-data-tabular">${d.short} ${r.dimScores[i]}/20</span>
+    `).join("");
+    return `
+      <a href="brand.html?brand=${encodeURIComponent(b.name)}"
+         class="border border-border-hairline p-5 rounded bg-surface-card flex flex-col gap-4 hover:border-primary transition-colors group">
+        <div class="flex justify-between items-start gap-4">
+          <div class="flex items-center gap-3 min-w-0">
+            ${brandLogoHtml(b, "w-10 h-10", "text-base")}
+            <span class="font-body-md text-body-md font-bold text-text-main truncate group-hover:underline">${b.name}</span>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="flex items-center gap-1 justify-end">
+              <span class="font-caption text-caption font-bold text-text-main">${r.retailer}</span>
+              <span class="material-symbols-outlined text-[14px] text-score-high">verified</span>
+            </div>
+            <span class="font-caption text-caption text-text-caption">${r.location}</span>
+          </div>
+        </div>
+        <div class="flex gap-1 flex-wrap">${badges}</div>
+        <p class="font-body-md text-body-md text-on-surface-variant italic">"${r.quote}"</p>
+        <span class="font-caption text-caption text-text-caption">${r.ago}</span>
+      </a>
+    `;
+  }).join("");
+</script>
+
+</body>
+</html>
