@@ -1,0 +1,67 @@
+/* Brand Partnership Index — Shared Base Styles */
+
+/* ── Material Symbols defaults ── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined[data-weight="fill"],
+.star-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ── Scrollbar hiding ── */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Sponsor logos ── */
+.sponsor-logo img {
+  filter: grayscale(1) opacity(0.5);
+  transition: filter 0.2s ease;
+}
+.sponsor-logo:hover img {
+  filter: grayscale(0) opacity(1);
+}
+
+/* ── Tooltips ── */
+.tooltip { position: relative; display: inline-flex; cursor: help; }
+.tooltip .tooltiptext {
+  visibility: hidden; width: 140px; background-color: #303032; color: #fff;
+  text-align: center; border-radius: 6px; padding: 8px 10px;
+  position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -70px;
+  opacity: 0; transition: opacity 0.2s;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400;
+  line-height: 1.4; white-space: normal; text-transform: none; pointer-events: none;
+}
+.tooltip .tooltiptext::after {
+  content: ""; position: absolute; top: 100%; left: 50%; margin-left: -4px;
+  border-width: 4px; border-style: solid;
+  border-color: #303032 transparent transparent transparent;
+}
+.tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+
+/* ── Chevron rotation for expandable rows ── */
+.brand-row[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+.chevron { transition: transform 0.2s ease; }
+
+/* ── Step transition animations (submit flow) ── */
+@keyframes slideOutLeft  { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(-40px); } }
+@keyframes slideInRight  { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
+@keyframes slideOutRight { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(40px); } }
+@keyframes slideInLeft   { from { opacity:0; transform:translateX(-40px); } to { opacity:1; transform:translateX(0); } }
+
+.step-exit-fwd  { animation: slideOutLeft 200ms ease-in forwards; }
+.step-enter-fwd { animation: slideInRight  250ms ease-out forwards; }
+.step-exit-bwd  { animation: slideOutRight 200ms ease-in forwards; }
+.step-enter-bwd { animation: slideInLeft   250ms ease-out forwards; }
+
+/* ── Auto-grow textareas ── */
+.comment-auto { resize: none; overflow: hidden; transition: height 150ms ease; }
+
+/* ── Progress bar segments ── */
+.progress-seg { transition: background-color 300ms ease; }
+
+/* ── Selection color ── */
+::selection {
+  background-color: #d7e3fd;
+  color: #101c2f;
+}

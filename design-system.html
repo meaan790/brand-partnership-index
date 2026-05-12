@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Design System · Brand Partnership Index</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="design-tokens.js"></script>
+<link rel="stylesheet" href="base.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+</head>
+<body class="bg-background-paper text-text-main font-body-md antialiased">
+
+<div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
+
+  <!-- Header -->
+  <div class="mb-16">
+    <p class="font-label-caps text-label-caps text-accent uppercase mb-3">Internal Reference</p>
+    <h1 class="font-display-lg text-display-lg text-primary mb-4">Design System</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Brand Partnership Index visual language. All tokens, typography, color, and component patterns in one place.</p>
+  </div>
+
+  <!-- ═══════ COLORS ═══════ -->
+  <section class="mb-section-gap">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Color Palette</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">Core palette tokens from design-tokens.js.</p>
+
+    <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Core</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div>
+        <div class="h-24 rounded-lg bg-primary mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Primary</p>
+        <p class="font-caption text-caption text-text-caption">#0F1B2E — Deep Navy</p>
+      </div>
+      <div>
+        <div class="h-24 rounded-lg bg-accent mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Accent</p>
+        <p class="font-caption text-caption text-text-caption">#D4A24C — Warm Amber</p>
+      </div>
+      <div>
+        <div class="h-24 rounded-lg bg-tertiary mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Tertiary</p>
+        <p class="font-caption text-caption text-text-caption">#281702 — Dark Brown</p>
+      </div>
+      <div>
+        <div class="h-24 rounded-lg bg-outline mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Neutral</p>
+        <p class="font-caption text-caption text-text-caption">#75777D — Slate</p>
+      </div>
+    </div>
+
+    <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Surfaces</h3>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+      <div>
+        <div class="h-16 rounded-lg bg-background-paper border border-border-hairline mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Paper</p>
+        <p class="font-caption text-caption text-text-caption">#FAFAF7</p>
+      </div>
+      <div>
+        <div class="h-16 rounded-lg bg-surface-card border border-border-hairline mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Card</p>
+        <p class="font-caption text-caption text-text-caption">#FFFFFF</p>
+      </div>
+      <div>
+        <div class="h-16 rounded-lg bg-surface-container mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Container</p>
+        <p class="font-caption text-caption text-text-caption">#F0EDEF</p>
+      </div>
+      <div>
+        <div class="h-16 rounded-lg bg-surface-container-high mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Container High</p>
+        <p class="font-caption text-caption text-text-caption">#EAE7E9</p>
+      </div>
+      <div>
+        <div class="h-16 rounded-lg bg-inverse-surface mb-2"></div>
+        <p class="font-data-tabular text-data-tabular">Inverse</p>
+        <p class="font-caption text-caption text-text-caption">#303032</p>
+      </div>
+    </div>
+
+    <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Text</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-text-main shrink-0"></div>
+        <div>
+          <p class="font-data-tabular text-data-tabular">Main</p>
+          <p class="font-caption text-caption text-text-caption">#181A1F</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-on-surface-variant shrink-0"></div>
+        <div>
+          <p class="font-data-tabular text-data-tabular">Variant</p>
+          <p class="font-caption text-caption text-text-caption">#45474C</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-text-caption shrink-0"></div>
+        <div>
+          <p class="font-data-tabular text-data-tabular">Caption</p>
+          <p class="font-caption text-caption text-text-caption">#6E7480</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-outline shrink-0"></div>
+        <div>
+          <p class="font-data-tabular text-data-tabular">Outline</p>
+          <p class="font-caption text-caption text-text-caption">#75777D</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Score Tiers</h3>
+    <div class="grid grid-cols-3 gap-4 mb-10">
+      <div>
+        <div class="h-16 rounded-lg bg-score-high mb-2 flex items-center justify-center">
+          <span class="text-white font-bold text-lg">75+</span>
+        </div>
+        <p class="font-data-tabular text-data-tabular text-score-high">High</p>
+        <p class="font-caption text-caption text-text-caption">#3F7556 — Muted Forest Green</p>
+      </div>
+      <div>
+        <div class="h-16 rounded-lg bg-score-mid mb-2 flex items-center justify-center">
+          <span class="text-gray-900 font-bold text-lg">50–74</span>
+        </div>
+        <p class="font-data-tabular text-data-tabular text-score-mid">Mid</p>
+        <p class="font-caption text-caption text-text-caption">#C8A53D — Warm Ochre</p>
+      </div>
+      <div>
+        <div class="h-16 rounded-lg bg-score-low mb-2 flex items-center justify-center">
+          <span class="text-white font-bold text-lg">&lt;50</span>
+        </div>
+        <p class="font-data-tabular text-data-tabular text-score-low">Low</p>
+        <p class="font-caption text-caption text-text-caption">#A24E3C — Muted Brick</p>
+      </div>
+    </div>
+
+    <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Borders</h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="p-6 border border-border-hairline rounded-lg">
+        <p class="font-data-tabular text-data-tabular">Hairline</p>
+        <p class="font-caption text-caption text-text-caption">#E4E2DA — 1px default</p>
+      </div>
+      <div class="p-6 border border-outline rounded-lg">
+        <p class="font-data-tabular text-data-tabular">Outline</p>
+        <p class="font-caption text-caption text-text-caption">#75777D — emphasis</p>
+      </div>
+      <div class="p-6 border border-outline-variant rounded-lg">
+        <p class="font-data-tabular text-data-tabular">Outline Variant</p>
+        <p class="font-caption text-caption text-text-caption">#C5C6CD — subtle</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ TYPOGRAPHY ═══════ -->
+  <section class="mb-section-gap">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Typography</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">Two typefaces: Source Serif 4 for editorial headlines, Inter for everything else.</p>
+
+    <div class="space-y-8">
+      <div class="border-b border-border-hairline pb-8">
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Display Large</span>
+          <span class="font-caption text-caption text-text-caption">Source Serif 4 · 48px · 700 · -0.02em</span>
+        </div>
+        <p class="font-display-lg text-display-lg text-primary">How the wholesale channel reviews its brand partners.</p>
+      </div>
+
+      <div class="border-b border-border-hairline pb-8">
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Headline Large</span>
+          <span class="font-caption text-caption text-text-caption">Source Serif 4 · 32px · 600</span>
+        </div>
+        <p class="font-headline-lg text-headline-lg text-primary">Biggest Movers This Quarter</p>
+      </div>
+
+      <div class="border-b border-border-hairline pb-8">
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Headline Medium</span>
+          <span class="font-caption text-caption text-text-caption">Source Serif 4 · 24px · 600</span>
+        </div>
+        <p class="font-headline-md text-headline-md text-primary">Website Standards</p>
+      </div>
+
+      <div class="border-b border-border-hairline pb-8">
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Headline Small</span>
+          <span class="font-caption text-caption text-text-caption">Source Serif 4 · 18px · 600</span>
+        </div>
+        <p class="font-headline-sm text-headline-sm text-primary">Sale &amp; Outlet Sections</p>
+      </div>
+
+      <div class="border-b border-border-hairline pb-8">
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Body Large</span>
+          <span class="font-caption text-caption text-text-caption">Inter · 18px · 400 · 1.7</span>
+        </div>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">Specialty retailers rate brands across five partnership standards. Brands track their scores and improve. Transparent, independent, anonymous.</p>
+      </div>
+
+      <div class="border-b border-border-hairline pb-8">
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Body Medium</span>
+          <span class="font-caption text-caption text-text-caption">Inter · 16px · 400 · 1.6</span>
+        </div>
+        <p class="font-body-md text-body-md text-text-main">Brooks consistently demonstrates excellence in inventory flow and floor support, achieving an industry-leading score in Shop Floor Support.</p>
+      </div>
+
+      <div class="border-b border-border-hairline pb-8">
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Data Tabular</span>
+          <span class="font-caption text-caption text-text-caption">Inter · 14px · 600 · 1.2</span>
+        </div>
+        <p class="font-data-tabular text-data-tabular text-text-main">88 / 100 &nbsp;&middot;&nbsp; +12 since Q4 &nbsp;&middot;&nbsp; 142 reviews</p>
+      </div>
+
+      <div class="border-b border-border-hairline pb-8">
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Caption</span>
+          <span class="font-caption text-caption text-text-caption">Inter · 13px · 400 · 1.4</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Last updated May 2026 · 48 brands actively tracked</p>
+      </div>
+
+      <div>
+        <div class="flex items-baseline justify-between mb-2">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Label Caps</span>
+          <span class="font-caption text-caption text-text-caption">Inter · 12px · 700 · 0.05em · uppercase</span>
+        </div>
+        <p class="font-label-caps text-label-caps text-text-caption uppercase">Avg Score &nbsp;&middot;&nbsp; Change &nbsp;&middot;&nbsp; Brands &nbsp;&middot;&nbsp; Reviews</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ BUTTONS ═══════ -->
+  <section class="mb-section-gap">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Buttons</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">Four button variants. Primary and accent for CTAs, secondary for less emphasis, ghost for inline actions.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary">Standard Sizes</h3>
+        <div class="flex flex-wrap gap-4 items-center">
+          <button class="bg-primary text-on-primary font-semibold px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors">Primary</button>
+          <button class="bg-accent text-on-accent font-semibold px-6 py-3 rounded-lg hover:bg-accent/90 transition-colors">Accent</button>
+          <button class="border border-primary text-primary font-semibold px-6 py-3 rounded-lg hover:bg-primary/5 transition-colors">Secondary</button>
+          <button class="text-primary font-semibold hover:underline transition-colors">Ghost &rarr;</button>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary">Small Sizes</h3>
+        <div class="flex flex-wrap gap-3 items-center">
+          <button class="bg-primary text-on-primary font-semibold px-4 py-2 text-sm rounded-md hover:bg-primary/90 transition-colors">Primary SM</button>
+          <button class="bg-accent text-on-accent font-semibold px-4 py-2 text-sm rounded-md hover:bg-accent/90 transition-colors">Accent SM</button>
+          <button class="border border-primary text-primary font-semibold px-4 py-2 text-sm rounded-md hover:bg-primary/5 transition-colors">Secondary SM</button>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary">Inverted (dark backgrounds)</h3>
+        <div class="bg-primary p-6 rounded-lg flex flex-wrap gap-4 items-center">
+          <button class="bg-on-primary text-primary font-semibold px-6 py-3 rounded-lg hover:bg-on-primary/90 transition-colors">Inverted</button>
+          <button class="border border-on-primary text-on-primary font-semibold px-6 py-3 rounded-lg hover:bg-on-primary/10 transition-colors">Outlined</button>
+          <button class="text-on-primary font-semibold hover:underline transition-colors">Ghost &rarr;</button>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary">Pill / Filter Chips</h3>
+        <div class="flex flex-wrap gap-2 items-center">
+          <button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-caption text-caption">Active</button>
+          <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption hover:bg-surface-variant transition-colors">Outdoor</button>
+          <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption hover:bg-surface-variant transition-colors">Running</button>
+          <button class="px-4 py-1.5 rounded-full border border-border-hairline text-text-main font-caption text-caption hover:bg-surface-variant transition-colors">Ski</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ CARDS ═══════ -->
+  <section class="mb-section-gap">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Cards</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">Hairline border, white surface, rounded-lg corners. Subtle shadow on hover for interactive cards.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+      <div class="bg-surface-card border border-border-hairline rounded-lg p-card-padding">
+        <p class="font-label-caps text-label-caps text-text-caption uppercase mb-2">Standard Card</p>
+        <h3 class="font-headline-md text-headline-md text-primary mb-2">Website Standards</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">How brand.com presents and behaves on its own digital surface.</p>
+      </div>
+
+      <div class="bg-surface-card border border-border-hairline rounded-lg p-card-padding hover:shadow-card-hover hover:border-primary/20 transition-all cursor-pointer">
+        <p class="font-label-caps text-label-caps text-text-caption uppercase mb-2">Interactive Card</p>
+        <h3 class="font-headline-md text-headline-md text-primary mb-2">Brooks</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-3">Hover me for the shadow effect.</p>
+        <span class="font-data-tabular text-data-tabular text-score-high">88/100</span>
+      </div>
+
+      <div class="bg-primary rounded-lg p-card-padding text-on-primary">
+        <p class="font-label-caps text-label-caps text-on-primary/60 uppercase mb-2">Dark Card</p>
+        <h3 class="font-headline-md text-headline-md text-on-primary mb-2">Claim Your Brand</h3>
+        <p class="font-body-md text-body-md text-on-primary/80">Access detailed analytics and respond to retailer feedback.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ BADGES & TAGS ═══════ -->
+  <section class="mb-section-gap">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Badges &amp; Tags</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">Score badges, status pills, and category tags.</p>
+
+    <div class="space-y-6">
+      <div>
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-3">Score Badges</h3>
+        <div class="flex flex-wrap gap-3 items-center">
+          <span class="bg-score-high text-white font-bold px-3 py-1.5 rounded-md text-lg">88</span>
+          <span class="bg-score-mid text-gray-900 font-bold px-3 py-1.5 rounded-md text-lg">64</span>
+          <span class="bg-score-low text-white font-bold px-3 py-1.5 rounded-md text-lg">38</span>
+          <span class="bg-accent text-on-accent font-bold px-3 py-1.5 rounded-md text-lg">+12</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-3">Status Pills</h3>
+        <div class="flex flex-wrap gap-3 items-center">
+          <span class="font-label-caps text-label-caps bg-score-high text-white px-3 py-1.5 rounded-full">Claimed</span>
+          <span class="font-label-caps text-label-caps bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-full border border-border-hairline">Unclaimed</span>
+          <span class="font-label-caps text-label-caps bg-accent/15 text-accent px-3 py-1.5 rounded-full">New</span>
+          <span class="font-label-caps text-label-caps bg-error/10 text-error px-3 py-1.5 rounded-full">Flagged</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-3">Category Tags</h3>
+        <div class="flex flex-wrap gap-2 items-center">
+          <span class="font-caption text-caption bg-surface-container text-on-surface-variant px-3 py-1 rounded-full">Outdoor</span>
+          <span class="font-caption text-caption bg-surface-container text-on-surface-variant px-3 py-1 rounded-full">Running</span>
+          <span class="font-caption text-caption bg-surface-container text-on-surface-variant px-3 py-1 rounded-full">Ski</span>
+          <span class="font-caption text-caption bg-surface-container text-on-surface-variant px-3 py-1 rounded-full">Surf</span>
+          <span class="font-caption text-caption bg-surface-container text-on-surface-variant px-3 py-1 rounded-full">Action Sports</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ FORM ELEMENTS ═══════ -->
+  <section class="mb-section-gap">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Form Elements</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">Inputs, textareas, and star ratings.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Text Input</h3>
+        <input class="w-full border border-border-hairline rounded-lg bg-surface-card px-4 py-3 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="Find a brand" type="text">
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Search with Icon</h3>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-caption">search</span>
+          <input class="w-full pl-10 pr-4 py-3 border border-border-hairline rounded-lg bg-surface-card font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="Search brands..." type="text">
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Textarea</h3>
+        <textarea class="w-full border border-border-hairline rounded-lg bg-surface-card p-4 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" rows="3" placeholder="What would you tell another retailer about working with this brand?"></textarea>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Star Rating</h3>
+        <div class="flex gap-2">
+          <button class="w-12 h-12 flex items-center justify-center rounded-full border border-primary bg-primary transition-colors">
+            <span class="material-symbols-outlined star-filled text-on-primary">star</span>
+          </button>
+          <button class="w-12 h-12 flex items-center justify-center rounded-full border border-primary bg-primary transition-colors">
+            <span class="material-symbols-outlined star-filled text-on-primary">star</span>
+          </button>
+          <button class="w-12 h-12 flex items-center justify-center rounded-full border border-primary bg-primary transition-colors">
+            <span class="material-symbols-outlined star-filled text-on-primary">star</span>
+          </button>
+          <button class="w-12 h-12 flex items-center justify-center rounded-full border border-border-hairline hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-outline">star</span>
+          </button>
+          <button class="w-12 h-12 flex items-center justify-center rounded-full border border-border-hairline hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-outline">star</span>
+          </button>
+        </div>
+        <div class="flex items-start gap-2 mt-2">
+          <span class="material-symbols-outlined text-score-high shrink-0" style="font-size:16px">thumb_up</span>
+          <span class="font-caption text-caption text-score-high">Clean .com — no permanent sale sections</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ SPACING ═══════ -->
+  <section class="mb-section-gap">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Spacing</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">Consistent spacing tokens for layout rhythm.</p>
+
+    <div class="space-y-4">
+      <div class="flex items-center gap-4">
+        <div class="w-[4px] h-6 bg-accent rounded"></div>
+        <div>
+          <span class="font-data-tabular text-data-tabular">unit</span>
+          <span class="font-caption text-caption text-text-caption ml-2">4px — base unit</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-[16px] h-6 bg-accent rounded"></div>
+        <div>
+          <span class="font-data-tabular text-data-tabular">margin-mobile</span>
+          <span class="font-caption text-caption text-text-caption ml-2">16px — mobile page margins</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-[24px] h-6 bg-accent rounded"></div>
+        <div>
+          <span class="font-data-tabular text-data-tabular">gutter / card-padding</span>
+          <span class="font-caption text-caption text-text-caption ml-2">24px — grid gaps and card internal padding</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-[40px] h-6 bg-accent rounded"></div>
+        <div>
+          <span class="font-data-tabular text-data-tabular">margin-desktop</span>
+          <span class="font-caption text-caption text-text-caption ml-2">40px — desktop page margins</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-[80px] h-6 bg-accent rounded"></div>
+        <div>
+          <span class="font-data-tabular text-data-tabular">section-gap</span>
+          <span class="font-caption text-caption text-text-caption ml-2">80px — between major sections</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ BORDER RADIUS ═══════ -->
+  <section class="mb-section-gap">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Border Radius</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">From sharp to fully rounded.</p>
+
+    <div class="flex flex-wrap gap-6 items-end">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-surface-container border border-border-hairline rounded-sm mb-2"></div>
+        <p class="font-caption text-caption text-text-caption">sm<br>0.125rem</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-surface-container border border-border-hairline rounded mb-2"></div>
+        <p class="font-caption text-caption text-text-caption">DEFAULT<br>0.375rem</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-surface-container border border-border-hairline rounded-md mb-2"></div>
+        <p class="font-caption text-caption text-text-caption">md<br>0.5rem</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-surface-container border border-border-hairline rounded-lg mb-2"></div>
+        <p class="font-caption text-caption text-text-caption">lg<br>0.75rem</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-surface-container border border-border-hairline rounded-xl mb-2"></div>
+        <p class="font-caption text-caption text-text-caption">xl<br>1rem</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-surface-container border border-border-hairline rounded-full mb-2"></div>
+        <p class="font-caption text-caption text-text-caption">full<br>9999px</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ ICONS ═══════ -->
+  <section class="mb-16">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-2">Icons</h2>
+    <p class="font-body-md text-body-md text-text-caption mb-8">Material Symbols Outlined. Used for dimensions, navigation, and UI affordances.</p>
+
+    <div class="flex flex-wrap gap-6">
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">language</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Website</p>
+      </div>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">payments</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Pricing</p>
+      </div>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">storefront</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Local</p>
+      </div>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">support_agent</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Floor</p>
+      </div>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">badge</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Pro</p>
+      </div>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">search</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Search</p>
+      </div>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">star</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Star</p>
+      </div>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">thumb_up</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Positive</p>
+      </div>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center mb-2">
+          <span class="material-symbols-outlined text-primary">thumb_down</span>
+        </div>
+        <p class="font-caption text-caption text-text-caption">Negative</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="border-t border-border-hairline pt-8 text-center">
+    <p class="font-caption text-caption text-text-caption">Brand Partnership Index Design System &middot; Last updated May 2026</p>
+    <p class="font-caption text-caption text-text-caption mt-1"><a href="index.html" class="text-primary hover:underline">Back to Leaderboard</a></p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -200,34 +200,29 @@ window.PLEDGES = [
 // Helpers ------------------------------------------------------------------
 
 window.tierBg = function (score) {
-  if (score >= 16) return "bg-[#3F7556] text-white";
-  if (score >= 13) return "bg-[#E8C547] text-gray-900";
-  if (score >= 10) return "bg-[#D97A35] text-white";
-  return "bg-[#B23B33] text-white";
+  if (score >= 15) return "bg-score-high text-white";
+  if (score >= 10) return "bg-score-mid text-gray-900";
+  return "bg-score-low text-white";
 };
 window.tierBg100 = function (score) {
-  if (score >= 80) return "bg-[#3F7556] text-white";
-  if (score >= 65) return "bg-[#E8C547] text-gray-900";
-  if (score >= 50) return "bg-[#D97A35] text-white";
-  return "bg-[#B23B33] text-white";
+  if (score >= 75) return "bg-score-high text-white";
+  if (score >= 50) return "bg-score-mid text-gray-900";
+  return "bg-score-low text-white";
 };
 window.tierBar = function (score) {
-  if (score >= 16) return "bg-[#3F7556]";
-  if (score >= 13) return "bg-[#E8C547]";
-  if (score >= 10) return "bg-[#D97A35]";
-  return "bg-[#B23B33]";
+  if (score >= 15) return "bg-score-high";
+  if (score >= 10) return "bg-score-mid";
+  return "bg-score-low";
 };
 window.tierText = function (score) {
-  if (score >= 16) return "text-[#3F7556]";
-  if (score >= 13) return "text-[#A88A1F]";
-  if (score >= 10) return "text-[#B25E1F]";
-  return "text-[#B23B33]";
+  if (score >= 15) return "text-score-high";
+  if (score >= 10) return "text-score-mid";
+  return "text-score-low";
 };
 window.strokeColor = function (score) {
-  if (score >= 80) return "#3F7556";
-  if (score >= 65) return "#E8C547";
-  if (score >= 50) return "#D97A35";
-  return "#B23B33";
+  if (score >= 75) return "#3F7556";
+  if (score >= 50) return "#C8A53D";
+  return "#A24E3C";
 };
 window.changeClass = function (change) {
   if (change.startsWith("+") && change !== "+0") return "text-score-high";
