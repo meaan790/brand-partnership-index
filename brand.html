@@ -29,6 +29,8 @@
     background-color: #FAFAF7;
     color: #1b1b1d;
   }
+  .sponsor-logo img { filter: grayscale(1) opacity(0.5); transition: filter 0.2s ease; }
+  .sponsor-logo:hover img { filter: grayscale(0) opacity(1); }
 </style>
 <script id="tailwind-config">
   tailwind.config = {
@@ -204,7 +206,16 @@
         <p class="text-sm text-on-surface-variant">Transparent, independent ratings of how brands support specialty retail.</p>
       </div>
     </div>
-    <div class="border-t border-border-hairline pt-6 text-center">
+    <div class="border-t border-border-hairline pt-6 pb-4 flex flex-col items-center gap-3">
+      <span class="text-xs text-on-surface-variant uppercase tracking-wider font-semibold">Sponsored by</span>
+      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10">
+        <a href="https://endvr.io" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/endvr.io/w/200/h/40" alt="ENDVR" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>ENDVR</span>'"></a>
+        <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/outsizeconsulting.com/w/200/h/40" alt="Outsize Consulting" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Outsize</span>'"></a>
+        <a href="https://www.locally.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/locally.com/w/200/h/40" alt="Locally" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Locally</span>'"></a>
+        <a href="https://www.lightspeedhq.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/lightspeedhq.com/w/200/h/40" alt="Lightspeed" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Lightspeed</span>'"></a>
+      </div>
+    </div>
+    <div class="border-t border-border-hairline pt-4 text-center">
       <p class="text-xs text-on-surface-variant">&copy; 2026 Brand Partnership Index. All rights reserved.</p>
     </div>
   </div>
@@ -517,6 +528,42 @@
     </section>
 
     ${reviews(brand)}
+
+    <section class="mb-section-gap">
+      <div class="border border-border-hairline rounded bg-surface-card p-card-padding">
+        <div class="flex flex-col md:flex-row md:items-center gap-4 mb-5">
+          <span class="material-symbols-outlined text-primary" style="font-size:28px">rocket_launch</span>
+          <div>
+            <h3 class="font-headline-md text-headline-md text-primary m-0">Looking to improve your scores?</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-1">Our partners help brands strengthen their wholesale partnerships.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <a href="https://endvr.io" target="_blank" rel="noopener" class="group flex items-start gap-3 p-4 rounded border border-border-hairline hover:border-primary/30 transition-colors">
+            <img src="https://cdn.brandfetch.io/endvr.io/w/200/h/40" alt="ENDVR" class="h-6 object-contain mt-0.5 shrink-0" onerror="this.outerHTML='<span class=\'font-bold text-sm text-primary shrink-0\'>ENDVR</span>'">
+            <div>
+              <p class="font-caption text-caption text-on-surface-variant">Boost <strong>Shop Floor Support</strong> with incentives, education, and sell-through tools for retail associates.</p>
+              <span class="font-caption text-caption text-primary group-hover:underline mt-1 inline-block">Learn more &rarr;</span>
+            </div>
+          </a>
+          <a href="https://www.locally.com" target="_blank" rel="noopener" class="group flex items-start gap-3 p-4 rounded border border-border-hairline hover:border-primary/30 transition-colors">
+            <img src="https://cdn.brandfetch.io/locally.com/w/200/h/40" alt="Locally" class="h-6 object-contain mt-0.5 shrink-0" onerror="this.outerHTML='<span class=\'font-bold text-sm text-primary shrink-0\'>Locally</span>'">
+            <div>
+              <p class="font-caption text-caption text-on-surface-variant">Improve <strong>Shop Local Support</strong> with real-time local inventory and online-to-offline shopping tools.</p>
+              <span class="font-caption text-caption text-primary group-hover:underline mt-1 inline-block">Learn more &rarr;</span>
+            </div>
+          </a>
+          <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="group flex items-start gap-3 p-4 rounded border border-border-hairline hover:border-primary/30 transition-colors">
+            <img src="https://cdn.brandfetch.io/outsizeconsulting.com/w/200/h/40" alt="Outsize Consulting" class="h-6 object-contain mt-0.5 shrink-0" onerror="this.outerHTML='<span class=\'font-bold text-sm text-primary shrink-0\'>Outsize</span>'">
+            <div>
+              <p class="font-caption text-caption text-on-surface-variant">Strategic advisory for outdoor and active brands navigating wholesale, DTC, and channel growth.</p>
+              <span class="font-caption text-caption text-primary group-hover:underline mt-1 inline-block">Learn more &rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
     ${claimPanelHtml(brand)}
     ${claimFormHtml(brand)}
   `;
