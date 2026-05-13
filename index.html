@@ -142,9 +142,15 @@
 
     <!-- Leaderboard Table Container -->
     <div class="w-full overflow-x-auto mb-16">
-      <div class="min-w-[1000px] border border-border-hairline bg-surface-card rounded">
-        <!-- Header -->
-        <div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-hairline bg-surface-container-low font-label-caps text-label-caps text-text-caption uppercase items-end">
+      <div class="md:min-w-[1000px] border border-border-hairline bg-surface-card rounded">
+        <!-- Mobile Header -->
+        <div class="flex md:hidden px-4 py-3 border-b border-border-hairline bg-surface-container-low font-label-caps text-label-caps text-text-caption uppercase">
+          <div class="w-10">Rank</div>
+          <div class="flex-1">Brand</div>
+          <div class="w-14 text-right">Score</div>
+        </div>
+        <!-- Desktop Header -->
+        <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-hairline bg-surface-container-low font-label-caps text-label-caps text-text-caption uppercase items-end">
           <div class="col-span-1 pb-1">Rank</div>
           <div class="col-span-3 pb-1">Brand</div>
           <div class="col-span-1 text-center pb-1">Score</div>
@@ -406,7 +412,20 @@
 
     return `
       <div class="brand-row-wrapper border-b border-border-hairline ${isTop ? "bg-surface-bright relative z-10 shadow-sm" : ""}">
-        <div class="brand-row grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-background-paper transition-colors cursor-pointer"
+        <!-- Mobile row -->
+        <div class="brand-row flex md:hidden items-center px-4 py-3 hover:bg-background-paper transition-colors cursor-pointer"
+             role="button" tabindex="0" aria-expanded="false" data-rank="${rank}">
+          <div class="w-10 font-data-tabular text-data-tabular text-text-caption">${rank}</div>
+          <div class="flex-1 flex items-center gap-3 min-w-0">
+            ${brandLogoHtml(b, "w-8 h-8", "text-sm")}
+            <a href="${brandHref}" class="brand-link font-body-md text-body-md font-bold truncate hover:underline ${isTop ? "text-primary" : "text-text-main"}">${b.name}</a>
+          </div>
+          <div class="w-14 flex justify-end">
+            <span class="${tierBg100(b.score)} px-2 py-0.5 rounded font-data-tabular text-data-tabular text-sm">${b.score}</span>
+          </div>
+        </div>
+        <!-- Desktop row -->
+        <div class="brand-row hidden md:grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-background-paper transition-colors cursor-pointer"
              role="button" tabindex="0" aria-expanded="false" data-rank="${rank}">
           <div class="col-span-1 font-data-tabular text-data-tabular text-text-caption">${rank}</div>
           <div class="col-span-3 flex items-center gap-3 min-w-0">
@@ -432,7 +451,7 @@
             </span>
           </div>
         </div>
-        <div class="brand-detail hidden px-6 pb-6 pt-2 ml-14 border-t border-border-hairline mx-6 mt-2 flex flex-col gap-4">
+        <div class="brand-detail hidden px-4 md:px-6 pb-6 pt-2 md:ml-14 border-t border-border-hairline mx-4 md:mx-6 mt-2 flex flex-col gap-4">
           <div class="flex items-center justify-between">
             <span class="font-caption text-caption text-text-caption">Based on <strong class="text-primary-container">${b.reviews} reviews</strong> from verified retailers.</span>
             <a href="${brandHref}" class="font-caption text-caption text-primary font-bold hover:underline inline-flex items-center gap-1">
