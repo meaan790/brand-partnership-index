@@ -21,14 +21,14 @@
 
 <!-- Overlay header — X / back arrow + centered label -->
 <header id="app-header" class="w-full top-0 sticky bg-background z-50">
-  <div class="flex items-center px-margin-mobile md:px-margin-desktop py-4 max-w-[540px] mx-auto relative">
+  <div class="flex items-center px-margin-mobile md:px-margin-desktop py-4 max-w-[840px] mx-auto relative">
     <button id="header-btn" class="w-10 h-10 flex items-center justify-center rounded-full border border-border-hairline hover:bg-surface-container transition-colors shrink-0">
       <span id="header-icon" class="material-symbols-outlined text-primary text-xl">close</span>
     </button>
     <span class="absolute left-1/2 -translate-x-1/2 font-label-caps text-label-caps text-text-main uppercase tracking-widest select-none">Review a Brand</span>
   </div>
   <!-- Progress bar -->
-  <div id="progress-bar" class="px-margin-mobile md:px-margin-desktop max-w-[540px] mx-auto pb-2">
+  <div id="progress-bar" class="px-margin-mobile md:px-margin-desktop max-w-[840px] mx-auto pb-2">
     <div class="w-full h-[3px] rounded-full bg-border-hairline overflow-hidden">
       <div id="progress-fill" class="h-full rounded-full bg-primary transition-all duration-300 ease-out" style="width:0%"></div>
     </div>
@@ -40,7 +40,7 @@
 </header>
 
 <!-- Main content -->
-<main id="app" class="flex-grow w-full max-w-[540px] mx-auto px-margin-mobile md:px-margin-desktop flex flex-col"></main>
+<main id="app" class="flex-grow w-full max-w-[840px] mx-auto px-margin-mobile md:px-margin-desktop flex flex-col"></main>
 
 <script src="brands.js"></script>
 <script>
@@ -95,7 +95,6 @@ const CITIES = [
 /* ============== STATE ============== */
 const S = {
   step: 0,
-  subStep: 0,
   verifyMethod: null,
   email: "",
   name: "",
@@ -126,11 +125,9 @@ function getProgressInfo() {
   if (step >= 4 && step <= 8) {
     const dimIdx = step - 4;
     const dim = DIMENSIONS[dimIdx];
-    const subIdx = Math.min(S.subStep, SUBS_PER_DIM - 1);
     const rated = countRated();
-    const basePct = 15 + (dimIdx * 17);
-    const subPct = Math.round((subIdx / SUBS_PER_DIM) * 17);
-    return { pct: Math.min(95, basePct + subPct), label: dim.name, count: Math.round((rated / 20) * 100) + "% complete" };
+    const pct = 15 + ((dimIdx + 1) * 16);
+    return { pct: Math.min(95, pct), label: dim.name, count: Math.round((rated / 20) * 100) + "% complete" };
   }
   if (step === 9) return { pct: 95, label: "Review & submit", count: Math.round((countRated() / 20) * 100) + "% complete" };
   return { pct: 100, label: "", count: "" };
@@ -184,44 +181,11 @@ function _animate(fwd, cb) {
   });
 }
 
-function go(n, targetSubStep) {
+function go(n) {
   const next = Math.max(0, Math.min(TOTAL_STEPS - 1, n));
-  if (next === S.step && targetSubStep === undefined) return;
-  const fwd = next > S.step || (next === S.step && targetSubStep !== undefined && targetSubStep > S.subStep);
-  _animate(fwd, () => {
-    S.step = next;
-    S.subStep = targetSubStep !== undefined ? targetSubStep : 0;
-  });
-}
-
-const SUBS_PER_DIM = 4;
-const SUB_SUMMARY = SUBS_PER_DIM;
-
-function goSub(n) {
-  if (n < 0) {
-    const dimIdx = S.step - 4;
-    if (dimIdx <= 0) { go(S.step - 1); return; }
-    _animate(false, () => { S.step = S.step - 1; S.subStep = SUB_SUMMARY; });
-    return;
-  }
-  if (n > SUB_SUMMARY) {
-    go(S.step + 1);
-    return;
-  }
-  const fwd = n > S.subStep;
-  _animate(fwd, () => { S.subStep = n; });
-}
-
-function validateSubAndGoSub(n) {
-  const dim = DIMENSIONS[S.step - 4];
-  const subs = DIMENSION_SUBS[dim.key];
-  const sub = subs[S.subStep];
-  if (S.ratings[dim.key].subs[sub.key].stars < 1) {
-    showValidationMsg("Please rate this sub-component before continuing.");
-    return;
-  }
-  clearValidationMsg();
-  goSub(n);
+  if (next === S.step) return;
+  const fwd = next > S.step;
+  _animate(fwd, () => { S.step = next; });
 }
 
 function validateDimAndGo(n) {
@@ -248,13 +212,7 @@ function clearValidationMsg() {
 }
 
 function handleBack() {
-  if (S.step >= 4 && S.step <= 8 && S.subStep > 0) {
-    goSub(S.subStep - 1);
-  } else if (S.step >= 5 && S.step <= 8 && S.subStep === 0) {
-    _animate(false, () => { S.step = S.step - 1; S.subStep = SUB_SUMMARY; });
-  } else {
-    go(S.step - 1);
-  }
+  go(S.step - 1);
 }
 
 /* ============== SCORING ============== */
@@ -274,28 +232,31 @@ function tierColor20(s) {
 }
 
 /* ============== STAR RATING ============== */
-function starsHtml(dimKey, subKey, current, anchor5, anchor1) {
-  let html = '';
-  html += `<div class="flex items-start gap-2 max-w-[360px] mx-auto mb-4 px-1">
-    <span class="material-symbols-outlined text-score-high shrink-0" style="font-size:18px">thumb_up</span>
-    <span class="font-caption text-caption text-score-high leading-snug">${anchor5 || 'Excellent'}</span>
-  </div>`;
-  html += `<div class="flex justify-between items-center max-w-[320px] mx-auto mb-4" data-star-group="${dimKey}_${subKey}">`;
+function heroStarsHtml(dimKey, subKey, current, anchor1, anchor5) {
+  let stars = '';
   for (let i = 1; i <= 5; i++) {
     const filled = i <= current;
-    html += `<button type="button" onclick="rateStar('${dimKey}','${subKey}',${i})"
-      class="w-12 h-12 flex items-center justify-center rounded-full border
-      ${filled ? 'border-primary bg-primary' : 'border-border-hairline hover:bg-surface-container'}
-      transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-      <span class="material-symbols-outlined ${filled ? 'star-filled text-on-primary' : 'text-outline'}">star</span>
+    stars += `<button type="button" onclick="rateStar('${dimKey}','${subKey}',${i})"
+      class="flex-1 flex items-center justify-center transition-colors focus:outline-none py-1 cursor-pointer">
+      <span class="material-symbols-outlined ${filled ? 'star-filled text-accent' : 'text-[#94A3B8] hover:text-accent/50'}" style="font-size:36px">star</span>
     </button>`;
   }
-  html += '</div>';
-  html += `<div class="flex items-start gap-2 max-w-[360px] mx-auto px-1">
-    <span class="material-symbols-outlined text-score-low shrink-0" style="font-size:18px">thumb_down</span>
-    <span class="font-caption text-caption text-score-low leading-snug">${anchor1 || 'Poor'}</span>
+  return `<div class="mt-1">
+    <div class="flex items-center" data-star-group="${dimKey}_${subKey}">${stars}</div>
+    <div class="flex mt-0.5">
+      <div class="flex-1 flex flex-col items-center">
+        <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-score-low/10 text-score-low font-bold text-xs">1</span>
+        <span class="text-xs text-score-low leading-tight whitespace-nowrap">${anchor1}</span>
+      </div>
+      <div class="flex-1"></div>
+      <div class="flex-1"></div>
+      <div class="flex-1"></div>
+      <div class="flex-1 flex flex-col items-center">
+        <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-score-high/10 text-score-high font-bold text-xs">5</span>
+        <span class="text-xs text-score-high leading-tight whitespace-nowrap">${anchor5}</span>
+      </div>
+    </div>
   </div>`;
-  return html;
 }
 
 window.rateStar = function(dimKey, subKey, val) {
@@ -303,53 +264,20 @@ window.rateStar = function(dimKey, subKey, val) {
   document.querySelectorAll(`[data-star-group="${dimKey}_${subKey}"] button`).forEach((btn, idx) => {
     const filled = (idx + 1) <= val;
     const icon = btn.querySelector('.material-symbols-outlined');
-    if (filled) {
-      btn.className = btn.className.replace(/border-border-hairline hover:bg-surface-container/g, 'border-primary bg-primary').replace(/border-border-hairline/g, 'border-primary');
-      if (!btn.classList.contains('bg-primary')) btn.classList.add('border-primary', 'bg-primary');
-      btn.classList.remove('hover:bg-surface-container');
-      icon.className = 'material-symbols-outlined star-filled text-on-primary';
-    } else {
-      btn.classList.remove('border-primary', 'bg-primary');
-      btn.classList.add('border-border-hairline', 'hover:bg-surface-container');
-      icon.className = 'material-symbols-outlined text-outline';
-    }
+    icon.className = `material-symbols-outlined ${filled ? 'star-filled text-accent' : 'text-[#94A3B8] hover:text-accent/50'}`;
+    icon.style.fontSize = '36px';
   });
+  const subCard = document.getElementById(`sub-${dimKey}-${subKey}`);
+  if (subCard) {
+    subCard.classList.toggle('border-l-2', val > 0);
+    subCard.classList.toggle('border-accent', val > 0);
+  }
   const score = dimScore(dimKey);
   document.querySelectorAll('.dim-score-display').forEach(el => el.textContent = score);
   const countEl = document.getElementById('progress-count');
   if (countEl) countEl.textContent = Math.round((countRated() / 20) * 100) + "% complete";
-
-  const area = document.getElementById('comment-area');
-  const ta = document.getElementById('sub-comment');
-  if (!area || !ta) return;
-  const isLow = val > 0 && val <= 2;
-  const dim = DIMENSIONS.find(d => d.key === dimKey);
-  const subs = DIMENSION_SUBS[dimKey];
-  const sub = subs.find(s => s.key === subKey);
-  const promptText = sub ? (sub.prompt || "Why this score?") : "Why this score?";
-
-  let nudge = area.querySelector('.low-score-nudge');
-  if (isLow) {
-    ta.rows = 3;
-    ta.placeholder = "Low scores really help brands improve. " + promptText;
-    ta.classList.remove('border-border-hairline', 'bg-transparent');
-    ta.classList.add('border-score-low/30', 'bg-score-low/5');
-    if (!nudge) {
-      nudge = document.createElement('p');
-      nudge.className = 'low-score-nudge font-caption text-caption text-score-low mb-2';
-      nudge.textContent = 'Brands use low-score feedback to make changes';
-      area.insertBefore(nudge, ta);
-    }
-  } else {
-    ta.rows = 2;
-    ta.placeholder = promptText;
-    ta.classList.remove('border-score-low/30', 'bg-score-low/5');
-    ta.classList.add('border-border-hairline', 'bg-transparent');
-    if (nudge) nudge.remove();
-  }
 };
 
-window.saveComment = function(dimKey, subKey, val) { S.ratings[dimKey].subs[subKey].comment = val; };
 window.autoGrow = function(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; };
 window.savePraise = function(dimKey, val) { S.ratings[dimKey].praise = val; };
 window.saveImprove = function(dimKey, val) { S.ratings[dimKey].improve = val; };
@@ -382,47 +310,58 @@ function renderVerify() {
     <div class="flex-grow flex flex-col items-center justify-center text-center py-12">
       ${centeredIcon('verified_user')}
       <h1 class="font-display-lg text-display-lg text-primary mb-4 px-4">Are you a retailer?</h1>
-      <p class="font-body-md text-body-md text-text-caption max-w-xs mx-auto mb-10">Reviews on the Index come from verified retailers only. We use LinkedIn to confirm.</p>
+      <p class="font-body-md text-body-md text-text-caption max-w-xs mx-auto mb-8">Reviews on the Index come from verified retailers only. We use LinkedIn to confirm.</p>
 
-      <div class="w-full max-w-sm mx-auto space-y-4">
+      <div class="w-full max-w-sm mx-auto space-y-3">
         <button onclick="S.verifyMethod='linkedin';go(1)"
-          class="w-full py-4 font-body-md text-body-md text-on-primary bg-primary rounded-xl hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex justify-center items-center gap-3">
-          <span class="material-symbols-outlined text-lg">work</span>
+          class="w-full flex items-center justify-center px-6 py-3 border border-border-hairline bg-surface-card hover:bg-surface-container-low transition-colors rounded-DEFAULT font-data-tabular text-data-tabular text-primary" data-auth="linkedin">
+          <svg aria-hidden="true" class="w-5 h-5 mr-3 text-[#0a66c2]" fill="currentColor" viewBox="0 0 24 24">
+            <path clip-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" fill-rule="evenodd"></path>
+          </svg>
           Continue with LinkedIn
         </button>
-        <p class="font-caption text-caption text-text-caption">We don\u2019t post anything. We only confirm you work in retail.</p>
-      </div>
-
-      <div class="flex items-center gap-4 w-full max-w-sm mx-auto my-8">
-        <div class="flex-1 border-t border-border-hairline"></div>
-        <span class="font-caption text-caption text-text-caption">or</span>
-        <div class="flex-1 border-t border-border-hairline"></div>
-      </div>`;
+        <button onclick="S.verifyMethod='google';go(1)"
+          class="w-full flex items-center justify-center px-6 py-3 border border-border-hairline bg-surface-card hover:bg-surface-container-low transition-colors rounded-DEFAULT font-data-tabular text-data-tabular text-primary" data-auth="google">
+          <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+        <div class="flex items-center gap-3 my-1">
+          <div class="flex-1 border-t border-border-hairline"></div>
+          <span class="font-caption text-caption text-text-caption">or</span>
+          <div class="flex-1 border-t border-border-hairline"></div>
+        </div>`;
 
   if (!showEmail) {
     content += `
-      <button onclick="S._showEmailForm=true;render()"
-        class="w-full max-w-sm mx-auto py-4 font-body-md text-body-md text-primary bg-transparent border border-border-hairline rounded-xl hover:bg-surface-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex justify-center items-center gap-3">
-        <span class="material-symbols-outlined text-lg">mail</span>
-        Verify by email instead
-      </button>`;
+        <button onclick="S._showEmailForm=true;render()"
+          class="w-full flex items-center justify-center px-6 py-3 border border-border-hairline bg-surface-card hover:bg-surface-container-low transition-colors rounded-DEFAULT font-data-tabular text-data-tabular text-primary">
+          <span class="material-symbols-outlined text-lg mr-3">mail</span>
+          Continue with Email
+        </button>
+        <p class="font-caption text-caption text-text-caption text-center">We don\u2019t post anything. We only confirm you work in retail.</p>
+      </div>`;
   } else {
     content += `
-      <div class="w-full max-w-sm mx-auto space-y-4 text-left">
-        <div>
-          <label class="block font-caption text-caption text-text-caption mb-1.5">Work email</label>
-          <input id="verify-email" type="email"${emailVal} placeholder="you@yourretailer.com"
-            oninput="S.email=this.value;S._emailErr=''"
-            class="w-full border ${emailErr ? 'border-error' : 'border-border-hairline'} rounded-xl px-4 py-3.5 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent bg-transparent">
-          ${emailErr ? `<p class="font-caption text-caption text-error mt-1">${emailErr}</p>` : ''}
+        <div class="space-y-3 text-left">
+          <div>
+            <label class="sr-only" for="verify-email">Work Email</label>
+            <input id="verify-email" type="email"${emailVal} placeholder="you@yourretailer.com"
+              oninput="S.email=this.value;S._emailErr=''"
+              class="w-full px-4 py-3 bg-surface-card border ${emailErr ? 'border-error' : 'border-border-hairline'} rounded-DEFAULT font-body-md text-body-md text-text-main placeholder:text-text-caption focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors">
+            ${emailErr ? `<p class="font-caption text-caption text-error mt-1">${emailErr}</p>` : ''}
+          </div>
+          <div>
+            <label class="sr-only" for="verify-name">Your name (optional)</label>
+            <input id="verify-name" type="text"${nameVal} placeholder="Your name (optional)"
+              oninput="S.name=this.value"
+              class="w-full px-4 py-3 bg-surface-card border border-border-hairline rounded-DEFAULT font-body-md text-body-md text-text-main placeholder:text-text-caption focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors">
+          </div>
+          <button onclick="handleEmailVerify()"
+            class="w-full flex items-center justify-center px-6 py-3 border border-border-hairline bg-surface-card hover:bg-surface-container-low transition-colors rounded-DEFAULT font-data-tabular text-data-tabular text-primary">
+            Continue with Email
+          </button>
         </div>
-        <div>
-          <label class="block font-caption text-caption text-text-caption mb-1.5">Your name <span class="text-outline">(optional)</span></label>
-          <input id="verify-name" type="text"${nameVal} placeholder="Anonymous"
-            oninput="S.name=this.value"
-            class="w-full border border-border-hairline rounded-xl px-4 py-3.5 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent bg-transparent">
-        </div>
-        ${ctaBtn('Verify email <span class="material-symbols-outlined text-sm">arrow_forward</span>', "handleEmailVerify()", true)}
+        <p class="font-caption text-caption text-text-caption text-center mt-3">We don\u2019t post anything. We only confirm you work in retail.</p>
       </div>`;
   }
 
@@ -601,123 +540,57 @@ function renderExpectations() {
     </div>`;
 }
 
-function subProgressDots(total, current) {
-  let dots = '';
-  for (let i = 0; i < total; i++) {
-    const active = i === current;
-    const done = i < current;
-    dots += `<div class="w-2 h-2 rounded-full transition-all ${active ? 'bg-primary scale-125' : done ? 'bg-primary/40' : 'bg-border-hairline'}"></div>`;
-  }
-  return `<div class="flex justify-center gap-2 items-center">${dots}<span class="ml-2 font-caption text-caption text-text-caption">${current + 1} of ${total}</span></div>`;
-}
-
 function renderDimension(dimIdx) {
-  const dim = DIMENSIONS[dimIdx];
-  const subs = DIMENSION_SUBS[dim.key];
-  const icon = DIMENSION_ICONS[dim.key];
-  const desc = DIM_DESCRIPTIONS[dim.key];
-  const score = dimScore(dim.key);
-  const ss = S.subStep;
-
-  if (ss === SUB_SUMMARY) return renderDimSummary(dimIdx);
-
-  const sub = subs[ss];
-  const rating = S.ratings[dim.key].subs[sub.key];
-  const isLow = rating.stars > 0 && rating.stars <= 2;
-  const promptText = sub.prompt || "Why this score?";
-  const placeholder = isLow
-    ? "Low scores really help brands improve. " + promptText
-    : promptText;
-
-  const nextIsLast = ss === SUBS_PER_DIM - 1;
-  const nextBtnLabel = nextIsLast ? "Section Summary" : subs[ss + 1].label;
-
-  return `
-    <div class="flex-grow flex flex-col py-8">
-      <div class="text-center mb-2">
-        <div class="flex items-center justify-center gap-2 mb-4">
-          <span class="material-symbols-outlined text-primary" style="font-size:20px">${icon}</span>
-          <span class="font-body-md text-body-md font-semibold text-primary">${dim.name}</span>
-        </div>
-        ${subProgressDots(SUBS_PER_DIM, ss)}
-      </div>
-
-      <div class="flex-grow flex flex-col items-center justify-center text-center py-8">
-        <h2 class="font-headline-lg text-headline-lg text-primary mb-2">${sub.label}</h2>
-        <p class="font-body-md text-body-md text-text-caption max-w-sm mx-auto mb-8">${sub.desc}</p>
-
-        ${starsHtml(dim.key, sub.key, rating.stars, sub.anchor5, sub.anchor1)}
-
-        <div class="w-full max-w-[360px] mx-auto mt-8" id="comment-area">
-          ${isLow ? '<p class="font-caption text-caption text-score-low mb-2">Brands use low-score feedback to make changes</p>' : ''}
-          <textarea id="sub-comment" oninput="saveComment('${dim.key}','${sub.key}',this.value);autoGrow(this)"
-            onfocus="autoGrow(this)" rows="${isLow ? 3 : 2}" placeholder="${placeholder.replace(/"/g, '&quot;')}"
-            class="comment-auto w-full border ${isLow ? 'border-score-low/30 bg-score-low/5' : 'border-border-hairline bg-transparent'} rounded-xl p-4 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">${rating.comment}</textarea>
-        </div>
-      </div>
-
-      <div class="pt-4">
-        <p id="validation-msg" class="hidden text-error font-caption text-caption text-center mb-2"></p>
-        ${ctaBtn(`Next: ${nextBtnLabel} <span class="material-symbols-outlined text-sm">arrow_forward</span>`, `validateSubAndGoSub(${ss + 1})`, true)}
-      </div>
-    </div>`;
-}
-
-function renderDimSummary(dimIdx) {
   const dim = DIMENSIONS[dimIdx];
   const subs = DIMENSION_SUBS[dim.key];
   const icon = DIMENSION_ICONS[dim.key];
   const score = dimScore(dim.key);
   const nextLabel = dimIdx < 4 ? DIMENSIONS[dimIdx + 1].name : "Review & Submit";
   const r = S.ratings[dim.key];
+  const brandName = S.brand ? S.brand.name : "this brand";
 
-  let subsReview = subs.map((sub, i) => {
+  const subsHtml = subs.map((sub, i) => {
     const sr = r.subs[sub.key];
-    let starsStr = '';
-    for (let s = 1; s <= 5; s++) {
-      starsStr += `<span class="material-symbols-outlined ${s <= sr.stars ? 'star-filled text-primary' : 'text-outline'}" style="font-size:16px">star</span>`;
-    }
+    const rated = sr.stars > 0;
     return `
-      <button onclick="goSub(${i})" class="flex items-center justify-between py-3 w-full text-left hover:bg-surface-container/50 -mx-2 px-2 rounded-lg transition-colors">
-        <span class="font-body-md text-body-md text-text-main">${sub.label}</span>
-        <div class="flex items-center gap-2">
-          <div class="flex gap-0">${starsStr}</div>
-          <span class="material-symbols-outlined text-outline" style="font-size:16px">edit</span>
-        </div>
-      </button>`;
-  }).join('<div class="border-b border-border-hairline"></div>');
+      <div class="bg-surface-container-low rounded-lg p-4 mb-2 ${rated ? 'border-l-2 border-accent' : ''}" id="sub-${dim.key}-${sub.key}">
+        <p class="font-body-md text-body-md font-semibold text-primary">${sub.label}</p>
+        <p class="font-caption text-caption text-on-surface-variant">${sub.desc}</p>
+        ${heroStarsHtml(dim.key, sub.key, sr.stars, sub.anchor1, sub.anchor5)}
+      </div>`;
+  }).join('');
 
   return `
-    <div class="flex-grow flex flex-col py-8">
-      <div class="text-center mb-6">
-        ${centeredIcon(icon)}
-        <h1 class="font-headline-lg text-headline-lg text-primary mb-2">${dim.name}</h1>
-        <div class="inline-flex items-baseline gap-1">
-          <span class="font-headline-lg text-headline-lg text-primary"><span class="dim-score-display">${score}</span></span>
-          <span class="font-body-md text-body-md text-text-caption">/20</span>
+    <div class="flex-grow flex flex-col py-1">
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary" style="font-size:22px">${icon}</span>
+          <h2 class="font-headline-sm text-headline-sm text-primary">${dim.name}</h2>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span class="font-headline-sm text-headline-sm text-primary"><span class="dim-score-display">${score}</span></span>
+          <span class="font-body-md text-body-md text-text-caption">/ 20</span>
         </div>
       </div>
 
-      <div class="mb-6">${subsReview}</div>
+      ${subsHtml}
 
-      <div class="space-y-6 mb-auto">
+      <div class="mt-2 space-y-1.5">
         <div>
-          <label class="block font-body-md text-body-md font-semibold text-primary mb-1.5">What does this brand do well?</label>
-          <p class="font-caption text-caption text-text-caption mb-2">Positive feedback helps brands keep investing in what works.</p>
-          <textarea oninput="savePraise('${dim.key}',this.value);autoGrow(this)"
-            onfocus="autoGrow(this)" rows="2" placeholder="e.g., Their reps are consistent and really know the product\u2026"
-            class="comment-auto w-full border border-border-hairline rounded-xl p-4 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent bg-transparent">${r.praise}</textarea>
+          <label class="block font-caption text-caption font-semibold text-primary mb-1">What does ${brandName} do well in ${dim.name}?</label>
+          <textarea oninput="savePraise('${dim.key}',this.value);autoGrow(this)" onfocus="autoGrow(this)" rows="2"
+            placeholder="e.g., Their website is clean with no permanent sale sections, and the store finder is easy to use"
+            class="w-full border border-border-hairline rounded-lg px-3 py-2 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent bg-transparent resize-none">${r.praise || ''}</textarea>
         </div>
         <div>
-          <label class="block font-body-md text-body-md font-semibold text-primary mb-1.5">What\u2019s the #1 thing they should change?</label>
-          <p class="font-caption text-caption text-text-caption mb-2">This is what brands act on. Be specific.</p>
-          <textarea oninput="saveImprove('${dim.key}',this.value);autoGrow(this)"
-            onfocus="autoGrow(this)" rows="2" placeholder="e.g., Need a dealer locator that actually shows accurate stock\u2026"
-            class="comment-auto w-full border border-border-hairline rounded-xl p-4 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent bg-transparent">${r.improve}</textarea>
+          <label class="block font-caption text-caption font-semibold text-primary mb-1">What should ${brandName} improve in ${dim.name}?</label>
+          <textarea oninput="saveImprove('${dim.key}',this.value);autoGrow(this)" onfocus="autoGrow(this)" rows="2"
+            placeholder="e.g., The 15% popup for new visitors undercuts our in-store experience"
+            class="w-full border border-border-hairline rounded-lg px-3 py-2 font-body-md text-body-md text-text-main placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent bg-transparent resize-none">${r.improve || ''}</textarea>
         </div>
       </div>
 
-      <div class="pt-8">
+      <div class="mt-2">
         <p id="validation-msg" class="hidden text-error font-caption text-caption text-center mb-2"></p>
         ${ctaBtn(`Next: ${nextLabel} <span class="material-symbols-outlined text-sm">arrow_forward</span>`, `validateDimAndGo(${S.step + 1})`, true)}
       </div>
@@ -754,7 +627,7 @@ function renderReview() {
         ${subsHtml}
         ${praiseHtml}
         ${improveHtml}
-        <button onclick="go(${4 + i},${SUB_SUMMARY})" class="mt-2 font-caption text-caption text-link-endvr flex items-center gap-1 hover:opacity-80 transition-opacity">
+        <button onclick="go(${4 + i})" class="mt-2 font-caption text-caption text-link-endvr flex items-center gap-1 hover:opacity-80 transition-opacity">
           <span class="material-symbols-outlined" style="font-size:14px">edit</span> Edit
         </button>
       </div>`;
@@ -771,7 +644,7 @@ function renderReview() {
       <div class="text-center mb-6 py-6 bg-primary-container rounded-xl">
         <span class="font-label-caps text-label-caps text-on-primary-container uppercase">Overall Score</span>
         <div class="font-display-lg text-display-lg text-on-primary mt-1">${total}<span class="text-on-primary-container">/100</span></div>
-        <p class="font-caption text-caption text-on-primary-container mt-2">${S.brand ? S.brand.name : '\u2014'} &middot; by ${S.retailer ? S.retailer.name : '\u2014'}, ${S.retailerLocation || '\u2014'}</p>
+        <p class="font-caption text-caption text-on-primary-container mt-2">${S.brand ? S.brand.name : '\u2014'} / by ${S.retailer ? S.retailer.name : '\u2014'}, ${S.retailerLocation || '\u2014'}</p>
       </div>
 
       <div class="mb-auto">${dimsHtml}</div>

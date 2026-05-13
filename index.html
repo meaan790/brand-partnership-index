@@ -56,10 +56,10 @@
 
 <main class="flex-grow">
   <!-- Hero Section -->
-  <section class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-section-gap md:py-[120px]">
-    <div class="max-w-3xl mb-12">
-      <h1 class="font-display-lg text-display-lg text-primary mb-6">How the wholesale channel reviews its brand partners.</h1>
-      <p class="font-body-lg text-body-lg text-on-surface-variant">Specialty retailers rate brands across five partnership standards. Brands track their scores and improve. Transparent, independent, anonymous.</p>
+  <section class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop pt-section-gap md:pt-[120px] pb-4 md:pb-6">
+    <div class="mb-10">
+      <h1 class="font-display-lg text-display-lg text-primary mb-6 max-w-4xl">How the wholesale channel<br>reviews its brand partners.</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">Specialty retailers rate brands across five partnership standards. Brands track their scores and improve.</p>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter border-t border-b border-border-hairline py-8">
       <div class="flex flex-col border-r border-border-hairline pr-gutter">
@@ -86,28 +86,28 @@
   </section>
 
   <!-- How it works -->
-  <section class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12">
-    <h2 class="font-headline-md text-headline-md text-primary text-center mb-8">How it works</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="text-center p-6">
-        <div class="w-12 h-12 rounded-full bg-accent text-on-accent flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
-        <h3 class="font-body-lg font-semibold mb-2">Retailers Review</h3>
-        <p class="text-on-surface-variant text-sm">Verified specialty retailers review their brand partners across five partnership standards.</p>
+  <section class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-12 border-t border-border-hairline">
+    <h2 class="font-headline-lg text-headline-lg text-primary text-center mb-8">How it works</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-full bg-accent text-on-accent flex items-center justify-center text-base font-bold mx-auto mb-4">1</div>
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Retailers Review</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Verified specialty retailers anonymously rate brands across five partnership standards.</p>
       </div>
-      <div class="text-center p-6">
-        <div class="w-12 h-12 rounded-full bg-accent text-on-accent flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
-        <h3 class="font-body-lg font-semibold mb-2">Scores Update</h3>
-        <p class="text-on-surface-variant text-sm">Brand scores update publicly as new reviews are submitted. Recent reviews carry more weight.</p>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-full bg-accent text-on-accent flex items-center justify-center text-base font-bold mx-auto mb-4">2</div>
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Scores Update</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Ratings flow into a live leaderboard and individual brand profiles that anyone can browse.</p>
       </div>
-      <div class="text-center p-6">
-        <div class="w-12 h-12 rounded-full bg-accent text-on-accent flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
-        <h3 class="font-body-lg font-semibold mb-2">Brands Improve</h3>
-        <p class="text-on-surface-variant text-sm">Brands claim their brand, see detailed feedback, and track their wholesale partnership score.</p>
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-full bg-accent text-on-accent flex items-center justify-center text-base font-bold mx-auto mb-4">3</div>
+        <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Brands Improve</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Brands see where they stand, respond to feedback, and invest in the wholesale channel.</p>
       </div>
     </div>
-    <div class="text-center">
-      <a href="submit.html" class="inline-block bg-primary text-on-primary font-semibold px-8 py-3 rounded hover:opacity-90 transition-opacity active:scale-[0.98] text-lg">Review a Brand</a>
-      <p class="text-on-surface-variant text-sm mt-3">Are you a brand? <a href="signin.html" class="text-primary hover:underline">Claim Your Brand</a></p>
+    <div class="text-center mt-8">
+      <a href="submit.html" class="inline-block bg-primary text-on-primary font-semibold px-8 py-3 rounded hover:opacity-90 transition-opacity active:scale-[0.98]">Review a Brand</a>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-3">Are you a brand? <a href="signin.html?type=brand" class="text-primary font-semibold underline hover:text-accent transition-colors">Claim Your Brand</a></p>
     </div>
   </section>
 
@@ -152,7 +152,7 @@
             <div class="w-full text-center mb-3">BRAND PARTNERSHIP STANDARDS (EACH OUT OF 20)</div>
             <div class="grid grid-cols-5 gap-1 w-full text-[10px] text-center font-bold text-text-caption">
               <div class="tooltip flex flex-col items-center justify-end leading-tight px-1 pb-1">
-                <span>Website</span><span>Standards</span>
+                <span>Brand.com</span><span>Standards</span>
                 <span class="tooltiptext">brand.com behavior</span>
               </div>
               <div class="tooltip flex flex-col items-center justify-end leading-tight px-1 pb-1">
@@ -180,12 +180,16 @@
         <!-- Rows rendered from data -->
         <div id="brand-rows"></div>
 
-        <!-- Show more -->
-        <div class="px-6 py-4 flex justify-center items-center hover:bg-background-paper transition-colors cursor-pointer border-t border-border-hairline">
-          <button id="show-more-btn" class="font-body-md text-body-md font-bold text-primary hover:opacity-70 transition-opacity flex items-center gap-2">
-            <span>Show more brands</span>
-            <span class="material-symbols-outlined text-xl">expand_more</span>
-          </button>
+        <!-- Gated rows (blurred) -->
+        <div id="gated-rows" class="relative">
+          <div id="gated-blur" class="pointer-events-none select-none" style="filter: blur(6px); opacity: 0.5;"></div>
+          <div id="gate-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-surface-card via-surface-card/90 to-transparent z-10 px-6 py-10">
+            <span class="material-symbols-outlined text-4xl text-primary mb-3">lock</span>
+            <h3 class="font-headline-md text-headline-md text-primary mb-2 text-center">See all brand rankings</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-5 text-center max-w-md">Create a free account to view the full leaderboard, detailed scores, and brand comparisons.</p>
+            <a href="signin.html" class="bg-primary text-on-primary font-semibold px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors">Create Free Account</a>
+            <p class="font-caption text-caption text-text-caption mt-3">Already have an account? <a href="signin.html" class="text-primary hover:underline">Sign in</a></p>
+          </div>
         </div>
       </div>
     </div>
@@ -200,54 +204,125 @@
     <div class="mb-16">
       <h2 class="font-headline-md text-headline-md mb-6 border-b border-border-hairline pb-2">Recent Reviews</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter" id="recent-reviews"></div>
+      <div id="gated-reviews" class="relative hidden mt-gutter">
+        <div id="gated-reviews-blur" class="grid grid-cols-1 md:grid-cols-2 gap-gutter pointer-events-none select-none" style="filter: blur(6px); opacity: 0.5;"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-background via-background/90 to-transparent z-10 px-6 py-10">
+          <span class="material-symbols-outlined text-4xl text-primary mb-3">lock</span>
+          <h3 class="font-headline-md text-headline-md text-primary mb-2 text-center">See all reviews</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-5 text-center max-w-md">Create a free account to read every retailer review, see detailed scores, and track brands over time.</p>
+          <a href="signin.html" class="bg-primary text-on-primary font-semibold px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors">Create Free Account</a>
+          <p class="font-caption text-caption text-text-caption mt-3">Already have an account? <a href="signin.html" class="text-primary hover:underline">Sign in</a></p>
+        </div>
+      </div>
     </div>
 
     <!-- CTAs Band -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-8">
-      <div class="border border-border-hairline p-8 md:p-12 rounded bg-surface-card flex flex-col items-start justify-center">
-        <h3 class="font-headline-lg text-headline-lg mb-4">I'm a retailer. Review a brand you carry.</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant mb-6">Contribute your experience to the index. Your review is anonymous and helps improve brand practices.</p>
-        <a href="submit.html" class="bg-primary text-on-primary px-6 py-3 rounded font-bold font-body-md hover:bg-primary/90 transition-colors inline-block">Review a Brand</a>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-12">
+      <div class="bg-surface-card border border-border-hairline rounded-lg p-6 md:p-8 flex flex-col justify-between">
+        <div>
+          <span class="font-label-caps text-label-caps text-accent uppercase mb-3 block">For Retailers</span>
+          <h3 class="font-headline-sm text-headline-sm text-primary mb-2">Give your partners honest feedback</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-6">Rate 5 dimensions in under 2 minutes. Anonymous, verified, and it drives real change.</p>
+        </div>
+        <a href="submit.html" class="bg-primary text-on-primary font-semibold px-6 py-3 rounded hover:opacity-90 transition-opacity text-center active:scale-[0.98]">Review a Brand</a>
       </div>
-      <div class="border border-border-hairline p-8 md:p-12 rounded bg-surface-card flex flex-col items-start justify-center">
-        <h3 class="font-headline-lg text-headline-lg mb-4">I'm a brand. Claim Your Brand.</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant mb-6">Access detailed analytics, respond to aggregate feedback, and view benchmark data against competitors.</p>
-        <a href="brand.html?brand=Brooks#claim" class="border border-border-hairline text-primary bg-transparent px-6 py-3 rounded font-bold font-body-md hover:bg-surface-variant transition-colors inline-block">Claim Your Brand</a>
+      <div class="bg-surface-card border border-border-hairline rounded-lg p-6 md:p-8 flex flex-col justify-between">
+        <div>
+          <span class="font-label-caps text-label-caps text-accent uppercase mb-3 block">For Brands</span>
+          <h3 class="font-headline-sm text-headline-sm text-primary mb-2">See how retailers rate your support</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-6">Claim your brand to access detailed scores, benchmark against competitors, and respond to feedback.</p>
+        </div>
+        <a href="signin.html" class="bg-primary text-on-primary font-semibold px-6 py-3 rounded hover:opacity-90 transition-opacity text-center active:scale-[0.98]">Claim Your Brand</a>
       </div>
     </div>
 
-    <!-- Partners & Sponsors -->
-    <div class="mb-8">
-      <h2 class="font-headline-md text-headline-md mb-6 border-b border-border-hairline pb-2">Partners & Sponsors</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
-        <a href="https://endvr.io" target="_blank" rel="noopener" class="group border border-border-hairline rounded bg-surface-card p-6 flex flex-col items-start hover:border-primary/30 transition-colors">
-          <div class="h-10 flex items-center mb-4">
-            <img src="https://cdn.brandfetch.io/endvr.io/w/200/h/40" alt="ENDVR" class="h-7 object-contain" onerror="this.outerHTML='<span class=\'font-bold text-lg text-primary\'>ENDVR</span>'">
-          </div>
-          <p class="font-caption text-caption text-on-surface-variant mb-4 flex-grow">The platform that helps brands invest in the shop floor. Incentives, education, and sell-through tools for retail associates.</p>
-          <span class="font-caption text-caption text-primary group-hover:underline">Learn more &rarr;</span>
-        </a>
-        <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="group border border-border-hairline rounded bg-surface-card p-6 flex flex-col items-start hover:border-primary/30 transition-colors">
-          <div class="h-10 flex items-center mb-4">
-            <img src="https://cdn.brandfetch.io/outsizeconsulting.com/w/200/h/40" alt="Outsize Consulting" class="h-7 object-contain" onerror="this.outerHTML='<span class=\'font-bold text-lg text-primary\'>Outsize</span>'">
-          </div>
-          <p class="font-caption text-caption text-on-surface-variant mb-4 flex-grow">Strategic advisory for outdoor and active brands navigating wholesale, DTC, and channel growth.</p>
-          <span class="font-caption text-caption text-primary group-hover:underline">Learn more &rarr;</span>
-        </a>
-        <a href="https://www.locally.com" target="_blank" rel="noopener" class="group border border-border-hairline rounded bg-surface-card p-6 flex flex-col items-start hover:border-primary/30 transition-colors">
-          <div class="h-10 flex items-center mb-4">
-            <img src="https://cdn.brandfetch.io/locally.com/w/200/h/40" alt="Locally" class="h-7 object-contain" onerror="this.outerHTML='<span class=\'font-bold text-lg text-primary\'>Locally</span>'">
-          </div>
-          <p class="font-caption text-caption text-on-surface-variant mb-4 flex-grow">Connecting shoppers, brands, and stores. Real-time local inventory and online-to-offline shopping tools.</p>
-          <span class="font-caption text-caption text-primary group-hover:underline">Learn more &rarr;</span>
-        </a>
-        <a href="https://www.lightspeedhq.com" target="_blank" rel="noopener" class="group border border-border-hairline rounded bg-surface-card p-6 flex flex-col items-start hover:border-primary/30 transition-colors">
-          <div class="h-10 flex items-center mb-4">
-            <img src="https://cdn.brandfetch.io/lightspeedhq.com/w/200/h/40" alt="Lightspeed" class="h-7 object-contain" onerror="this.outerHTML='<span class=\'font-bold text-lg text-primary\'>Lightspeed</span>'">
-          </div>
-          <p class="font-caption text-caption text-on-surface-variant mb-4 flex-grow">The unified POS and commerce platform powering specialty retail operations, inventory, and payments.</p>
-          <span class="font-caption text-caption text-primary group-hover:underline">Learn more &rarr;</span>
-        </a>
+    <!-- Solutions to Improve Your Score -->
+    <div class="mb-8 bg-surface-container-low -mx-margin-mobile md:-mx-margin-desktop px-margin-mobile md:px-margin-desktop py-16 rounded-none">
+      <div class="max-w-[1280px] mx-auto">
+        <div class="mb-10">
+          <span class="font-label-caps text-label-caps text-accent uppercase">Sponsored Partners</span>
+          <h2 class="font-headline-lg text-headline-lg text-primary mt-2">Solutions to help improve your index score</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-2">Proven tools and expertise that help brands strengthen their wholesale partnerships and climb the leaderboard.</p>
+        </div>
+
+        <!-- 3x1: ENDVR, Locally, Outsize -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- ENDVR -->
+          <a href="https://endvr.io" target="_blank" rel="noopener" class="group bg-surface-card border border-border-hairline rounded-lg p-6 flex flex-col hover:shadow-card-hover hover:border-primary/20 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="endvr-logo.webp" alt="ENDVR" class="h-8 rounded">
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Shop Floor Support</span>
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Brand.com Standards</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-5 flex-grow">The platform brands use to launch mobile-first SPIFs, product training, and cashback campaigns that drive sell-through at retail. Used by 160+ brands to activate the shop floor.</p>
+            <span class="inline-flex items-center gap-2 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
+              Support the store floor
+              <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </span>
+          </a>
+
+          <!-- Locally -->
+          <a href="https://www.locally.com" target="_blank" rel="noopener" class="group bg-surface-card border border-border-hairline rounded-lg p-6 flex flex-col hover:shadow-card-hover hover:border-primary/20 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="https://www.locally.com/img/locally-logo-2022.png" alt="Locally" class="h-8 rounded object-contain">
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Shop Local Support</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-5 flex-grow">The dealer locator and local inventory platform that puts your retailers on every product page. Shoppers see what's in stock nearby and buy local instead of from your .com.</p>
+            <span class="inline-flex items-center gap-2 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
+              Power your dealer locator
+              <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </span>
+          </a>
+
+          <!-- Outsize Consulting -->
+          <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="group bg-surface-card border border-border-hairline rounded-lg p-6 flex flex-col hover:shadow-card-hover hover:border-primary/20 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="https://static1.squarespace.com/static/66968cb18f45862ed4e165f3/t/6696bb4354fe535b592dffca/1721154374463/OC+Logo+Banner.png?format=300w" alt="Outsize Consulting" class="h-8 rounded object-contain">
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Brand.com Standards</span>
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Pricing Standards</span>
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Pro Deal Standards</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-5 flex-grow">Strategic advisory for outdoor and active brands navigating wholesale pricing architecture, MAP enforcement, and pro deal discipline.</p>
+            <span class="inline-flex items-center gap-2 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
+              Get expert wholesale strategy
+              <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </span>
+          </a>
+        </div>
+
+        <!-- Lightspeed & NuORDER removed for now — not approaching yet
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[860px] mx-auto mt-6">
+          <a href="https://www.lightspeedhq.com" target="_blank" rel="noopener" class="group bg-surface-card border border-border-hairline rounded-lg p-6 flex flex-col hover:shadow-card-hover hover:border-primary/20 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="https://www.lightspeedhq.com/favicon.svg?v=5" alt="Lightspeed" class="h-8 w-8 rounded">
+              <span class="font-bold text-lg text-primary tracking-tight">Lightspeed</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Shop Floor Support</span>
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Pricing Standards</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-5 flex-grow">POS, inventory, and unified commerce for the independent retailers who carry your brand.</p>
+            <span class="inline-flex items-center gap-2 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">See how Lightspeed powers specialty retail<span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+          </a>
+          <a href="https://www.nuorder.com" target="_blank" rel="noopener" class="group bg-surface-card border border-border-hairline rounded-lg p-6 flex flex-col hover:shadow-card-hover hover:border-primary/20 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="https://www.nuorder.com/wp-content/uploads/2020/08/NuORDER_byLightspeed_BlackRGB_Horizontal_NuOrder_Black_Horizontal_NuOrder_Black_Horizontal-1.svg" alt="NuORDER" class="h-7 rounded object-contain">
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Pricing Standards</span>
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Shop Floor Support</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-5 flex-grow">B2B commerce platform. Digital line sheets, wholesale ordering, and inventory visibility.</p>
+            <span class="inline-flex items-center gap-2 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">Streamline your B2B ordering<span class="material-symbols-outlined text-lg">arrow_forward</span></span>
+          </a>
+        </div>
+        -->
       </div>
     </div>
 
@@ -275,7 +350,7 @@
       <div>
         <h4 class="font-body-md font-semibold text-primary mb-3">Learn</h4>
         <ul class="space-y-2">
-          <li><a href="methodology.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Methodology</a></li>
+          <li><a href="methodology.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">About & Methodology</a></li>
         </ul>
       </div>
       <div>
@@ -283,13 +358,18 @@
         <p class="text-sm text-on-surface-variant">Transparent, independent ratings of how brands support specialty retail.</p>
       </div>
     </div>
-    <div class="border-t border-border-hairline pt-6 pb-4 flex flex-col items-center gap-3">
-      <span class="text-xs text-on-surface-variant uppercase tracking-wider font-semibold">Sponsored by</span>
-      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-        <a href="https://endvr.io" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/endvr.io/w/200/h/40" alt="ENDVR" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>ENDVR</span>'"></a>
-        <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/outsizeconsulting.com/w/200/h/40" alt="Outsize Consulting" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Outsize</span>'"></a>
-        <a href="https://www.locally.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/locally.com/w/200/h/40" alt="Locally" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Locally</span>'"></a>
-        <a href="https://www.lightspeedhq.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/lightspeedhq.com/w/200/h/40" alt="Lightspeed" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Lightspeed</span>'"></a>
+    <div class="border-t border-border-hairline pt-8 pb-6 flex flex-col items-center gap-4">
+      <span class="font-label-caps text-label-caps text-text-caption uppercase">Sponsored by</span>
+      <div class="flex flex-wrap items-center justify-center gap-12 md:gap-16">
+        <a href="https://endvr.io" target="_blank" rel="noopener" class="hover:opacity-80 transition-opacity">
+          <img src="endvr-logo.webp" alt="ENDVR" class="h-14 object-contain">
+        </a>
+        <a href="https://www.locally.com" target="_blank" rel="noopener" class="hover:opacity-80 transition-opacity">
+          <img src="https://www.locally.com/img/locally-logo-2022.png" alt="Locally" class="h-14 object-contain">
+        </a>
+        <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="hover:opacity-80 transition-opacity">
+          <img src="https://static1.squarespace.com/static/66968cb18f45862ed4e165f3/t/6696bb4354fe535b592dffca/1721154374463/OC+Logo+Banner.png?format=300w" alt="Outsize Consulting" class="h-14 object-contain">
+        </a>
       </div>
     </div>
     <div class="border-t border-border-hairline pt-4 text-center">
@@ -312,8 +392,6 @@
   let lbFilter = "All";
   let lbSearch = "";
   let lbSort = "score";
-  let lbExpanded = false;
-  const LB_PAGE = 10;
 
   function changeNumeric(c) { return parseInt(c, 10) || 0; }
 
@@ -372,7 +450,10 @@
   }
 
   const container = document.getElementById("brand-rows");
-  const showMoreBtn = document.querySelector('#show-more-btn');
+  const gatedBlur = document.getElementById("gated-blur");
+  const gatedRows = document.getElementById("gated-rows");
+  const GATE_LIMIT = 10;
+  const GATED_PREVIEW = 4;
 
   function getFiltered() {
     let list = [...BRANDS];
@@ -386,17 +467,15 @@
 
   function renderLeaderboard() {
     const filtered = getFiltered();
-    const limit = lbExpanded ? filtered.length : Math.min(LB_PAGE, filtered.length);
-    container.innerHTML = filtered.slice(0, limit).map((b, i) => rowMarkup(b, i + 1)).join("");
+    const visible = filtered.slice(0, Math.min(GATE_LIMIT, filtered.length));
+    container.innerHTML = visible.map((b, i) => rowMarkup(b, i + 1)).join("");
     bindRowEvents();
-    if (showMoreBtn) {
-      if (filtered.length <= LB_PAGE) {
-        showMoreBtn.closest('.px-6').style.display = 'none';
-      } else {
-        showMoreBtn.closest('.px-6').style.display = '';
-        showMoreBtn.querySelector('span:first-child').textContent = lbExpanded ? 'Show fewer brands' : 'Show more brands';
-        showMoreBtn.querySelector('.material-symbols-outlined').textContent = lbExpanded ? 'expand_less' : 'expand_more';
-      }
+    const remaining = filtered.slice(GATE_LIMIT);
+    if (remaining.length > 0 && gatedBlur && gatedRows) {
+      gatedRows.classList.remove("hidden");
+      gatedBlur.innerHTML = remaining.slice(0, GATED_PREVIEW).map((b, i) => rowMarkup(b, GATE_LIMIT + i + 1)).join("");
+    } else if (gatedRows) {
+      gatedRows.classList.add("hidden");
     }
   }
 
@@ -445,11 +524,6 @@
     lbSort = e.target.value;
     renderLeaderboard();
   });
-
-  // Show more / fewer
-  if (showMoreBtn) {
-    showMoreBtn.addEventListener('click', () => { lbExpanded = !lbExpanded; renderLeaderboard(); });
-  }
 
   renderLeaderboard();
 
@@ -504,7 +578,7 @@
     }
   ];
 
-  document.getElementById("recent-reviews").innerHTML = RECENT_REVIEWS.map(r => {
+  function reviewCardHtml(r) {
     const b = getBrandByName(r.brand);
     if (!b) return "";
     const badges = DIMENSIONS.map((d, i) => `
@@ -531,8 +605,16 @@
         <span class="font-caption text-caption text-text-caption">${r.ago}</span>
       </a>
     `;
-  }).join("");
+  }
+  document.getElementById("recent-reviews").innerHTML = RECENT_REVIEWS.slice(0, 2).map(reviewCardHtml).join("");
+  const gatedReviewsEl = document.getElementById("gated-reviews");
+  const gatedReviewsBlur = document.getElementById("gated-reviews-blur");
+  if (gatedReviewsEl && gatedReviewsBlur && RECENT_REVIEWS.length > 2) {
+    gatedReviewsBlur.innerHTML = RECENT_REVIEWS.slice(2).map(reviewCardHtml).join("");
+    gatedReviewsEl.classList.remove("hidden");
+  }
 </script>
+<script src="signin-modal.js"></script>
 
 </body>
 </html>

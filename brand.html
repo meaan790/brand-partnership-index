@@ -82,7 +82,7 @@
       <div>
         <h4 class="font-body-md font-semibold text-primary mb-3">Learn</h4>
         <ul class="space-y-2">
-          <li><a href="methodology.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">Methodology</a></li>
+          <li><a href="methodology.html" class="text-sm text-on-surface-variant hover:text-primary transition-colors">About & Methodology</a></li>
         </ul>
       </div>
       <div>
@@ -90,13 +90,18 @@
         <p class="text-sm text-on-surface-variant">Transparent, independent ratings of how brands support specialty retail.</p>
       </div>
     </div>
-    <div class="border-t border-border-hairline pt-6 pb-4 flex flex-col items-center gap-3">
-      <span class="text-xs text-on-surface-variant uppercase tracking-wider font-semibold">Sponsored by</span>
-      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-        <a href="https://endvr.io" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/endvr.io/w/200/h/40" alt="ENDVR" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>ENDVR</span>'"></a>
-        <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/outsizeconsulting.com/w/200/h/40" alt="Outsize Consulting" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Outsize</span>'"></a>
-        <a href="https://www.locally.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/locally.com/w/200/h/40" alt="Locally" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Locally</span>'"></a>
-        <a href="https://www.lightspeedhq.com" target="_blank" rel="noopener" class="sponsor-logo"><img src="https://cdn.brandfetch.io/lightspeedhq.com/w/200/h/40" alt="Lightspeed" class="h-6 md:h-7 object-contain" onerror="this.outerHTML='<span class=\'font-semibold text-sm text-on-surface-variant\'>Lightspeed</span>'"></a>
+    <div class="border-t border-border-hairline pt-8 pb-6 flex flex-col items-center gap-4">
+      <span class="font-label-caps text-label-caps text-text-caption uppercase">Sponsored by</span>
+      <div class="flex flex-wrap items-center justify-center gap-12 md:gap-16">
+        <a href="https://endvr.io" target="_blank" rel="noopener" class="hover:opacity-80 transition-opacity">
+          <img src="endvr-logo.webp" alt="ENDVR" class="h-14 object-contain">
+        </a>
+        <a href="https://www.locally.com" target="_blank" rel="noopener" class="hover:opacity-80 transition-opacity">
+          <img src="https://www.locally.com/img/locally-logo-2022.png" alt="Locally" class="h-14 object-contain">
+        </a>
+        <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="hover:opacity-80 transition-opacity">
+          <img src="https://static1.squarespace.com/static/66968cb18f45862ed4e165f3/t/6696bb4354fe535b592dffca/1721154374463/OC+Logo+Banner.png?format=300w" alt="Outsize Consulting" class="h-14 object-contain">
+        </a>
       </div>
     </div>
     <div class="border-t border-border-hairline pt-4 text-center">
@@ -175,7 +180,7 @@
         <span class="font-label-caps text-label-caps bg-surface-container text-on-surface-variant px-3 py-1.5 rounded-full border border-border-hairline">BRAND UNCLAIMED</span>
         <h4 class="font-headline-md text-headline-md text-primary m-0">${brand.name} hasn't claimed this brand yet.</h4>
         <p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
-          Scores on this page come from verified retailer reviews. ${brand.name}'s public statements on Website Standards, Pricing, Shop Local Support, Shop Floor Support, and Pro Deal Standards will appear here once a representative claims the brand.
+          Scores on this page come from verified retailer reviews. ${brand.name}'s public statements on Brand.com Standards, Pricing, Shop Local Support, Shop Floor Support, and Pro Deal Standards will appear here once a representative claims the brand.
         </p>
         <div class="flex flex-wrap gap-3 mt-2">
           <a href="signin.html?type=brand" class="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-primary/90 transition-colors inline-block">
@@ -190,31 +195,39 @@
   }
 
   function commitments(brand) {
-    // Claimed brands: derive from score (better partners commit to more pledges).
-    // Unclaimed brands: 0 of 4 — they haven't formally pledged anything.
-    let pledgedCount = 0;
+    let activeCount = 0;
     if (brand.claimed) {
-      if (brand.score >= 80) pledgedCount = 4;
-      else if (brand.score >= 70) pledgedCount = 3;
-      else if (brand.score >= 60) pledgedCount = 2;
-      else if (brand.score >= 50) pledgedCount = 1;
+      if (brand.score >= 80) activeCount = 4;
+      else if (brand.score >= 70) activeCount = 3;
+      else if (brand.score >= 60) activeCount = 2;
+      else if (brand.score >= 50) activeCount = 1;
     }
-    const items = PLEDGES.map((p, i) => {
-      const checked = i < pledgedCount;
+    const items = COMMITMENTS.map((c, i) => {
+      const active = i < activeCount;
       return `
-        <div class="flex items-center gap-3 p-3 ${checked ? "bg-surface-container-low" : "bg-background-paper opacity-60"} border border-border-hairline rounded">
-          <span class="material-symbols-outlined ${checked ? "text-score-high" : "text-text-caption"}" ${checked ? `data-weight="fill"` : ""}>${checked ? "check_circle" : "radio_button_unchecked"}</span>
-          <span class="font-data-tabular text-data-tabular ${checked ? "text-primary" : "text-text-caption"}">${p}</span>
+        <div class="flex items-start gap-3 p-3 ${active ? "bg-surface-container-low" : "bg-background-paper opacity-60"} border border-border-hairline rounded">
+          <span class="material-symbols-outlined ${active ? "text-score-high" : "text-text-caption"} mt-0.5" ${active ? `data-weight="fill"` : ""}>${active ? "check_circle" : "radio_button_unchecked"}</span>
+          <div class="flex flex-col">
+            <span class="font-data-tabular text-data-tabular ${active ? "text-primary" : "text-text-caption"}">${c}</span>
+            ${active ? `<span class="font-caption text-caption text-on-surface-variant mt-1">Added by ${brand.name}</span>` : ""}
+          </div>
         </div>
       `;
     }).join("");
+    const addBtn = brand.claimed ? `
+      <button type="button" class="flex items-center gap-2 mt-3 px-3 py-2 border border-dashed border-border-hairline rounded text-primary font-caption text-caption hover:bg-surface-container-low transition-colors w-full justify-center cursor-pointer">
+        <span class="material-symbols-outlined text-base">add</span>
+        Add a commitment
+      </button>
+    ` : "";
     return `
       <div class="lg:col-span-4 bg-surface-card border border-border-hairline p-card-padding rounded">
         <div class="flex items-end justify-between mb-6">
           <h3 class="font-headline-md text-headline-md text-primary m-0">Public Commitments</h3>
-          <span class="font-caption text-caption text-text-caption">${pledgedCount} of ${PLEDGES.length}</span>
+          <span class="font-caption text-caption text-text-caption">${activeCount} active</span>
         </div>
         <div class="flex flex-col gap-3">${items}</div>
+        ${addBtn}
       </div>
     `;
   }
@@ -414,35 +427,57 @@
     ${reviews(brand)}
 
     <section class="mb-section-gap">
-      <div class="border border-border-hairline rounded bg-surface-card p-card-padding">
-        <div class="flex flex-col md:flex-row md:items-center gap-4 mb-5">
-          <span class="material-symbols-outlined text-primary" style="font-size:28px">rocket_launch</span>
+      <div class="bg-surface-container-low rounded-lg p-8">
+        <div class="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+          <span class="material-symbols-outlined text-accent" style="font-size:32px">rocket_launch</span>
           <div>
-            <h3 class="font-headline-md text-headline-md text-primary m-0">Looking to improve your scores?</h3>
-            <p class="font-body-md text-body-md text-on-surface-variant mt-1">Our partners help brands strengthen their wholesale partnerships.</p>
+            <span class="font-label-caps text-label-caps text-accent uppercase">Sponsored</span>
+            <h3 class="font-headline-md text-headline-md text-primary mt-1">Solutions to improve your scores</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-1">Tools and expertise that help brands strengthen their wholesale partnerships.</p>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <a href="https://endvr.io" target="_blank" rel="noopener" class="group flex items-start gap-3 p-4 rounded border border-border-hairline hover:border-primary/30 transition-colors">
-            <img src="https://cdn.brandfetch.io/endvr.io/w/200/h/40" alt="ENDVR" class="h-6 object-contain mt-0.5 shrink-0" onerror="this.outerHTML='<span class=\'font-bold text-sm text-primary shrink-0\'>ENDVR</span>'">
-            <div>
-              <p class="font-caption text-caption text-on-surface-variant">Boost <strong>Shop Floor Support</strong> with incentives, education, and sell-through tools for retail associates.</p>
-              <span class="font-caption text-caption text-primary group-hover:underline mt-1 inline-block">Learn more &rarr;</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <a href="https://endvr.io" target="_blank" rel="noopener" class="group bg-surface-card rounded-lg p-5 border border-border-hairline hover:shadow-card-hover hover:border-primary/20 transition-all flex flex-col">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="endvr-logo.webp" alt="ENDVR" class="h-7 rounded">
             </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Shop Floor Support</span>
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Brand.com Standards</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">Mobile incentives, education, and sell-through tools. Consumer cashback routes demand to retail doors instead of brand.com.</p>
+            <span class="inline-flex items-center gap-1 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
+              See how top brands use ENDVR
+              <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </span>
           </a>
-          <a href="https://www.locally.com" target="_blank" rel="noopener" class="group flex items-start gap-3 p-4 rounded border border-border-hairline hover:border-primary/30 transition-colors">
-            <img src="https://cdn.brandfetch.io/locally.com/w/200/h/40" alt="Locally" class="h-6 object-contain mt-0.5 shrink-0" onerror="this.outerHTML='<span class=\'font-bold text-sm text-primary shrink-0\'>Locally</span>'">
-            <div>
-              <p class="font-caption text-caption text-on-surface-variant">Improve <strong>Shop Local Support</strong> with real-time local inventory and online-to-offline shopping tools.</p>
-              <span class="font-caption text-caption text-primary group-hover:underline mt-1 inline-block">Learn more &rarr;</span>
+          <a href="https://www.locally.com" target="_blank" rel="noopener" class="group bg-surface-card rounded-lg p-5 border border-border-hairline hover:shadow-card-hover hover:border-primary/20 transition-all flex flex-col">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="https://www.locally.com/img/locally-logo-2022.png" alt="Locally" class="h-7 rounded object-contain">
             </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Shop Local Support</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">Real-time local inventory on product pages, store finder tools, and online-to-offline demand routing.</p>
+            <span class="inline-flex items-center gap-1 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
+              See the Locally platform
+              <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </span>
           </a>
-          <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="group flex items-start gap-3 p-4 rounded border border-border-hairline hover:border-primary/30 transition-colors">
-            <img src="https://cdn.brandfetch.io/outsizeconsulting.com/w/200/h/40" alt="Outsize Consulting" class="h-6 object-contain mt-0.5 shrink-0" onerror="this.outerHTML='<span class=\'font-bold text-sm text-primary shrink-0\'>Outsize</span>'">
-            <div>
-              <p class="font-caption text-caption text-on-surface-variant">Strategic advisory for outdoor and active brands navigating wholesale, DTC, and channel growth.</p>
-              <span class="font-caption text-caption text-primary group-hover:underline mt-1 inline-block">Learn more &rarr;</span>
+          <a href="https://www.outsizeconsulting.com" target="_blank" rel="noopener" class="group bg-surface-card rounded-lg p-5 border border-border-hairline hover:shadow-card-hover hover:border-primary/20 transition-all flex flex-col">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="https://static1.squarespace.com/static/66968cb18f45862ed4e165f3/t/6696bb4354fe535b592dffca/1721154374463/OC+Logo+Banner.png?format=300w" alt="Outsize Consulting" class="h-7 rounded object-contain">
             </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Brand.com Standards</span>
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Pricing Standards</span>
+              <span class="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">Pro Deal Standards</span>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">Strategic advisory for outdoor and active brands navigating wholesale pricing and pro deal discipline.</p>
+            <span class="inline-flex items-center gap-1 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
+              Get expert wholesale strategy
+              <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </span>
           </a>
         </div>
       </div>
@@ -523,6 +558,7 @@
     close.addEventListener('click', ()=>{ menu.classList.add('hidden'); menu.classList.remove('flex'); });
   })();
 </script>
+<script src="signin-modal.js"></script>
 
 </body>
 </html>
