@@ -406,6 +406,12 @@
     const dimsHtml = b.dims.map(d =>
       `<div class="h-6 ${tierBg(d)} rounded flex items-center justify-center">${d}/20</div>`
     ).join("");
+    const mobileDimsHtml = b.dims.map((d, i) =>
+      `<div class="flex items-center justify-between py-1.5 ${i < b.dims.length - 1 ? 'border-b border-border-hairline' : ''}">
+        <span class="font-body-md text-body-md text-on-surface-variant">${DIMENSIONS[i].name}</span>
+        <span class="${tierBg(d)} px-2 py-0.5 rounded font-data-tabular text-sm">${d}/20</span>
+      </div>`
+    ).join("");
     const summary = autoSummary(b);
     const headerLabel = b.summary ? "Top Performance Summary" : "Performance Summary";
     const brandHref = `brand.html?brand=${encodeURIComponent(b.name)}`;
@@ -452,6 +458,14 @@
           </div>
         </div>
         <div class="brand-detail hidden px-4 md:px-6 pb-6 pt-2 md:ml-14 border-t border-border-hairline mx-4 md:mx-6 mt-2 flex flex-col gap-4">
+          <!-- Mobile dimension scores -->
+          <div class="md:hidden bg-background-paper rounded-lg border border-border-hairline p-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-label-caps text-label-caps text-text-caption uppercase">Dimension Scores</span>
+              <span class="font-caption text-caption ${changeClass(b.change)}">${b.change}</span>
+            </div>
+            ${mobileDimsHtml}
+          </div>
           <div class="flex items-center justify-between">
             <span class="font-caption text-caption text-text-caption">Based on <strong class="text-primary-container">${b.reviews} reviews</strong> from verified retailers.</span>
             <a href="${brandHref}" class="font-caption text-caption text-primary font-bold hover:underline inline-flex items-center gap-1">
