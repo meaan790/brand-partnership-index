@@ -82,6 +82,11 @@ export function genDist(score: number, total: number): number[] {
   return counts;
 }
 
+export const tierBg = tierClass20;
+export const tierBg100 = tierClass100;
+export const tierBar = tierBarClass;
+export const tierText = tierTextClass;
+
 export function validateWorkEmail(email: string, personalDomains: Set<string>): { ok: boolean; reason?: string } {
   const value = (email || "").trim();
   if (!value) return { ok: false, reason: "Please enter your work email." };
