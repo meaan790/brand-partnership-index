@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* ── Core palette ── */
+  --color-primary: #0F1B2E;
+  --color-on-primary: #ffffff;
+  --color-accent: #D4A24C;
+  --color-on-accent: #1a1200;
+  --color-accent-muted: #D4A24C26;
+
+  /* ── Surfaces ── */
+  --color-background: #fbf8fa;
+  --color-background-paper: #FAFAF7;
+  --color-surface-card: #FFFFFF;
+  --color-surface-container-low: #f5f3f5;
+  --color-surface-container: #f0edef;
+  --color-surface-variant: #e4e2e4;
+
+  /* ── Text ── */
+  --color-foreground: #181A1F;
+  --color-text-main: #181A1F;
+  --color-text-caption: #6E7480;
+  --color-on-surface-variant: #45474c;
+
+  /* ── Borders ── */
+  --color-border-hairline: #E4E2DA;
+  --color-outline: #75777d;
+  --color-outline-variant: #c5c6cd;
+
+  /* ── Score tiers ── */
+  --color-score-high: #3F7556;
+  --color-score-mid: #C8A53D;
+  --color-score-low: #A24E3C;
+
+  /* ── Functional ── */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-link-endvr: #7C4DFF;
+
+  /* ── Fonts ── */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+
+  /* ── Shadows ── */
+  --shadow-card-hover: 0 2px 12px rgba(15, 27, 46, 0.08);
+  --shadow-nav: 0 1px 3px rgba(15, 27, 46, 0.06);
+}
+
+/* ── Material Symbols ── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined[data-weight="fill"],
+.star-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ── Step transition animations ── */
+@keyframes slideOutLeft  { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(-40px); } }
+@keyframes slideInRight  { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
+@keyframes slideOutRight { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(40px); } }
+@keyframes slideInLeft   { from { opacity:0; transform:translateX(-40px); } to { opacity:1; transform:translateX(0); } }
+
+.step-exit-fwd  { animation: slideOutLeft 200ms ease-in forwards; }
+.step-enter-fwd { animation: slideInRight  250ms ease-out forwards; }
+.step-exit-bwd  { animation: slideOutRight 200ms ease-in forwards; }
+.step-enter-bwd { animation: slideInLeft   250ms ease-out forwards; }
+
+/* ── Selection color ── */
+::selection {
+  background-color: #d7e3fd;
+  color: #101c2f;
+}
+
+/* ── Scrollbar hiding ── */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
