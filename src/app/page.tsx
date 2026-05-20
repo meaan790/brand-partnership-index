@@ -36,6 +36,7 @@ const RECENT_REVIEWS = [
     brand: "YETI",
     retailer: "Mountain Sports Shop",
     location: "Boulder, CO",
+    country: "US",
     ago: "2 hours ago",
     dimScores: [18, 19, 16, 18, 15],
     quote:
@@ -45,6 +46,7 @@ const RECENT_REVIEWS = [
     brand: "Brooks",
     retailer: "Runners Roost",
     location: "Austin, TX",
+    country: "US",
     ago: "5 hours ago",
     dimScores: [17, 18, 19, 20, 16],
     quote:
@@ -54,6 +56,7 @@ const RECENT_REVIEWS = [
     brand: "Salomon",
     retailer: "Alpine Ascents",
     location: "Seattle, WA",
+    country: "US",
     ago: "1 day ago",
     dimScores: [14, 15, 12, 16, 9],
     quote:
@@ -63,6 +66,7 @@ const RECENT_REVIEWS = [
     brand: "Hoka",
     retailer: "Footzone",
     location: "Bend, OR",
+    country: "US",
     ago: "2 days ago",
     dimScores: [19, 18, 16, 15, 14],
     quote:
@@ -260,9 +264,16 @@ export default async function HomePage() {
                   <p className="font-body-md text-body-md text-on-surface-variant italic">
                     &ldquo;{r.quote}&rdquo;
                   </p>
-                  <span className="font-caption text-caption text-text-caption">
-                    {r.ago}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-caption text-caption text-text-caption">
+                      {r.ago}
+                    </span>
+                    {r.country && (
+                      <span className="font-label-caps text-[10px] bg-surface-container-low text-text-caption px-2 py-0.5 rounded-full">
+                        {r.country}
+                      </span>
+                    )}
+                  </div>
                 </Link>
               );
             })}

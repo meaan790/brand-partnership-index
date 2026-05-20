@@ -17,27 +17,38 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/?error=auth_failed`);
   }
 
-  // Ensure profile exists (belt-and-suspenders — trigger should handle this)
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("id, role")
-      .eq("id", user.id)
-      .single();
+  if (!user) {
+    return NextResponse.redirect(`${origin}/?error=no_user`);
+  }
 
-    if (!profile) {
-      const role = user.user_metadata?.role || "retailer";
-      await supabase.from("profiles").insert({
-        id: user.id,
-        email: user.email,
-        role,
-        company_name: "",
-      });
-    }
+  // Ensure profile exists
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("id, role, company_name, country")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile) {
+    const role = user.user_metadata?.role || "retailer";
+    await supabase.from("profiles").insert({
+      id: user.id,
+      email: user.email,
+      role,
+      company_name: "",
+    });
+
+    // New user — send to onboarding
+    return NextResponse.redirect(`${origin}/onboarding`);
+  }
+
+  // Existing user with incomplete profile — send to onboarding
+  const isIncomplete = !profile.company_name && !profile.country;
+  if (isIncomplete) {
+    return NextResponse.redirect(`${origin}/onboarding`);
   }
 
   const destination = redirect && redirect.startsWith("/") ? redirect : "/dashboard";

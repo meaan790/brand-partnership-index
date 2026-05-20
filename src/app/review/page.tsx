@@ -124,6 +124,20 @@ export default function ReviewPage() {
     if (!brand) setShowRatings(false);
   }, [brand, showRatings]);
 
+  async function searchBrandsDb(query: string): Promise<BrandResult[]> {
+    try {
+      const res = await fetch(`/api/brands?q=${encodeURIComponent(query)}`);
+      if (!res.ok) return [];
+      const data = await res.json();
+      return (data || []).map((b: any) => ({
+        name: b.name,
+        domain: b.domain,
+        icon: b.logo_url || `https://logo.clearbit.com/${b.domain}`,
+        inIndex: true,
+      }));
+    } catch { return []; }
+  }
+
   async function searchBrandfetchApi(query: string): Promise<any[]> {
     const trimmed = query.trim();
     if (trimmed.length < 2) return [];
@@ -146,15 +160,27 @@ export default function ReviewPage() {
     if (!q.trim() || q.trim().length < 2) { setBrandResults([]); setBrandSearching(false); return; }
     setBrandSearching(true);
     brandDebounceRef.current = setTimeout(async () => {
-      const lower = q.toLowerCase();
-      const indexMatches: BrandResult[] = SEED_BRANDS.filter((b) => b.name.toLowerCase().includes(lower))
-        .slice(0, 4).map((b) => ({ name: b.name, domain: b.domain, icon: `https://logo.clearbit.com/${b.domain}`, inIndex: true }));
+      // Priority 1: search the brands database
+      const dbMatches = await searchBrandsDb(q);
+      const dbDomains = new Set(dbMatches.map((r) => r.domain));
+
+      // Priority 2: Brandfetch for brands not yet in the index
       const remote = await searchBrandfetchApi(q);
       setBrandSearching(false);
-      const indexDomains = new Set(indexMatches.map((r) => r.domain));
-      const remoteFiltered: BrandResult[] = remote.filter((r: any) => r?.domain && !indexDomains.has(r.domain))
-        .slice(0, 6).map((r: any) => ({ name: r.name, domain: r.domain, icon: r.icon, inIndex: false }));
-      setBrandResults([...indexMatches, ...remoteFiltered]);
+      const remoteFiltered: BrandResult[] = remote
+        .filter((r: any) => r?.domain && !dbDomains.has(r.domain))
+        .slice(0, 6)
+        .map((r: any) => ({ name: r.name, domain: r.domain, icon: r.icon, inIndex: false }));
+
+      // Priority 3: manual add option if no exact match
+      const allResults = [...dbMatches, ...remoteFiltered];
+      const trimmed = q.trim();
+      const hasExactMatch = allResults.some((r) => r.name.toLowerCase() === trimmed.toLowerCase());
+      if (!hasExactMatch && trimmed.length >= 2) {
+        allResults.push({ name: trimmed, domain: "", inIndex: false });
+      }
+
+      setBrandResults(allResults);
     }, 250);
   }
 
@@ -274,18 +300,28 @@ export default function ReviewPage() {
               </div>
               {brandResults.length > 0 && (
                 <div className="absolute z-20 top-full mt-1 w-full bg-white border border-border-hairline rounded-xl shadow-xl max-h-80 overflow-y-auto">
-                  {brandResults.map((b) => (
-                    <button key={b.domain} onClick={() => selectBrand(b)}
+                  {brandResults.map((b) => {
+                    const isManualAdd = !b.domain;
+                    return (
+                    <button key={b.domain || `manual-${b.name}`} onClick={() => selectBrand(b)}
                       className="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-container-low transition-colors cursor-pointer text-left border-b border-border-hairline last:border-b-0">
-                      {b.icon ? (
+                      {isManualAdd ? (
+                        <span className="w-7 h-7 rounded bg-accent/10 flex items-center justify-center">
+                          <span className="material-symbols-outlined text-accent text-sm">add</span>
+                        </span>
+                      ) : b.icon ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img src={b.icon} alt="" className="w-7 h-7 rounded object-contain bg-white" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                       ) : (
                         <span className="w-7 h-7 rounded bg-surface-container-low flex items-center justify-center text-xs font-bold text-primary">{b.name[0]}</span>
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="font-body-md text-body-md text-on-background truncate">{b.name}</p>
-                        <p className="font-caption text-caption text-text-caption truncate">{b.domain}</p>
+                        <p className="font-body-md text-body-md text-on-background truncate">
+                          {isManualAdd ? `Add "${b.name}" as a new brand` : b.name}
+                        </p>
+                        <p className="font-caption text-caption text-text-caption truncate">
+                          {isManualAdd ? "Not in the index yet" : b.domain}
+                        </p>
                       </div>
                       {b.inIndex && (
                         <span className="font-label-caps text-label-caps text-score-high bg-score-high/10 px-2 py-0.5 rounded-full text-[10px] shrink-0 flex items-center gap-1">
@@ -293,7 +329,8 @@ export default function ReviewPage() {
                         </span>
                       )}
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>

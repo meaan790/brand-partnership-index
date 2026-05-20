@@ -2,7 +2,17 @@ import { createClient } from "@/lib/supabase/server";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const supabase = await createClient();
+  let supabase;
+  try {
+    supabase = await createClient();
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json(
+      { error: "Supabase not configured", details: msg },
+      { status: 503 },
+    );
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -11,16 +21,32 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await request.json();
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
   const { brand_id, brand_name, brand_domain, scores, pros, cons, status } =
     body;
 
-  if (!scores || typeof scores !== "object") {
+  if (!scores || typeof scores !== "object" || Object.keys(scores).length === 0) {
     return NextResponse.json(
       { error: "Scores are required" },
       { status: 400 },
     );
   }
+
+  // Fetch reviewer profile for location data
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("country, store_city")
+    .eq("id", user.id)
+    .single();
+
+  const reviewerCountry = profile?.country ?? null;
+  const reviewerCity = profile?.store_city ?? null;
 
   // Resolve brand — by ID or by name+domain (upsert)
   let resolvedBrandId = brand_id;
@@ -30,7 +56,7 @@ export async function POST(request: NextRequest) {
       .from("brands")
       .select("id")
       .eq("domain", brand_domain)
-      .single();
+      .maybeSingle();
 
     if (existing) {
       resolvedBrandId = existing.id;
@@ -52,12 +78,36 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (brandError) {
-        return NextResponse.json(
-          { error: "Failed to create brand", details: brandError.message },
-          { status: 500 },
-        );
+        // Slug collision — try with a suffix
+        if (brandError.code === "23505") {
+          const slugRetry = `${slug}-${Date.now().toString(36)}`;
+          const { data: retryBrand, error: retryError } = await supabase
+            .from("brands")
+            .insert({
+              name: brand_name,
+              slug: slugRetry,
+              domain: brand_domain,
+              categories: [],
+            })
+            .select("id")
+            .single();
+
+          if (retryError) {
+            return NextResponse.json(
+              { error: "Failed to create brand", details: retryError.message },
+              { status: 500 },
+            );
+          }
+          resolvedBrandId = retryBrand.id;
+        } else {
+          return NextResponse.json(
+            { error: "Failed to create brand", details: brandError.message },
+            { status: 500 },
+          );
+        }
+      } else {
+        resolvedBrandId = newBrand.id;
       }
-      resolvedBrandId = newBrand.id;
     }
   }
 
@@ -77,16 +127,23 @@ export async function POST(request: NextRequest) {
     .eq("reviewer_id", user.id)
     .eq("brand_id", resolvedBrandId)
     .eq("status", "draft")
-    .single();
+    .maybeSingle();
 
   let reviewId: string;
 
   if (existingDraft) {
     reviewId = existingDraft.id;
-    await supabase
+    const { error: updateError } = await supabase
       .from("reviews")
-      .update({ status: reviewStatus })
+      .update({ status: reviewStatus, country: reviewerCountry, store_city: reviewerCity })
       .eq("id", reviewId);
+
+    if (updateError) {
+      return NextResponse.json(
+        { error: "Failed to update review", details: updateError.message },
+        { status: 500 },
+      );
+    }
   } else {
     const { data: review, error: reviewError } = await supabase
       .from("reviews")
@@ -94,6 +151,8 @@ export async function POST(request: NextRequest) {
         reviewer_id: user.id,
         brand_id: resolvedBrandId,
         status: reviewStatus,
+        country: reviewerCountry,
+        store_city: reviewerCity,
       })
       .select("id")
       .single();
@@ -107,8 +166,18 @@ export async function POST(request: NextRequest) {
     reviewId = review.id;
   }
 
-  // Save dimension-level scores (one row per dimension, sub_component_key = "overall")
-  await supabase.from("review_scores").delete().eq("review_id", reviewId);
+  // Save dimension-level scores
+  const { error: deleteScoresError } = await supabase
+    .from("review_scores")
+    .delete()
+    .eq("review_id", reviewId);
+
+  if (deleteScoresError) {
+    return NextResponse.json(
+      { error: "Failed to clear old scores", details: deleteScoresError.message },
+      { status: 500 },
+    );
+  }
 
   const scoreRows = Object.entries(scores as Record<string, number>)
     .filter(([, score]) => score >= 1 && score <= 5)
@@ -134,7 +203,17 @@ export async function POST(request: NextRequest) {
   }
 
   // Save pros/cons as review comments
-  await supabase.from("review_comments").delete().eq("review_id", reviewId);
+  const { error: deleteCommentsError } = await supabase
+    .from("review_comments")
+    .delete()
+    .eq("review_id", reviewId);
+
+  if (deleteCommentsError) {
+    return NextResponse.json(
+      { error: "Failed to clear old comments", details: deleteCommentsError.message },
+      { status: 500 },
+    );
+  }
 
   const commentRows: { review_id: string; dimension_key: string; comment_text: string }[] = [];
   if (pros && typeof pros === "string" && pros.trim()) {
@@ -152,7 +231,16 @@ export async function POST(request: NextRequest) {
     });
   }
   if (commentRows.length > 0) {
-    await supabase.from("review_comments").insert(commentRows);
+    const { error: commentsError } = await supabase
+      .from("review_comments")
+      .insert(commentRows);
+
+    if (commentsError) {
+      return NextResponse.json(
+        { error: "Failed to save comments", details: commentsError.message },
+        { status: 500 },
+      );
+    }
   }
 
   return NextResponse.json({ id: reviewId, status: reviewStatus });

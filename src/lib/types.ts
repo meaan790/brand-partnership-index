@@ -48,6 +48,10 @@ export interface UserProfile {
   role: UserRole;
   company_name: string;
   store_location: string | null;
+  store_city: string | null;
+  store_region: string | null;
+  country: string | null;
+  place_id: string | null;
   anonymous_display_name: string | null;
   created_at: string;
 }
@@ -57,6 +61,8 @@ export interface Review {
   reviewer_id: string;
   brand_id: string;
   status: ReviewStatus;
+  country: string | null;
+  store_city: string | null;
   created_at: string;
   updated_at: string;
 }
