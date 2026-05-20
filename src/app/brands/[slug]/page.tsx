@@ -640,7 +640,7 @@ export default async function BrandProfilePage({
               </span>
             </a>
             <a
-              href="https://www.outsizeconsulting.com"
+              href="https://www.outdoorunfiltered.com"
               target="_blank"
               rel="noopener"
               className="group bg-surface-card rounded-lg p-5 border border-border-hairline hover:shadow-card-hover hover:border-primary/20 transition-all flex flex-col"
@@ -649,7 +649,7 @@ export default async function BrandProfilePage({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="https://static1.squarespace.com/static/66968cb18f45862ed4e165f3/t/6696bb4354fe535b592dffca/1721154374463/OC+Logo+Banner.png?format=300w"
-                  alt="Outsize Consulting"
+                  alt="Outdoor Unfiltered"
                   className="h-7 rounded object-contain"
                 />
               </div>
@@ -665,11 +665,11 @@ export default async function BrandProfilePage({
                 </span>
               </div>
               <p className="font-body-md text-body-md text-on-surface-variant mb-4 grow">
-                Strategic advisory for outdoor and active brands navigating
-                wholesale pricing and pro deal discipline.
+                The podcast for outdoor industry professionals exploring wholesale
+                strategy, brand-retailer dynamics, and what&apos;s actually working.
               </p>
               <span className="inline-flex items-center gap-1 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
-                Get expert wholesale strategy
+                Listen now
                 <span className="material-symbols-outlined text-lg">
                   arrow_forward
                 </span>

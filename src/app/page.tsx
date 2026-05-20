@@ -7,7 +7,10 @@ import { BrandLogo } from "@/components/BrandLogo";
 import { SignInLink } from "@/components/SignInLink";
 import type { BrandWithScores } from "@/lib/types";
 
+const MIN_LEADERBOARD_SIZE = 10;
+
 async function getBrands(): Promise<BrandWithScores[]> {
+  let dbBrands: BrandWithScores[] = [];
   try {
     const { createClient } = await import("@/lib/supabase/server");
     const supabase = await createClient();
@@ -16,11 +19,17 @@ async function getBrands(): Promise<BrandWithScores[]> {
       .select("*")
       .order("score", { ascending: false });
 
-    if (data && data.length > 0) return data as BrandWithScores[];
+    if (data && data.length > 0) dbBrands = data as BrandWithScores[];
   } catch {
-    // Supabase not configured — fall through to seed data
+    // Supabase not configured
   }
-  return [...SEED_BRANDS].sort((a, b) => b.score - a.score);
+
+  if (dbBrands.length >= MIN_LEADERBOARD_SIZE) return dbBrands;
+
+  // Merge real brands with seed data to fill the leaderboard
+  const realSlugs = new Set(dbBrands.map((b) => b.slug));
+  const fillers = SEED_BRANDS.filter((b) => !realSlugs.has(b.slug));
+  return [...dbBrands, ...fillers].sort((a, b) => b.score - a.score);
 }
 
 const MOVER_NAMES = ["Hoka", "KEEN", "Brooks", "Patagonia"];
@@ -505,9 +514,9 @@ export default async function HomePage() {
               </span>
             </a>
 
-            {/* Outsize Consulting */}
+            {/* Outdoor Unfiltered */}
             <a
-              href="https://www.outsizeconsulting.com"
+              href="https://www.outdoorunfiltered.com"
               target="_blank"
               rel="noopener"
               className="group bg-surface-card border border-border-hairline rounded-lg p-6 flex flex-col hover:shadow-card-hover hover:border-primary/20 transition-all"
@@ -516,7 +525,7 @@ export default async function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="https://static1.squarespace.com/static/66968cb18f45862ed4e165f3/t/6696bb4354fe535b592dffca/1721154374463/OC+Logo+Banner.png?format=300w"
-                  alt="Outsize Consulting"
+                  alt="Outdoor Unfiltered"
                   className="h-8 rounded object-contain"
                 />
               </div>
@@ -532,12 +541,11 @@ export default async function HomePage() {
                 </span>
               </div>
               <p className="font-body-md text-body-md text-on-surface-variant mb-5 flex-grow">
-                Strategic advisory for outdoor and active brands navigating
-                wholesale pricing architecture, MAP enforcement, and pro deal
-                discipline.
+                The podcast for outdoor industry professionals exploring wholesale
+                strategy, brand-retailer dynamics, and what&apos;s actually working.
               </p>
               <span className="inline-flex items-center gap-2 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
-                Get expert wholesale strategy
+                Listen now
                 <span className="material-symbols-outlined text-lg">
                   arrow_forward
                 </span>

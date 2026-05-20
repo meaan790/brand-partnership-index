@@ -105,7 +105,7 @@ export function Footer() {
               />
             </a>
             <a
-              href="https://www.outsizeconsulting.com"
+              href="https://www.outdoorunfiltered.com"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:opacity-80 transition-opacity"
@@ -113,7 +113,7 @@ export function Footer() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://static1.squarespace.com/static/66968cb18f45862ed4e165f3/t/6696bb4354fe535b592dffca/1721154374463/OC+Logo+Banner.png?format=300w"
-                alt="Outsize Consulting"
+                alt="Outdoor Unfiltered"
                 className="h-14 object-contain"
               />
             </a>
