@@ -6,6 +6,7 @@ import { SEED_BRANDS } from "@/lib/seed-data";
 import { DIMENSIONS } from "@/lib/constants";
 import { tierBg, tierBg100, changeClass } from "@/lib/scoring";
 import { BrandLogo } from "@/components/BrandLogo";
+import { useSignInModal } from "@/components/SignInModalProvider";
 import type { BrandWithScores } from "@/lib/types";
 
 function getBrand(name: string): BrandWithScores | undefined {
@@ -13,6 +14,7 @@ function getBrand(name: string): BrandWithScores | undefined {
 }
 
 export default function ComparePage() {
+  const { open: openSignIn } = useSignInModal();
   const [slots, setSlots] = useState<(string | null)[]>([
     "Brooks",
     "Hoka",
@@ -193,12 +195,12 @@ export default function ComparePage() {
           <p className="font-caption text-caption text-text-caption">
             Sign in to unlock two more brand slots and compare side by side.
           </p>
-          <Link
-            href="/signin"
-            className="bg-primary text-on-primary font-semibold px-5 py-2 rounded text-sm hover:opacity-90 transition-opacity cursor-pointer"
+          <button
+            onClick={() => openSignIn()}
+            className="bg-primary text-on-primary font-semibold px-5 py-2 rounded-full text-sm hover:opacity-90 transition-opacity cursor-pointer"
           >
             Sign In
-          </Link>
+          </button>
         </div>
       </div>
     );
@@ -493,19 +495,21 @@ export default function ComparePage() {
   }
 
   return (
-    <div className="max-w-[1280px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
-      <section className="max-w-4xl mb-12">
-        <span className="font-label-caps text-label-caps text-text-caption uppercase">
-          Compare
-        </span>
-        <h1 className="font-display-lg text-display-lg text-text-main mt-2 mb-4">
-          Lay brands side by side.
-        </h1>
-        <p className="font-body-lg text-body-lg text-on-surface-variant">
-          Pick up to four brands. We&apos;ll show overall and per-dimension
-          scores in a single view, with the best on each row highlighted.
-        </p>
+    <>
+      {/* Hero — dark navy centered */}
+      <section className="bg-primary pt-16 md:pt-20 pb-12 md:pb-14">
+        <div className="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+          <h1 className="font-display-lg text-display-lg text-white mb-4">
+            Lay brands side by side
+          </h1>
+          <p className="font-body-lg text-body-lg text-white/70 max-w-xl mx-auto">
+            Pick up to four brands. We&apos;ll show overall and per-dimension
+            scores in a single view, with the best on each row highlighted.
+          </p>
+        </div>
       </section>
+
+    <div className="max-w-[1280px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-12">
         {pickerCard(0)}
@@ -519,5 +523,6 @@ export default function ComparePage() {
 
       <div className="mt-12">{highlights()}</div>
     </div>
+    </>
   );
 }

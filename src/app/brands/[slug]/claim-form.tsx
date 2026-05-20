@@ -67,7 +67,7 @@ export function ClaimForm({ brandName, domain }: ClaimFormProps) {
           <div className="md:col-span-2 flex items-center gap-3 mt-2">
             <button
               type="submit"
-              className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-primary/90 transition-colors"
+              className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded-full hover:bg-primary/90 transition-colors"
             >
               Submit claim request
             </button>

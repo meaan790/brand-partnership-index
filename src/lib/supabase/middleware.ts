@@ -9,7 +9,7 @@ export async function updateSession(request: NextRequest) {
     // Supabase not configured — skip auth checks, gate protected routes
     if (request.nextUrl.pathname.startsWith("/dashboard")) {
       const redirect = request.nextUrl.clone();
-      redirect.pathname = "/signin";
+      redirect.pathname = "/";
       return NextResponse.redirect(redirect);
     }
     return NextResponse.next({ request });
@@ -42,12 +42,11 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Gate dashboard routes behind auth
+  // Gate dashboard routes behind auth — redirect to homepage (modal handles sign-in)
   const isProtected = request.nextUrl.pathname.startsWith("/dashboard");
   if (isProtected && !user) {
     const url = request.nextUrl.clone();
-    url.pathname = "/signin";
-    url.searchParams.set("redirect", request.nextUrl.pathname);
+    url.pathname = "/";
     return NextResponse.redirect(url);
   }
 

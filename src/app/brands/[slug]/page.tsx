@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DIMENSIONS } from "@/lib/constants";
 import { SEED_BRANDS } from "@/lib/seed-data";
+import { SignInLink } from "@/components/SignInLink";
 import {
   tierBg,
   tierBar,
@@ -182,12 +183,22 @@ export default async function BrandProfilePage({
             </div>
           </div>
           <div className="flex items-center gap-4 mt-2">
-            <Link
-              href={claimed ? "/dashboard" : "/signin?type=brand"}
-              className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-primary/90 transition-colors border border-primary inline-block"
-            >
-              {claimed ? "Edit Profile" : "Claim Your Brand"}
-            </Link>
+            {claimed ? (
+              <Link
+                href="/dashboard"
+                className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded-full hover:bg-primary/90 transition-colors border border-primary inline-block"
+              >
+                Edit Profile
+              </Link>
+            ) : (
+              <SignInLink
+                role="brand"
+                signup
+                className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded-full hover:bg-primary/90 transition-colors border border-primary inline-block cursor-pointer"
+              >
+                Claim Your Brand
+              </SignInLink>
+            )}
             <FollowButton />
           </div>
         </div>
@@ -342,12 +353,13 @@ export default async function BrandProfilePage({
               Standards will appear here once a representative claims the brand.
             </p>
             <div className="flex flex-wrap gap-3 mt-2">
-              <Link
-                href="/signin?type=brand"
-                className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-primary/90 transition-colors inline-block"
+              <SignInLink
+                role="brand"
+                signup
+                className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded-full hover:bg-primary/90 transition-colors inline-block cursor-pointer"
               >
                 Claim this Brand
-              </Link>
+              </SignInLink>
               <Link
                 href={`/review?brand=${encodeURIComponent(brand.name)}&type=edit`}
                 className="bg-transparent text-primary font-data-tabular text-data-tabular px-6 py-3 rounded border border-border-hairline hover:bg-surface-container transition-colors inline-block"
@@ -622,7 +634,7 @@ export default async function BrandProfilePage({
               </div>
               <Link
                 href="/dashboard"
-                className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-primary/90 transition-colors inline-block"
+                className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded-full hover:bg-primary/90 transition-colors inline-block"
               >
                 Open Brand Dashboard
               </Link>

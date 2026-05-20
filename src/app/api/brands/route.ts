@@ -9,7 +9,7 @@ export async function GET() {
     const { data, error } = await supabase
       .from("brand_scores_v")
       .select("*")
-      .order("overall_score", { ascending: false });
+      .order("score", { ascending: false });
 
     if (error || !data || data.length === 0) {
       return NextResponse.json(SEED_BRANDS);

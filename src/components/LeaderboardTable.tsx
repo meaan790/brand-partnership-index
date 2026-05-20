@@ -12,6 +12,7 @@ import {
   bottomDim,
 } from "@/lib/scoring";
 import { BrandLogo } from "@/components/BrandLogo";
+import { useSignInModal } from "@/components/SignInModalProvider";
 import type { BrandWithScores } from "@/lib/types";
 
 const GATE_LIMIT = 10;
@@ -46,6 +47,7 @@ export function LeaderboardTable({
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("score");
   const [expandedRanks, setExpandedRanks] = useState<Set<number>>(new Set());
+  const { open: openSignIn } = useSignInModal();
 
   const filtered = useMemo(() => {
     let list = [...brands];
@@ -483,20 +485,20 @@ export function LeaderboardTable({
                     Create a free account to view the full leaderboard, detailed
                     scores, and brand comparisons.
                   </p>
-                  <Link
-                    href="/signin"
-                    className="bg-primary text-on-primary font-semibold px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors"
+                  <button
+                    onClick={() => openSignIn({ view: "signup" })}
+                    className="bg-primary text-on-primary font-semibold px-8 py-3 rounded-full hover:bg-primary/90 transition-colors cursor-pointer"
                   >
                     Create Free Account
-                  </Link>
+                  </button>
                   <p className="font-caption text-caption text-text-caption mt-3">
                     Already have an account?{" "}
-                    <Link
-                      href="/signin"
-                      className="text-primary hover:underline"
+                    <button
+                      onClick={() => openSignIn()}
+                      className="text-primary hover:underline cursor-pointer"
                     >
                       Sign in
-                    </Link>
+                    </button>
                   </p>
                 </div>
               </div>

@@ -3,11 +3,7 @@ import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
-export default async function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function DashboardPage() {
   const supabase = await createClient();
   const {
     data: { user },
@@ -17,5 +13,15 @@ export default async function DashboardLayout({
     redirect("/");
   }
 
-  return <>{children}</>;
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  if (profile?.role === "brand") {
+    redirect("/dashboard/brand");
+  }
+
+  redirect("/dashboard/retailer");
 }

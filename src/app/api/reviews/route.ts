@@ -12,15 +12,17 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const { brand_id, brand_name, brand_domain, scores, comments, status } = body;
+  const { brand_id, brand_name, brand_domain, scores, pros, cons, status } =
+    body;
 
   if (!scores || typeof scores !== "object") {
     return NextResponse.json(
       { error: "Scores are required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
+  // Resolve brand — by ID or by name+domain (upsert)
   let resolvedBrandId = brand_id;
 
   if (!resolvedBrandId && brand_name && brand_domain) {
@@ -52,7 +54,7 @@ export async function POST(request: NextRequest) {
       if (brandError) {
         return NextResponse.json(
           { error: "Failed to create brand", details: brandError.message },
-          { status: 500 }
+          { status: 500 },
         );
       }
       resolvedBrandId = newBrand.id;
@@ -62,13 +64,13 @@ export async function POST(request: NextRequest) {
   if (!resolvedBrandId) {
     return NextResponse.json(
       { error: "Brand ID or name/domain required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   const reviewStatus = status === "submitted" ? "submitted" : "draft";
 
-  // Check for existing draft
+  // Check for existing draft by same reviewer for same brand
   const { data: existingDraft } = await supabase
     .from("reviews")
     .select("id")
@@ -99,40 +101,24 @@ export async function POST(request: NextRequest) {
     if (reviewError) {
       return NextResponse.json(
         { error: "Failed to create review", details: reviewError.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
     reviewId = review.id;
   }
 
-  // Delete existing scores for this review, then insert fresh
+  // Save dimension-level scores (one row per dimension, sub_component_key = "overall")
   await supabase.from("review_scores").delete().eq("review_id", reviewId);
 
-  const scoreRows: {
-    review_id: string;
-    dimension_key: string;
-    sub_component_key: string;
-    score: number;
-    comment: string | null;
-  }[] = [];
-
-  for (const [dimKey, subs] of Object.entries(
-    scores as Record<string, Record<string, number>>
-  )) {
-    for (const [subKey, score] of Object.entries(subs)) {
-      if (score >= 1 && score <= 5) {
-        const subComments =
-          (body.subComments as Record<string, Record<string, string>>) || {};
-        scoreRows.push({
-          review_id: reviewId,
-          dimension_key: dimKey,
-          sub_component_key: subKey,
-          score,
-          comment: subComments[dimKey]?.[subKey] || null,
-        });
-      }
-    }
-  }
+  const scoreRows = Object.entries(scores as Record<string, number>)
+    .filter(([, score]) => score >= 1 && score <= 5)
+    .map(([dimKey, score]) => ({
+      review_id: reviewId,
+      dimension_key: dimKey,
+      sub_component_key: "overall",
+      score,
+      comment: null,
+    }));
 
   if (scoreRows.length > 0) {
     const { error: scoresError } = await supabase
@@ -142,31 +128,31 @@ export async function POST(request: NextRequest) {
     if (scoresError) {
       return NextResponse.json(
         { error: "Failed to save scores", details: scoresError.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
   }
 
-  // Save dimension-level comments
-  if (comments && typeof comments === "object") {
-    await supabase
-      .from("review_comments")
-      .delete()
-      .eq("review_id", reviewId);
+  // Save pros/cons as review comments
+  await supabase.from("review_comments").delete().eq("review_id", reviewId);
 
-    const commentRows = Object.entries(
-      comments as Record<string, string>
-    )
-      .filter(([, text]) => text && text.trim())
-      .map(([dimKey, text]) => ({
-        review_id: reviewId,
-        dimension_key: dimKey,
-        comment_text: text.trim(),
-      }));
-
-    if (commentRows.length > 0) {
-      await supabase.from("review_comments").insert(commentRows);
-    }
+  const commentRows: { review_id: string; dimension_key: string; comment_text: string }[] = [];
+  if (pros && typeof pros === "string" && pros.trim()) {
+    commentRows.push({
+      review_id: reviewId,
+      dimension_key: "_pros",
+      comment_text: pros.trim(),
+    });
+  }
+  if (cons && typeof cons === "string" && cons.trim()) {
+    commentRows.push({
+      review_id: reviewId,
+      dimension_key: "_cons",
+      comment_text: cons.trim(),
+    });
+  }
+  if (commentRows.length > 0) {
+    await supabase.from("review_comments").insert(commentRows);
   }
 
   return NextResponse.json({ id: reviewId, status: reviewStatus });

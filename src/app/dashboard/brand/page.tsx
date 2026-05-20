@@ -101,14 +101,14 @@ export default function BrandDashboardPage() {
         <div className="flex gap-4 flex-wrap">
           <Link
             href="/brands/brooks"
-            className="px-6 py-3 border border-border-hairline rounded font-label-caps text-label-caps text-primary hover:bg-surface-container-low transition-colors flex items-center gap-2"
+            className="px-6 py-3 border border-border-hairline rounded-full font-label-caps text-label-caps text-primary hover:bg-surface-container-low transition-colors flex items-center gap-2"
           >
             <span className="material-symbols-outlined text-[16px]">
               visibility
             </span>
             View Public Profile
           </Link>
-          <button className="px-6 py-3 border border-border-hairline rounded font-label-caps text-label-caps text-primary hover:bg-surface-container-low transition-colors flex items-center gap-2">
+          <button className="px-6 py-3 border border-border-hairline rounded-full font-label-caps text-label-caps text-primary hover:bg-surface-container-low transition-colors flex items-center gap-2">
             <span className="material-symbols-outlined text-[16px]">edit</span>
             Manage Profile
           </button>
@@ -268,7 +268,7 @@ export default function BrandDashboardPage() {
                     />
                     <button
                       onClick={addCommitment}
-                      className="px-4 py-2 bg-primary text-on-primary font-caption text-caption rounded hover:opacity-90 transition-opacity"
+                      className="px-4 py-2 bg-primary text-on-primary font-caption text-caption rounded-full hover:opacity-90 transition-opacity"
                     >
                       Add
                     </button>
@@ -276,7 +276,7 @@ export default function BrandDashboardPage() {
                 </div>
                 <button
                   onClick={() => setEditing(false)}
-                  className="w-full py-2 bg-primary text-on-primary font-body-md text-body-md rounded hover:opacity-90 transition-opacity mt-2"
+                  className="w-full py-2 bg-primary text-on-primary font-body-md text-body-md rounded-full hover:opacity-90 transition-opacity mt-2"
                 >
                   Save Changes
                 </button>
@@ -389,7 +389,7 @@ export default function BrandDashboardPage() {
                       {r.quote}
                     </blockquote>
                     <div className="flex justify-end mt-2">
-                      <button className="px-4 py-2 bg-primary text-on-primary rounded font-label-caps text-label-caps hover:bg-primary/90 transition-colors">
+                      <button className="px-4 py-2 bg-primary text-on-primary rounded-full font-label-caps text-label-caps hover:bg-primary/90 transition-colors">
                         Respond Privately
                       </button>
                     </div>

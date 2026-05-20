@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DIMENSIONS, DIMENSION_SUBS } from "@/lib/constants";
+import { SignInLink } from "@/components/SignInLink";
 
 const DIM_WHATS: Record<string, string> = {
   website:
@@ -16,22 +17,25 @@ const DIM_WHATS: Record<string, string> = {
 
 export default function MethodologyPage() {
   return (
+    <>
+      {/* Hero — dark navy centered */}
+      <section className="bg-primary pt-16 md:pt-20 pb-12 md:pb-14">
+        <div className="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+          <h1 className="font-display-lg text-display-lg text-white mb-4">
+            How we measure brand–retailer partnerships
+          </h1>
+          <p className="font-body-lg text-body-lg text-white/70 max-w-xl mx-auto">
+            Every score is built from verified reviews submitted by independent
+            retailers — the people who actually live with each brand&apos;s
+            wholesale program.
+          </p>
+        </div>
+      </section>
+
     <div className="max-w-[1280px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
-      {/* Hero / About */}
+      {/* Scoring overview */}
       <section className="max-w-3xl mb-section-gap scroll-mt-24">
-        <span className="font-label-caps text-label-caps text-text-caption uppercase">
-          Methodology
-        </span>
-        <h1 className="font-display-lg text-display-lg text-text-main mt-2 mb-6">
-          How we measure brand–retailer partnerships.
-        </h1>
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
-          The Brand Partnership Index scores how well brands support the
-          specialty retailers who carry them. Every score is built from verified
-          reviews submitted by independent retailers — the people who actually
-          live with each brand&apos;s wholesale program.
-        </p>
-        <p className="font-body-lg text-body-lg text-on-surface-variant">
           We score five Brand Partnership Standards, each on a 0–20 scale. Each
           standard has four sub-components that retailers rate with 1–5 stars.
           The standard&apos;s score is the sum of its four sub-component ratings.
@@ -438,7 +442,7 @@ export default function MethodologyPage() {
           </div>
           <Link
             href="/review"
-            className="bg-primary text-on-primary font-semibold px-6 py-3 rounded hover:opacity-90 transition-opacity text-center active:scale-[0.98]"
+            className="bg-primary text-on-primary font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity text-center active:scale-[0.98]"
           >
             Review a Brand
           </Link>
@@ -456,14 +460,16 @@ export default function MethodologyPage() {
               competitors, and respond to feedback.
             </p>
           </div>
-          <Link
-            href="/signin"
-            className="bg-primary text-on-primary font-semibold px-6 py-3 rounded hover:opacity-90 transition-opacity text-center active:scale-[0.98]"
+          <SignInLink
+            role="brand"
+            signup
+            className="bg-primary text-on-primary font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity text-center active:scale-[0.98] cursor-pointer"
           >
             Claim Your Brand
-          </Link>
+          </SignInLink>
         </div>
       </section>
     </div>
+    </>
   );
 }

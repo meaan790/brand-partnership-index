@@ -88,13 +88,13 @@ export interface ReviewWithScores extends Review {
 }
 
 export interface LeaderboardEntry {
-  brand_id: string;
-  brand_name: string;
-  brand_slug: string;
-  brand_domain: string;
+  id: string;
+  name: string;
+  slug: string;
+  domain: string;
   categories: string[];
-  overall_score: number;
-  dim_scores: number[];
+  score: number;
+  dims: number[];
   review_count: number;
   change: string;
 }

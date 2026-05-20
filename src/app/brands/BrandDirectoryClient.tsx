@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { BrandLogo } from "@/components/BrandLogo";
+import { useSignInModal } from "@/components/SignInModalProvider";
 import { DIMENSIONS } from "@/lib/constants";
 import { tierClass100, tierTextClass, changeClass, topDim } from "@/lib/scoring";
 import type { BrandWithScores } from "@/lib/types";
@@ -79,6 +80,7 @@ export function BrandDirectoryClient({
 }: {
   brands: BrandWithScores[];
 }) {
+  const { open: openSignIn } = useSignInModal();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortMode, setSortMode] = useState<SortMode>("score");
@@ -122,16 +124,13 @@ export function BrandDirectoryClient({
 
   return (
     <main className="flex-grow">
-      {/* Hero */}
-      <section className="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop pt-12 pb-8">
-        <div>
-          <span className="font-label-caps text-label-caps text-text-caption uppercase">
-            Browse
-          </span>
-          <h1 className="font-display-lg text-display-lg text-text-main mt-2 mb-4">
-            All brands in the index.
+      {/* Hero — dark navy centered */}
+      <section className="bg-primary pt-16 md:pt-20 pb-12 md:pb-14">
+        <div className="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+          <h1 className="font-display-lg text-display-lg text-white mb-4">
+            All brands in the index
           </h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant">
+          <p className="font-body-lg text-body-lg text-white/70 max-w-xl mx-auto">
             Filter by category, search by name, or sort by score, momentum, or
             recency. Click any brand to open their full profile.
           </p>
@@ -221,20 +220,20 @@ export function BrandDirectoryClient({
                     Create a free account to browse every brand in the index,
                     view detailed scores, and compare across categories.
                   </p>
-                  <Link
-                    href="/signin"
-                    className="bg-primary text-on-primary font-semibold px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors"
+                  <button
+                    onClick={() => openSignIn({ view: "signup" })}
+                    className="bg-primary text-on-primary font-semibold px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors cursor-pointer"
                   >
                     Create Free Account
-                  </Link>
+                  </button>
                   <p className="font-caption text-caption text-text-caption mt-3">
                     Already have an account?{" "}
-                    <Link
-                      href="/signin"
-                      className="text-primary hover:underline"
+                    <button
+                      onClick={() => openSignIn()}
+                      className="text-primary hover:underline cursor-pointer"
                     >
                       Sign in
-                    </Link>
+                    </button>
                   </p>
                 </div>
               </div>
@@ -265,7 +264,7 @@ export function BrandDirectoryClient({
           </p>
           <Link
             href="/submit"
-            className="inline-block bg-primary text-on-primary font-semibold px-8 py-3 rounded hover:opacity-90 transition-opacity active:scale-[0.98] text-lg"
+            className="inline-block bg-primary text-on-primary font-semibold px-8 py-3 rounded-full hover:opacity-90 transition-opacity active:scale-[0.98] text-lg"
           >
             Review a Brand
           </Link>

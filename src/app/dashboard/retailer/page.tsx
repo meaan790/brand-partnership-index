@@ -108,7 +108,7 @@ export default function RetailerDashboardPage() {
                 Submit a new wholesale partner review. Bypasses initial
                 verification for established accounts.
               </p>
-              <span className="font-label-caps text-label-caps uppercase bg-primary text-on-primary px-6 py-3 rounded hover:bg-primary/90 transition-colors z-10">
+              <span className="font-label-caps text-label-caps uppercase bg-primary text-on-primary px-6 py-3 rounded-full hover:bg-primary/90 transition-colors z-10">
                 Start Review
               </span>
             </Link>

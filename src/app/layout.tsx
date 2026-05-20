@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { SignInModalProvider } from "@/components/SignInModalProvider";
 
 export const metadata: Metadata = {
   title: "Brand Partnership Index",
@@ -27,9 +28,11 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background-paper text-text-main font-body-md antialiased min-h-screen flex flex-col">
-        <Nav />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <SignInModalProvider>
+          <Nav />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </SignInModalProvider>
       </body>
     </html>
   );
