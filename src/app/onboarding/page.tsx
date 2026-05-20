@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 interface PlacePrediction {
@@ -47,7 +47,18 @@ function extractPlaceDetails(
 }
 
 export default function OnboardingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><span className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" /></div>}>
+      <OnboardingContent />
+    </Suspense>
+  );
+}
+
+function OnboardingContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect");
+  const afterDone = redirectTo && redirectTo.startsWith("/") ? redirectTo : "/dashboard";
   const [role, setRole] = useState<"retailer" | "brand" | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -166,7 +177,7 @@ export default function OnboardingPage() {
       }).eq("id", user.id);
     }
 
-    router.replace("/dashboard");
+    router.replace(afterDone);
   }
 
   if (loading) {
@@ -294,7 +305,7 @@ export default function OnboardingPage() {
             {saving ? "Saving…" : "Continue"}
           </button>
           <button
-            onClick={() => router.replace("/dashboard")}
+            onClick={() => router.replace(afterDone)}
             className="px-6 py-4 border border-border-hairline text-primary font-semibold rounded-full hover:bg-surface-container-low transition-colors cursor-pointer"
           >
             Skip

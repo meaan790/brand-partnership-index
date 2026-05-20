@@ -41,14 +41,18 @@ export async function GET(request: NextRequest) {
       company_name: "",
     });
 
-    // New user — send to onboarding
-    return NextResponse.redirect(`${origin}/onboarding`);
+    // New user — send to onboarding, forwarding redirect param
+    const onboardingUrl = new URL("/onboarding", origin);
+    if (redirect && redirect.startsWith("/")) onboardingUrl.searchParams.set("redirect", redirect);
+    return NextResponse.redirect(onboardingUrl);
   }
 
   // Existing user with incomplete profile — send to onboarding
   const isIncomplete = !profile.company_name && !profile.country;
   if (isIncomplete) {
-    return NextResponse.redirect(`${origin}/onboarding`);
+    const onboardingUrl = new URL("/onboarding", origin);
+    if (redirect && redirect.startsWith("/")) onboardingUrl.searchParams.set("redirect", redirect);
+    return NextResponse.redirect(onboardingUrl);
   }
 
   const destination = redirect && redirect.startsWith("/") ? redirect : "/dashboard";

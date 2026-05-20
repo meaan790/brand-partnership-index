@@ -51,11 +51,12 @@ export async function POST(request: NextRequest) {
   // Resolve brand — by ID or by name+domain (upsert)
   let resolvedBrandId = brand_id;
 
-  if (!resolvedBrandId && brand_name && brand_domain) {
+  if (!resolvedBrandId && brand_name) {
+    const effectiveDomain = brand_domain || `${brand_name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.unknown`;
     const { data: existing } = await supabase
       .from("brands")
       .select("id")
-      .eq("domain", brand_domain)
+      .eq("domain", effectiveDomain)
       .maybeSingle();
 
     if (existing) {
@@ -71,14 +72,13 @@ export async function POST(request: NextRequest) {
         .insert({
           name: brand_name,
           slug,
-          domain: brand_domain,
+          domain: effectiveDomain,
           categories: [],
         })
         .select("id")
         .single();
 
       if (brandError) {
-        // Slug collision — try with a suffix
         if (brandError.code === "23505") {
           const slugRetry = `${slug}-${Date.now().toString(36)}`;
           const { data: retryBrand, error: retryError } = await supabase
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
             .insert({
               name: brand_name,
               slug: slugRetry,
-              domain: brand_domain,
+              domain: effectiveDomain,
               categories: [],
             })
             .select("id")

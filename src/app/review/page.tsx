@@ -107,6 +107,25 @@ export default function ReviewPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [showRatings, setShowRatings] = useState(false);
+  const draftRestoredRef = useRef(false);
+
+  // Restore draft from sessionStorage on mount
+  useEffect(() => {
+    if (draftRestoredRef.current) return;
+    draftRestoredRef.current = true;
+    try {
+      const raw = sessionStorage.getItem("bpi_review_draft");
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      if (draft.brand) setBrand(draft.brand);
+      if (draft.brandQuery) setBrandQuery(draft.brandQuery);
+      if (draft.scores) setScores(draft.scores);
+      if (draft.pros) setPros(draft.pros);
+      if (draft.cons) setCons(draft.cons);
+      if (draft.autoSubmit) pendingSubmitRef.current = true;
+      sessionStorage.removeItem("bpi_review_draft");
+    } catch { /* ignore corrupt data */ }
+  }, []);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -217,14 +236,22 @@ export default function ReviewPage() {
     supabase.auth.getUser().then(({ data }) => { if (data.user) { pendingSubmitRef.current = false; doSubmit(); } });
   });
 
+  function saveDraft(autoSubmit: boolean) {
+    try {
+      sessionStorage.setItem("bpi_review_draft", JSON.stringify({
+        brand, brandQuery, scores, pros, cons, autoSubmit,
+      }));
+    } catch { /* storage full or unavailable */ }
+  }
+
   async function handleSubmit() {
     if (!brand || !canSubmit) return;
     try {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user) { doSubmit(); }
-      else { pendingSubmitRef.current = true; openSignIn({ view: "signup", preselectedRole: "retailer" }); }
-    } catch { pendingSubmitRef.current = true; openSignIn({ view: "signup", preselectedRole: "retailer" }); }
+      else { saveDraft(true); pendingSubmitRef.current = true; openSignIn({ view: "signup", preselectedRole: "retailer" }); }
+    } catch { saveDraft(true); pendingSubmitRef.current = true; openSignIn({ view: "signup", preselectedRole: "retailer" }); }
   }
 
   function autoGrow(e: React.ChangeEvent<HTMLTextAreaElement>) { e.target.style.height = "auto"; e.target.style.height = e.target.scrollHeight + "px"; }

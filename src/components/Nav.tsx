@@ -123,6 +123,12 @@ export function Nav() {
                   >
                     Dashboard
                   </Link>
+                  <Link
+                    href="/dashboard/profile"
+                    className="block px-4 py-2.5 text-sm text-on-background hover:bg-surface-container-low transition-colors"
+                  >
+                    Profile
+                  </Link>
                   <button
                     onClick={handleSignOut}
                     className="w-full text-left px-4 py-2.5 text-sm text-error hover:bg-surface-container-low transition-colors cursor-pointer rounded-b-lg"

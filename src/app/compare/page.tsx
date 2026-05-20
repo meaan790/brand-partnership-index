@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { SEED_BRANDS } from "@/lib/seed-data";
 import { DIMENSIONS } from "@/lib/constants";
 import { tierBg, tierBg100, changeClass } from "@/lib/scoring";
 import { BrandLogo } from "@/components/BrandLogo";
 import { useSignInModal } from "@/components/SignInModalProvider";
+import { createClient } from "@/lib/supabase/client";
 import type { BrandWithScores } from "@/lib/types";
 
 function getBrand(name: string): BrandWithScores | undefined {
@@ -46,7 +47,15 @@ export default function ComparePage() {
     </>
   );
 
-  const isGated = (i: number) => i >= 2;
+  const [isAuthed, setIsAuthed] = useState(false);
+  useEffect(() => {
+    try {
+      const supabase = createClient();
+      supabase.auth.getUser().then(({ data }) => { if (data.user) setIsAuthed(true); });
+    } catch { /* ignore */ }
+  }, []);
+
+  const isGated = (i: number) => !isAuthed && i >= 2;
 
   const overallScores = picked.map((b) => (b ? b.score : null));
   const maxOverall = Math.max(

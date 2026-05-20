@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { BrandLogo } from "@/components/BrandLogo";
 import { useSignInModal } from "@/components/SignInModalProvider";
 import { DIMENSIONS } from "@/lib/constants";
 import { tierClass100, tierTextClass, changeClass, topDim } from "@/lib/scoring";
+import { createClient } from "@/lib/supabase/client";
 import type { BrandWithScores } from "@/lib/types";
 
 const BRAND_GATE_LIMIT = 8;
@@ -84,6 +85,14 @@ export function BrandDirectoryClient({
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortMode, setSortMode] = useState<SortMode>("score");
+  const [isAuthed, setIsAuthed] = useState(false);
+
+  useEffect(() => {
+    try {
+      const supabase = createClient();
+      supabase.auth.getUser().then(({ data }) => { if (data.user) setIsAuthed(true); });
+    } catch { /* supabase not configured */ }
+  }, []);
 
   const categories = useMemo(() => ["All", ...allCategories(brands)], [brands]);
 
@@ -114,8 +123,9 @@ export function BrandDirectoryClient({
     return list;
   }, [brands, activeCategory, searchQuery, sortMode]);
 
-  const visible = filtered.slice(0, BRAND_GATE_LIMIT);
-  const remaining = filtered.slice(BRAND_GATE_LIMIT);
+  const gateLimit = isAuthed ? filtered.length : BRAND_GATE_LIMIT;
+  const visible = filtered.slice(0, gateLimit);
+  const remaining = filtered.slice(gateLimit);
 
   const resultSummary =
     `${filtered.length} of ${brands.length} brands` +
@@ -263,7 +273,7 @@ export function BrandDirectoryClient({
             retail.
           </p>
           <Link
-            href="/submit"
+            href="/review"
             className="inline-block bg-primary text-on-primary font-semibold px-8 py-3 rounded-full hover:opacity-90 transition-opacity active:scale-[0.98] text-lg"
           >
             Review a Brand

@@ -14,7 +14,6 @@ import {
 import { BrandLogo } from "@/components/BrandLogo";
 import { FollowButton } from "./follow-button";
 import { SelfReportTabs } from "./self-report-tabs";
-import { ClaimForm } from "./claim-form";
 import type { BrandWithScores } from "@/lib/types";
 
 const REVIEW_TEMPLATES = [
@@ -70,6 +69,17 @@ const COMMITMENTS = [
   "DTC Firewall",
 ];
 
+interface RealReview {
+  id: string;
+  status: string;
+  created_at: string;
+  country: string | null;
+  store_city: string | null;
+  dimScores: number[];
+  pros: string | null;
+  cons: string | null;
+}
+
 async function getBrand(slug: string): Promise<BrandWithScores | null> {
   try {
     const { createClient } = await import("@/lib/supabase/server");
@@ -84,6 +94,40 @@ async function getBrand(slug: string): Promise<BrandWithScores | null> {
     // Supabase not configured
   }
   return SEED_BRANDS.find((b) => b.slug === slug) ?? null;
+}
+
+async function getBrandReviews(brandSlug: string): Promise<RealReview[]> {
+  try {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = await createClient();
+    const { data: brand } = await supabase.from("brands").select("id").eq("slug", brandSlug).single();
+    if (!brand) return [];
+    const { data } = await supabase
+      .from("reviews")
+      .select("id, status, created_at, country, store_city, review_scores(dimension_key, score), review_comments(dimension_key, comment_text)")
+      .eq("brand_id", brand.id)
+      .eq("status", "published")
+      .order("created_at", { ascending: false })
+      .limit(10);
+    if (!data || data.length === 0) return [];
+    const dimKeys = ["website", "pricing", "local", "floor", "pro"];
+    return data.map((r: any) => {
+      const scoreMap: Record<string, number> = {};
+      for (const s of r.review_scores || []) scoreMap[s.dimension_key] = s.score * 4;
+      const prosComment = (r.review_comments || []).find((c: any) => c.dimension_key === "_pros");
+      const consComment = (r.review_comments || []).find((c: any) => c.dimension_key === "_cons");
+      return {
+        id: r.id,
+        status: r.status,
+        created_at: r.created_at,
+        country: r.country,
+        store_city: r.store_city,
+        dimScores: dimKeys.map((k) => scoreMap[k] || 0),
+        pros: prosComment?.comment_text || null,
+        cons: consComment?.comment_text || null,
+      };
+    });
+  } catch { return []; }
 }
 
 export async function generateMetadata({
@@ -114,6 +158,22 @@ export default async function BrandProfilePage({
   const claimed = !!brand.claimed_by;
   const reviews = brand.review_count;
 
+  // Fetch real commitments
+  let realCommitments: { text: string; active: boolean }[] = [];
+  try {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = await createClient();
+    const { data: dbBrand } = await supabase.from("brands").select("id").eq("slug", slug).single();
+    if (dbBrand) {
+      const { data: comms } = await supabase
+        .from("brand_commitments")
+        .select("text, active")
+        .eq("brand_id", dbBrand.id)
+        .order("sort_order");
+      if (comms && comms.length > 0) realCommitments = comms;
+    }
+  } catch { /* ignore */ }
+
   let activeCount = 0;
   if (claimed) {
     if (brand.score >= 80) activeCount = 4;
@@ -122,18 +182,31 @@ export default async function BrandProfilePage({
     else if (brand.score >= 50) activeCount = 1;
   }
 
+  const commitmentsToShow = realCommitments.length > 0
+    ? realCommitments
+    : COMMITMENTS.map((c, i) => ({ text: c, active: i < activeCount }));
+
+  const realReviews = await getBrandReviews(slug);
+  const hasRealReviews = realReviews.length > 0;
+
   const target = brand.score / 5;
-  const adjustedReviews = REVIEW_TEMPLATES.map((tpl) => {
-    const sourceAvg =
-      tpl.dimScores.reduce((a, b) => a + b, 0) / tpl.dimScores.length;
-    const shift = target - sourceAvg;
-    return {
-      ...tpl,
-      dimScores: tpl.dimScores.map((s) =>
-        Math.max(1, Math.min(20, Math.round(s + shift)))
-      ),
-    };
-  });
+  const adjustedReviews = hasRealReviews
+    ? realReviews.map((r) => ({
+        retailer: r.store_city || "Anonymous",
+        location: [r.store_city, r.country].filter(Boolean).join(", ") || "Unknown",
+        ago: new Date(r.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+        dimScores: r.dimScores,
+        quote: r.pros || r.cons || "",
+        response: null as { ago: string; body: string } | null,
+      }))
+    : REVIEW_TEMPLATES.map((tpl) => {
+        const sourceAvg = tpl.dimScores.reduce((a, b) => a + b, 0) / tpl.dimScores.length;
+        const shift = target - sourceAvg;
+        return {
+          ...tpl,
+          dimScores: tpl.dimScores.map((s) => Math.max(1, Math.min(20, Math.round(s + shift)))),
+        };
+      });
 
   return (
     <div className="max-w-[1280px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
@@ -376,38 +449,35 @@ export default async function BrandProfilePage({
               Public Commitments
             </h3>
             <span className="font-caption text-caption text-text-caption">
-              {activeCount} active
+              {commitmentsToShow.filter((c) => c.active).length} active
             </span>
           </div>
           <div className="flex flex-col gap-3">
-            {COMMITMENTS.map((c, i) => {
-              const active = i < activeCount;
-              return (
+            {commitmentsToShow.map((c) => (
                 <div
-                  key={c}
-                  className={`flex items-start gap-3 p-3 ${active ? "bg-surface-container-low" : "bg-background-paper opacity-60"} border border-border-hairline rounded`}
+                  key={c.text}
+                  className={`flex items-start gap-3 p-3 ${c.active ? "bg-surface-container-low" : "bg-background-paper opacity-60"} border border-border-hairline rounded`}
                 >
                   <span
-                    className={`material-symbols-outlined ${active ? "text-score-high" : "text-text-caption"} mt-0.5`}
-                    {...(active ? { "data-weight": "fill" } : {})}
+                    className={`material-symbols-outlined ${c.active ? "text-score-high" : "text-text-caption"} mt-0.5`}
+                    {...(c.active ? { "data-weight": "fill" } : {})}
                   >
-                    {active ? "check_circle" : "radio_button_unchecked"}
+                    {c.active ? "check_circle" : "radio_button_unchecked"}
                   </span>
                   <div className="flex flex-col">
                     <span
-                      className={`font-data-tabular text-data-tabular ${active ? "text-primary" : "text-text-caption"}`}
+                      className={`font-data-tabular text-data-tabular ${c.active ? "text-primary" : "text-text-caption"}`}
                     >
-                      {c}
+                      {c.text}
                     </span>
-                    {active && (
+                    {c.active && (
                       <span className="font-caption text-caption text-on-surface-variant mt-1">
                         Added by {brand.name}
                       </span>
                     )}
                   </div>
                 </div>
-              );
-            })}
+              ))}
           </div>
           {claimed && (
             <button
@@ -510,14 +580,7 @@ export default async function BrandProfilePage({
             );
           })}
         </div>
-        <div className="mt-8 flex justify-center">
-          <button
-            type="button"
-            className="bg-transparent text-primary font-data-tabular text-data-tabular px-6 py-3 rounded border border-border-hairline hover:bg-surface-container transition-colors"
-          >
-            Load More Reviews
-          </button>
-        </div>
+        {/* Load more reviews — hidden until real pagination is needed */}
       </section>
 
       <section className="mb-section-gap">
@@ -642,7 +705,22 @@ export default async function BrandProfilePage({
           </div>
         </section>
       ) : (
-        <ClaimForm brandName={brand.name} domain={brand.domain} />
+        <section id="claim" className="mb-16 scroll-mt-24">
+          <div className="bg-surface-card border border-border-hairline p-card-padding rounded">
+            <span className="font-label-caps text-label-caps bg-primary text-on-primary px-3 py-1.5 rounded-full">
+              UNCLAIMED
+            </span>
+            <h3 className="font-headline-md text-headline-md text-primary mt-3">
+              Is this your brand?
+            </h3>
+            <p className="font-body-md text-body-md text-on-surface-variant mt-1 max-w-2xl mb-6">
+              Claim {brand.name}&rsquo;s profile to respond to retailer feedback, manage public commitments, and track your partnership score.
+            </p>
+            <SignInLink role="brand" signup className="bg-primary text-on-primary font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity cursor-pointer">
+              Claim this Brand
+            </SignInLink>
+          </div>
+        </section>
       )}
     </div>
   );

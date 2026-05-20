@@ -225,7 +225,12 @@ export function SignInModal({
     setLoading(true);
     try {
       const supabase = createClient();
-      const redirectTo = `${window.location.origin}/auth/callback`;
+      const currentPath = window.location.pathname;
+      const callbackUrl = new URL("/auth/callback", window.location.origin);
+      if (currentPath && currentPath !== "/") {
+        callbackUrl.searchParams.set("redirect", currentPath);
+      }
+      const redirectTo = callbackUrl.toString();
 
       const options: { emailRedirectTo: string; data?: Record<string, string> } = {
         emailRedirectTo: redirectTo,
@@ -470,11 +475,11 @@ export function SignInModal({
           <div className="border-t border-border-hairline px-8 py-3 text-center">
             <p className="font-caption text-caption text-text-caption">
               By continuing, you agree to the{" "}
-              <a className="text-primary hover:underline" href="#">
+              <a className="text-primary hover:underline" href="/methodology">
                 Terms of Service
               </a>{" "}
               and{" "}
-              <a className="text-primary hover:underline" href="#">
+              <a className="text-primary hover:underline" href="/methodology">
                 Privacy Policy
               </a>
               .
