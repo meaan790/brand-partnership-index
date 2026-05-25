@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useSignInModal } from "@/components/SignInModalProvider";
 
 const DIM_ANCHORS: Record<string, { low: string; high: string }> = {
-  website: { low: "Aggressive DTC behavior", high: "Retailer-friendly website" },
+  website: { low: "Aggressive DTC behavior", high: "Retailer-friendly DTC site" },
   pricing: { low: "MAP not enforced", high: "Strict pricing discipline" },
   local:   { low: "No demand routing", high: "Active local support" },
   floor:   { low: "No store investment", high: "Strong floor support" },
@@ -151,7 +151,7 @@ export default function ReviewPage() {
       return (data || []).map((b: any) => ({
         name: b.name,
         domain: b.domain,
-        icon: b.logo_url || `https://logo.clearbit.com/${b.domain}`,
+        icon: b.logo_url || `https://www.google.com/s2/favicons?domain=${b.domain}&sz=128`,
         inIndex: true,
       }));
     } catch { return []; }
@@ -368,7 +368,7 @@ export default function ReviewPage() {
             <div className="max-w-md mx-auto">
               <div className="flex items-center justify-center gap-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`https://logo.clearbit.com/${brand.domain}`} alt=""
+                <img src={`https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`} alt=""
                   className="w-10 h-10 rounded-lg object-contain bg-white shadow-sm"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                 <div className="text-left">

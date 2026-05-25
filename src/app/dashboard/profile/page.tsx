@@ -146,7 +146,7 @@ export default function ProfilePage() {
       <section className="bg-primary pt-16 md:pt-20 pb-12 md:pb-14">
         <div className="max-w-2xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
           <h1 className="font-display-lg text-display-lg text-white mb-3">Your Profile</h1>
-          <p className="font-body-lg text-body-lg text-white/70">
+          <p className="font-body-md text-body-md text-white/70">
             Manage your account details.
           </p>
         </div>

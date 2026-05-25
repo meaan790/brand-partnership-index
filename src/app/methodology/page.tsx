@@ -4,9 +4,9 @@ import { SignInLink } from "@/components/SignInLink";
 
 const DIM_WHATS: Record<string, string> = {
   website:
-    "How brand.com presents and behaves on its own digital surface.",
+    "How the brand's DTC site presents and behaves on its own digital surface.",
   pricing:
-    "MAP enforcement and pricing discipline across the channel beyond brand.com.",
+    "MAP enforcement and pricing discipline across the channel beyond the DTC site.",
   local:
     "Brand actively routing customers to the retailers carrying it.",
   floor:
@@ -24,7 +24,7 @@ export default function MethodologyPage() {
           <h1 className="font-display-lg text-display-lg text-white mb-4">
             How we measure brand–retailer partnerships
           </h1>
-          <p className="font-body-lg text-body-lg text-white/70 max-w-xl mx-auto">
+          <p className="font-body-md text-body-md text-white/70 max-w-xl mx-auto">
             Every score is built from verified reviews submitted by independent
             retailers — the people who actually live with each brand&apos;s
             wholesale program.
@@ -35,7 +35,7 @@ export default function MethodologyPage() {
     <div className="max-w-[1280px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
       {/* Scoring overview */}
       <section className="max-w-3xl mb-section-gap scroll-mt-24">
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-6">
+        <p className="font-body-md text-body-md text-on-surface-variant mb-6">
           We score five Brand Partnership Standards, each on a 0–20 scale. Each
           standard has four sub-components that retailers rate with 1–5 stars.
           The standard&apos;s score is the sum of its four sub-component ratings.
