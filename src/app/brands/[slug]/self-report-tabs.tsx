@@ -35,7 +35,7 @@ export function SelfReportTabs({
         <h4 className="font-label-caps text-label-caps text-text-caption mb-3 uppercase">
           Brand Statement
         </h4>
-        <p className="font-body-lg text-body-lg text-on-surface">
+        <p className="font-body-md text-body-md text-on-surface">
           &ldquo;{statements[active]}&rdquo;
         </p>
         <div className="mt-6 flex items-center gap-2 text-caption font-caption text-text-caption">

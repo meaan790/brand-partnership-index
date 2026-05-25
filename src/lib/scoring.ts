@@ -87,6 +87,12 @@ export const tierBg100 = tierClass100;
 export const tierBar = tierBarClass;
 export const tierText = tierTextClass;
 
+export function hasHistoricalData(change: string, spark?: number[]): boolean {
+  if (!change || change === "0" || change === "+0" || change === "-0") return false;
+  if (spark && spark.every((v) => v === 0)) return false;
+  return true;
+}
+
 export function validateWorkEmail(email: string, personalDomains: Set<string>): { ok: boolean; reason?: string } {
   const value = (email || "").trim();
   if (!value) return { ok: false, reason: "Please enter your work email." };

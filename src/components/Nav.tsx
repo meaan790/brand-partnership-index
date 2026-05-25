@@ -68,6 +68,9 @@ export function Nav() {
     return user.email[0].toUpperCase();
   }
 
+  const userRole = user?.user_metadata?.role as string | undefined;
+  const isBrandUser = userRole === "brand";
+
   return (
     <>
       <nav className="bg-background w-full top-0 sticky border-b border-border-hairline z-50">
@@ -98,12 +101,14 @@ export function Nav() {
             })}
           </ul>
           <div className="hidden md:flex items-center gap-4">
-            <Link
-              href="/review"
-              className="font-body-md text-body-md bg-primary text-on-primary px-5 py-2 rounded-full hover:opacity-90 transition-opacity active:scale-[0.98]"
-            >
-              Review a Brand
-            </Link>
+            {!isBrandUser && (
+              <Link
+                href="/review"
+                className="font-body-md text-body-md bg-primary text-on-primary px-5 py-2 rounded-full hover:opacity-90 transition-opacity active:scale-[0.98]"
+              >
+                Review a Brand
+              </Link>
+            )}
             {!loading && user ? (
               <div className="relative group">
                 <button className="flex items-center gap-2 cursor-pointer">
@@ -197,13 +202,15 @@ export function Nav() {
             );
           })}
           <hr className="border-border-hairline my-2" />
-          <Link
-            href="/review"
-            onClick={() => setMobileOpen(false)}
-            className="text-body-lg font-body-lg bg-primary text-on-primary px-4 py-3 rounded-full text-center hover:opacity-90 transition-opacity"
-          >
-            Review a Brand
-          </Link>
+          {!isBrandUser && (
+            <Link
+              href="/review"
+              onClick={() => setMobileOpen(false)}
+              className="text-body-lg font-body-lg bg-primary text-on-primary px-4 py-3 rounded-full text-center hover:opacity-90 transition-opacity"
+            >
+              Review a Brand
+            </Link>
+          )}
           {!loading && user ? (
             <>
               <Link

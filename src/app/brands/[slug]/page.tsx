@@ -10,6 +10,7 @@ import {
   changeClass,
   strokeColor,
   genDist,
+  hasHistoricalData,
 } from "@/lib/scoring";
 import { BrandLogo } from "@/components/BrandLogo";
 import { FollowButton } from "./follow-button";
@@ -50,8 +51,8 @@ const REVIEW_TEMPLATES = [
 ];
 
 const STATEMENT_TEMPLATES: Record<string, string> = {
-  "Brand.com Standards":
-    "We hold the line on brand.com behavior. No flash sales, no liquidation banners, and our DTC PDPs link to local stockists when in-stock inventory exists within 50 miles of the shopper.",
+  "DTC Site Standards":
+    "We hold the line on DTC site behavior. No flash sales, no liquidation banners, and our DTC PDPs link to local stockists when in-stock inventory exists within 50 miles of the shopper.",
   "Pricing Standards":
     "We hold MAP across all wholesale partners and police violations within 48 hours. Our dedicated team monitors online pricing daily to ensure a level playing field for our specialty accounts.",
   "Shop Local Support":
@@ -249,7 +250,7 @@ export default async function BrandProfilePage({
                 ))}
               </div>
               {brand.description && (
-                <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2">
+                <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-2">
                   {brand.description}
                 </p>
               )}
@@ -287,21 +288,23 @@ export default async function BrandProfilePage({
               >
                 {brand.score}
               </span>
-              <div className="flex flex-col">
-                <span
-                  className={`font-data-tabular text-data-tabular ${changeClass(brand.change)} flex items-center gap-1`}
-                >
-                  <span className="material-symbols-outlined text-[16px]">
-                    {brand.change.startsWith("-")
-                      ? "arrow_downward"
-                      : "arrow_upward"}
-                  </span>{" "}
-                  {brand.change}
-                </span>
-                <span className="font-caption text-caption text-text-caption">
-                  vs last year
-                </span>
-              </div>
+              {hasHistoricalData(brand.change, brand.spark) && (
+                <div className="flex flex-col">
+                  <span
+                    className={`font-data-tabular text-data-tabular ${changeClass(brand.change)} flex items-center gap-1`}
+                  >
+                    <span className="material-symbols-outlined text-[16px]">
+                      {brand.change.startsWith("-")
+                        ? "arrow_downward"
+                        : "arrow_upward"}
+                    </span>{" "}
+                    {brand.change}
+                  </span>
+                  <span className="font-caption text-caption text-text-caption">
+                    vs prior quarter
+                  </span>
+                </div>
+              )}
             </div>
           </div>
           <div className="mt-8 flex items-end justify-between border-t border-border-hairline pt-4">
@@ -313,20 +316,22 @@ export default async function BrandProfilePage({
                 Verified Retailers
               </span>
             </div>
-            <svg
-              className="w-24 h-10"
-              preserveAspectRatio="none"
-              viewBox="0 0 80 24"
-            >
-              <polyline
-                fill="none"
-                stroke={strokeColor(brand.score)}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                points={`0,${brand.spark[0]} 26,${brand.spark[1]} 53,${brand.spark[2]} 80,${brand.spark[3]}`}
-              />
-            </svg>
+            {hasHistoricalData(brand.change, brand.spark) && (
+              <svg
+                className="w-24 h-10"
+                preserveAspectRatio="none"
+                viewBox="0 0 80 24"
+              >
+                <polyline
+                  fill="none"
+                  stroke={strokeColor(brand.score)}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  points={`0,${brand.spark[0]} 26,${brand.spark[1]} 53,${brand.spark[2]} 80,${brand.spark[3]}`}
+                />
+              </svg>
+            )}
           </div>
         </div>
       </section>
@@ -421,7 +426,7 @@ export default async function BrandProfilePage({
             </h4>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-xl">
               Scores on this page come from verified retailer reviews.{" "}
-              {brand.name}&rsquo;s public statements on Brand.com Standards,
+              {brand.name}&rsquo;s public statements on DTC Site Standards,
               Pricing, Shop Local Support, Shop Floor Support, and Pro Deal
               Standards will appear here once a representative claims the brand.
             </p>
@@ -558,7 +563,7 @@ export default async function BrandProfilePage({
                     </span>
                   ))}
                 </div>
-                <p className="font-body-lg text-body-lg text-on-surface italic">
+                <p className="font-body-md text-body-md text-on-surface italic">
                   &ldquo;{r.quote}&rdquo;
                 </p>
                 {r.response && (
@@ -625,12 +630,12 @@ export default async function BrandProfilePage({
                   Shop Floor Support
                 </span>
                 <span className="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">
-                  Brand.com Standards
+                  DTC Site Standards
                 </span>
               </div>
               <p className="font-body-md text-body-md text-on-surface-variant mb-4 grow">
                 Mobile incentives, education, and sell-through tools. Consumer
-                cashback routes demand to retail doors instead of brand.com.
+                cashback routes demand to retail doors instead of the DTC site.
               </p>
               <span className="inline-flex items-center gap-1 font-body-md font-semibold text-primary group-hover:text-accent transition-colors">
                 See how top brands use ENDVR
@@ -655,7 +660,7 @@ export default async function BrandProfilePage({
               </div>
               <div className="flex flex-wrap gap-2 mb-3">
                 <span className="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">
-                  Brand.com Standards
+                  DTC Site Standards
                 </span>
                 <span className="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">
                   Pricing Standards

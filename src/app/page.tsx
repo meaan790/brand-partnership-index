@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SEED_BRANDS } from "@/lib/seed-data";
 import { DIMENSIONS } from "@/lib/constants";
-import { tierClass20, tierClass100, changeClass } from "@/lib/scoring";
+import { tierClass20, tierClass100, changeClass, hasHistoricalData } from "@/lib/scoring";
 import { LeaderboardTable } from "@/components/LeaderboardTable";
 import { BrandLogo } from "@/components/BrandLogo";
 import { SignInLink } from "@/components/SignInLink";
@@ -34,7 +34,7 @@ async function getBrands(): Promise<BrandWithScores[]> {
 
 const MOVER_NAMES = ["Hoka", "KEEN", "Brooks", "Patagonia"];
 const MOVER_BLURBS: Record<string, string> = {
-  Hoka: "Removed brand.com sale tab and increased margins on core models.",
+  Hoka: "Removed DTC site sale tab and increased margins on core models.",
   KEEN: "Improved B2B inventory availability and enforced stricter MAP policies.",
   Brooks: "Tightened MAP enforcement and expanded shop floor rep coverage.",
   Patagonia: "Tightened pro-deal qualifications and improved local demand routing.",
@@ -95,9 +95,15 @@ function getBrandByName(
 export default async function HomePage() {
   const brands = await getBrands();
 
-  const movers = MOVER_NAMES.map((n) => getBrandByName(brands, n)).filter(
-    Boolean,
-  ) as BrandWithScores[];
+  const showHistorical = brands.some((b) => hasHistoricalData(b.change, b.spark));
+  const movers = showHistorical
+    ? (MOVER_NAMES.map((n) => getBrandByName(brands, n)).filter(Boolean) as BrandWithScores[])
+    : [];
+
+  const avgScore = brands.length > 0
+    ? Math.round(brands.reduce((sum, b) => sum + b.score, 0) / brands.length)
+    : 0;
+  const totalReviews = brands.reduce((sum, b) => sum + b.review_count, 0);
 
   const visibleReviews = RECENT_REVIEWS.slice(0, 2);
   const gatedReviews = RECENT_REVIEWS.slice(2);
@@ -110,7 +116,7 @@ export default async function HomePage() {
           <h1 className="font-display-lg text-display-lg text-white mb-6">
             The independent benchmark for brand-retailer partnerships
           </h1>
-          <p className="font-body-lg text-body-lg text-white/70 max-w-xl mx-auto mb-10">
+          <p className="font-body-md text-body-md text-white/70 max-w-xl mx-auto mb-10">
             Specialty retailers rate brands across five partnership standards.
             Brands track their scores and improve.
           </p>
@@ -134,32 +140,34 @@ export default async function HomePage() {
       {/* Stats Bar */}
       <section className="border-b border-border-hairline">
         <div className="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter py-8">
+          <div className={`grid grid-cols-2 ${showHistorical ? "md:grid-cols-4" : "md:grid-cols-3"} gap-gutter py-8`}>
             <div className="flex flex-col border-r border-border-hairline pr-gutter">
               <span className="font-label-caps text-label-caps text-text-caption uppercase">
                 Avg Score
               </span>
-              <span className="font-headline-lg text-headline-lg mt-2">64</span>
+              <span className="font-headline-lg text-headline-lg mt-2">{avgScore}</span>
               <span className="font-caption text-caption text-text-caption mt-1">
                 across all categories
               </span>
             </div>
-            <div className="flex flex-col md:border-r border-border-hairline md:pr-gutter pl-0 md:pl-gutter">
-              <span className="font-label-caps text-label-caps text-text-caption uppercase">
-                Change
-              </span>
-              <span className="font-headline-lg text-headline-lg mt-2 text-score-high">
-                +5.2
-              </span>
-              <span className="font-caption text-caption text-text-caption mt-1">
-                since Q4
-              </span>
-            </div>
-            <div className="flex flex-col border-r border-border-hairline pr-gutter pl-0 md:pl-gutter mt-8 md:mt-0">
+            {showHistorical && (
+              <div className="flex flex-col md:border-r border-border-hairline md:pr-gutter pl-0 md:pl-gutter">
+                <span className="font-label-caps text-label-caps text-text-caption uppercase">
+                  Change
+                </span>
+                <span className="font-headline-lg text-headline-lg mt-2 text-score-high">
+                  +5.2
+                </span>
+                <span className="font-caption text-caption text-text-caption mt-1">
+                  since last quarter
+                </span>
+              </div>
+            )}
+            <div className={`flex flex-col border-r border-border-hairline pr-gutter pl-0 md:pl-gutter mt-8 md:mt-0`}>
               <span className="font-label-caps text-label-caps text-text-caption uppercase">
                 Brands
               </span>
-              <span className="font-headline-lg text-headline-lg mt-2">48</span>
+              <span className="font-headline-lg text-headline-lg mt-2">{brands.length}</span>
               <span className="font-caption text-caption text-text-caption mt-1">
                 actively tracked
               </span>
@@ -168,7 +176,7 @@ export default async function HomePage() {
               <span className="font-label-caps text-label-caps text-text-caption uppercase">
                 Reviews
               </span>
-              <span className="font-headline-lg text-headline-lg mt-2">312</span>
+              <span className="font-headline-lg text-headline-lg mt-2">{totalReviews}</span>
               <span className="font-caption text-caption text-text-caption mt-1">
                 verified retailers
               </span>
@@ -180,7 +188,8 @@ export default async function HomePage() {
       {/* Leaderboard (search bar + table + gating) */}
       <LeaderboardTable brands={brands} />
 
-      {/* Movers Band — grey background */}
+      {/* Movers Band — grey background (hidden when no historical data) */}
+      {showHistorical && movers.length > 0 && (
       <section className="bg-surface-container-low py-14">
         <div className="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop">
           <h2 className="font-headline-md text-headline-md mb-6 border-b border-border-hairline pb-2">
@@ -218,6 +227,7 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Recent Reviews — white background */}
       <section className="py-14">
@@ -248,7 +258,7 @@ export default async function HomePage() {
                     </div>
                     <div className="text-right shrink-0">
                       <div className="flex items-center gap-1 justify-end">
-                        <span className="font-caption text-caption font-bold text-text-main">
+                        <span className="font-caption text-caption font-semibold text-text-main">
                           {r.retailer}
                         </span>
                         <span className="material-symbols-outlined text-[14px] text-score-high">
@@ -498,7 +508,7 @@ export default async function HomePage() {
                   Shop Floor Support
                 </span>
                 <span className="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">
-                  Brand.com Standards
+                  DTC Site Standards
                 </span>
               </div>
               <p className="font-body-md text-body-md text-on-surface-variant mb-5 flex-grow">
@@ -531,7 +541,7 @@ export default async function HomePage() {
               </div>
               <div className="flex flex-wrap gap-2 mb-3">
                 <span className="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">
-                  Brand.com Standards
+                  DTC Site Standards
                 </span>
                 <span className="font-label-caps text-label-caps text-accent bg-accent/10 px-2 py-1 rounded-full text-[10px]">
                   Pricing Standards

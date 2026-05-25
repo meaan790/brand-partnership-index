@@ -1,3 +1,12 @@
+// TODO(store-verification): Currently retailers self-report their store via
+// Google Places and provide a work email. There is no automated verification
+// that the email domain matches the store. Options for a future pass:
+//   1. Email-domain matching against the store's known website
+//   2. Manual approval queue (admin reviews new signups)
+//   3. Google Business Profile ownership check
+//   4. Trust work-email + Google Places for MVP (current behavior)
+// Decision needed from team before implementing any gate.
+
 "use client";
 
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
@@ -66,6 +75,8 @@ function OnboardingContent() {
   // Retailer fields
   const [storeQuery, setStoreQuery] = useState("");
   const [predictions, setPredictions] = useState<PlacePrediction[]>([]);
+  const [storeSearching, setStoreSearching] = useState(false);
+  const [storeSearchDone, setStoreSearchDone] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<PlaceDetails | null>(null);
   const autocompleteService = useRef<google.maps.places.AutocompleteService | null>(null);
   const placesService = useRef<google.maps.places.PlacesService | null>(null);
@@ -122,6 +133,8 @@ function OnboardingContent() {
     (query: string) => {
       if (!autocompleteService.current || query.length < 2) {
         setPredictions([]);
+        setStoreSearching(false);
+        setStoreSearchDone(true);
         return;
       }
       autocompleteService.current.getPlacePredictions(
@@ -130,6 +143,8 @@ function OnboardingContent() {
           setPredictions(
             (results || []).slice(0, 6) as PlacePrediction[],
           );
+          setStoreSearching(false);
+          setStoreSearchDone(true);
         },
       );
     },
@@ -139,8 +154,13 @@ function OnboardingContent() {
   function handleStoreInput(value: string) {
     setStoreQuery(value);
     setSelectedPlace(null);
+    setStoreSearchDone(false);
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => searchPlaces(value), 250);
+    if (value.trim().length < 2) { setPredictions([]); setStoreSearching(false); return; }
+    setStoreSearching(true);
+    debounceRef.current = setTimeout(() => {
+      searchPlaces(value);
+    }, 250);
   }
 
   function selectPrediction(prediction: PlacePrediction) {
@@ -177,7 +197,19 @@ function OnboardingContent() {
       }).eq("id", user.id);
     }
 
-    router.replace(afterDone);
+    // If redirecting to /review, only go there if there's a pending draft;
+    // otherwise send the user to their dashboard.
+    let destination = afterDone;
+    if (destination === "/review") {
+      try {
+        const draft = sessionStorage.getItem("bpi_review_draft");
+        if (!draft) destination = "/dashboard";
+      } catch {
+        destination = "/dashboard";
+      }
+    }
+
+    router.replace(destination);
   }
 
   if (loading) {
@@ -197,7 +229,7 @@ function OnboardingContent() {
           <h1 className="font-display-lg text-display-lg text-white mb-3">
             Complete your profile
           </h1>
-          <p className="font-body-lg text-body-lg text-white/70">
+          <p className="font-body-md text-body-md text-white/70">
             {role === "retailer"
               ? "Tell us where your store is so your reviews show the right region."
               : "Tell us about your company."}
@@ -221,9 +253,12 @@ function OnboardingContent() {
                 onChange={(e) => handleStoreInput(e.target.value)}
                 placeholder={placesReady ? "Start typing your store name or address…" : "Loading Google Places…"}
                 disabled={!placesReady}
-                className="w-full rounded-xl pl-12 pr-4 py-4 font-body-md text-body-md text-text-main placeholder:text-text-caption bg-surface-card border border-border-hairline focus:ring-2 focus:ring-accent focus:outline-none transition-shadow disabled:opacity-50"
+                className="w-full rounded-xl pl-12 pr-10 py-4 font-body-md text-body-md text-text-main placeholder:text-text-caption bg-surface-card border border-border-hairline focus:ring-2 focus:ring-accent focus:outline-none transition-shadow disabled:opacity-50"
                 autoFocus
               />
+              {storeSearching && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-caption animate-spin text-lg">progress_activity</span>
+              )}
               {predictions.length > 0 && (
                 <div className="absolute z-20 top-full mt-1 w-full bg-white border border-border-hairline rounded-xl shadow-xl max-h-72 overflow-y-auto">
                   {predictions.map((p) => (
@@ -240,6 +275,11 @@ function OnboardingContent() {
                       </span>
                     </button>
                   ))}
+                </div>
+              )}
+              {storeSearchDone && predictions.length === 0 && storeQuery.trim().length >= 2 && !storeSearching && !selectedPlace && (
+                <div className="absolute z-20 top-full mt-1 w-full bg-white border border-border-hairline rounded-xl shadow-xl px-4 py-4 text-center">
+                  <p className="font-body-md text-body-md text-text-caption">No stores found. Try a different name or address.</p>
                 </div>
               )}
             </div>

@@ -10,6 +10,7 @@ import {
   strokeColor,
   topDim,
   bottomDim,
+  hasHistoricalData,
 } from "@/lib/scoring";
 import { BrandLogo } from "@/components/BrandLogo";
 import { useSignInModal } from "@/components/SignInModalProvider";
@@ -21,7 +22,7 @@ const GATED_PREVIEW = 4;
 const CATEGORIES = ["All", "Outdoor", "Surf", "Action Sports", "Bike", "Ski", "Running"];
 
 const DIM_HEADER_LABELS: [string, string][] = [
-  ["Brand.com", "Standards"],
+  ["DTC Site", "Standards"],
   ["Pricing", "Standards"],
   ["Shop Local", "Support"],
   ["Shop Floor", "Support"],
@@ -48,6 +49,11 @@ export function LeaderboardTable({
   const [sort, setSort] = useState("score");
   const [expandedRanks, setExpandedRanks] = useState<Set<number>>(new Set());
   const { open: openSignIn } = useSignInModal();
+
+  const showHistorical = useMemo(
+    () => brands.some((b) => hasHistoricalData(b.change, b.spark)),
+    [brands],
+  );
 
   const filtered = useMemo(() => {
     let list = [...brands];
@@ -145,7 +151,7 @@ export function LeaderboardTable({
               <div className="w-14 text-right">Score</div>
             </div>
             {/* Desktop Header */}
-            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-hairline bg-surface-container-low font-label-caps text-label-caps text-text-caption uppercase items-end">
+            <div className={`hidden md:grid ${showHistorical ? "grid-cols-12" : "grid-cols-10"} gap-4 px-6 py-4 border-b border-border-hairline bg-surface-container-low font-label-caps text-label-caps text-text-caption uppercase items-end`}>
               <div className="col-span-1 pb-1">Rank</div>
               <div className="col-span-3 pb-1">Brand</div>
               <div className="col-span-1 text-center pb-1">Score</div>
@@ -168,8 +174,12 @@ export function LeaderboardTable({
                   ))}
                 </div>
               </div>
-              <div className="col-span-1 text-center pb-1">Trend</div>
-              <div className="col-span-1 text-right pb-1">Change</div>
+              {showHistorical && (
+                <>
+                  <div className="col-span-1 text-center pb-1">Trend</div>
+                  <div className="col-span-1 text-right pb-1">Change</div>
+                </>
+              )}
             </div>
 
             {/* Visible Rows */}
@@ -231,7 +241,7 @@ export function LeaderboardTable({
 
                     {/* Desktop row */}
                     <div
-                      className="brand-row hidden md:grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-background-paper transition-colors cursor-pointer"
+                      className={`brand-row hidden md:grid ${showHistorical ? "grid-cols-12" : "grid-cols-10"} gap-4 px-6 py-4 items-center hover:bg-background-paper transition-colors cursor-pointer`}
                       role="button"
                       tabIndex={0}
                       aria-expanded={expanded}
@@ -280,32 +290,36 @@ export function LeaderboardTable({
                           </div>
                         ))}
                       </div>
-                      <div className="col-span-1 flex justify-center items-center">
-                        <svg
-                          className="w-20 h-6"
-                          preserveAspectRatio="none"
-                          viewBox="0 0 80 24"
-                        >
-                          <polyline
-                            fill="none"
-                            stroke={strokeColor(b.score)}
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            points={`0,${b.spark[0]} 26,${b.spark[1]} 53,${b.spark[2]} 80,${b.spark[3]}`}
-                          />
-                        </svg>
-                      </div>
-                      <div
-                        className={`col-span-1 text-right font-data-tabular text-data-tabular ${changeClass(b.change)}`}
-                      >
-                        <span className="inline-flex items-center justify-end gap-1">
-                          <span>{b.change}</span>
-                          <span className="chevron material-symbols-outlined text-base text-text-caption">
-                            expand_more
-                          </span>
-                        </span>
-                      </div>
+                      {showHistorical && (
+                        <>
+                          <div className="col-span-1 flex justify-center items-center">
+                            <svg
+                              className="w-20 h-6"
+                              preserveAspectRatio="none"
+                              viewBox="0 0 80 24"
+                            >
+                              <polyline
+                                fill="none"
+                                stroke={strokeColor(b.score)}
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                points={`0,${b.spark[0]} 26,${b.spark[1]} 53,${b.spark[2]} 80,${b.spark[3]}`}
+                              />
+                            </svg>
+                          </div>
+                          <div
+                            className={`col-span-1 text-right font-data-tabular text-data-tabular ${changeClass(b.change)}`}
+                          >
+                            <span className="inline-flex items-center justify-end gap-1">
+                              <span>{b.change}</span>
+                              <span className="chevron material-symbols-outlined text-base text-text-caption">
+                                expand_more
+                              </span>
+                            </span>
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     {/* Detail pane */}
@@ -318,11 +332,13 @@ export function LeaderboardTable({
                           <span className="font-label-caps text-label-caps text-text-caption uppercase">
                             Dimension Scores
                           </span>
-                          <span
-                            className={`font-caption text-caption ${changeClass(b.change)}`}
-                          >
-                            {b.change}
-                          </span>
+                          {showHistorical && (
+                            <span
+                              className={`font-caption text-caption ${changeClass(b.change)}`}
+                            >
+                              {b.change}
+                            </span>
+                          )}
                         </div>
                         {b.dims.map((d, di) => (
                           <div
@@ -417,7 +433,7 @@ export function LeaderboardTable({
                           </div>
                         </div>
                         {/* Desktop blurred row */}
-                        <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 items-center">
+                        <div className={`hidden md:grid ${showHistorical ? "grid-cols-12" : "grid-cols-10"} gap-4 px-6 py-4 items-center`}>
                           <div className="col-span-1 font-data-tabular text-data-tabular text-text-caption">
                             {rank}
                           </div>
@@ -448,27 +464,31 @@ export function LeaderboardTable({
                               </div>
                             ))}
                           </div>
-                          <div className="col-span-1 flex justify-center items-center">
-                            <svg
-                              className="w-20 h-6"
-                              preserveAspectRatio="none"
-                              viewBox="0 0 80 24"
-                            >
-                              <polyline
-                                fill="none"
-                                stroke={strokeColor(b.score)}
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                points={`0,${b.spark[0]} 26,${b.spark[1]} 53,${b.spark[2]} 80,${b.spark[3]}`}
-                              />
-                            </svg>
-                          </div>
-                          <div
-                            className={`col-span-1 text-right font-data-tabular text-data-tabular ${changeClass(b.change)}`}
-                          >
-                            {b.change}
-                          </div>
+                          {showHistorical && (
+                            <>
+                              <div className="col-span-1 flex justify-center items-center">
+                                <svg
+                                  className="w-20 h-6"
+                                  preserveAspectRatio="none"
+                                  viewBox="0 0 80 24"
+                                >
+                                  <polyline
+                                    fill="none"
+                                    stroke={strokeColor(b.score)}
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    points={`0,${b.spark[0]} 26,${b.spark[1]} 53,${b.spark[2]} 80,${b.spark[3]}`}
+                                  />
+                                </svg>
+                              </div>
+                              <div
+                                className={`col-span-1 text-right font-data-tabular text-data-tabular ${changeClass(b.change)}`}
+                              >
+                                {b.change}
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     );
