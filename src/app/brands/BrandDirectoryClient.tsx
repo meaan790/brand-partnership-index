@@ -140,7 +140,7 @@ export function BrandDirectoryClient({
           <h1 className="font-display-lg text-display-lg text-white mb-4">
             All brands in the index
           </h1>
-          <p className="font-body-lg text-body-lg text-white/70 max-w-xl mx-auto">
+          <p className="font-body-md text-body-md text-white/70 max-w-xl mx-auto">
             Filter by category, search by name, or sort by score, momentum, or
             recency. Click any brand to open their full profile.
           </p>

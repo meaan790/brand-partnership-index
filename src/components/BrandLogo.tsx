@@ -10,20 +10,25 @@ interface BrandLogoProps {
 
 type LogoStep = "clearbit" | "google" | "letter";
 
+function LetterFallback({ name, size }: { name: string; size: string }) {
+  return (
+    <div className={`${size} bg-surface-variant rounded border border-border-hairline flex items-center justify-center shrink-0`}>
+      <span className="font-bold text-text-caption">{name.charAt(0)}</span>
+    </div>
+  );
+}
+
 export function BrandLogo({ name, domain, size = "w-10 h-10" }: BrandLogoProps) {
-  const [step, setStep] = useState<LogoStep>("clearbit");
+  const hasDomain = Boolean(domain && domain.trim());
+  const [step, setStep] = useState<LogoStep>(hasDomain ? "clearbit" : "letter");
 
   const handleError = () => {
     if (step === "clearbit") setStep("google");
     else setStep("letter");
   };
 
-  if (step === "letter") {
-    return (
-      <div className={`${size} bg-surface-variant rounded border border-border-hairline flex items-center justify-center shrink-0`}>
-        <span className="font-bold text-text-caption">{name.charAt(0)}</span>
-      </div>
-    );
+  if (step === "letter" || !hasDomain) {
+    return <LetterFallback name={name} size={size} />;
   }
 
   const src =

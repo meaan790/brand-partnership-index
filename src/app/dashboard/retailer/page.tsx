@@ -92,7 +92,7 @@ export default async function RetailerDashboardPage() {
         <h1 className="font-display-lg text-display-lg text-primary mb-2">
           Welcome back, {companyName}
         </h1>
-        <p className="font-body-lg text-body-lg text-text-caption">
+        <p className="font-body-md text-body-md text-text-caption">
           {locationStr ? `${locationStr} · ` : ""}Here&apos;s a summary of your recent activity.
         </p>
       </header>

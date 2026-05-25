@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useSignInModal } from "@/components/SignInModalProvider";
 
 const DIM_ANCHORS: Record<string, { low: string; high: string }> = {
-  website: { low: "Aggressive DTC behavior", high: "Retailer-friendly website" },
+  website: { low: "Aggressive DTC behavior", high: "Retailer-friendly DTC site" },
   pricing: { low: "MAP not enforced", high: "Strict pricing discipline" },
   local:   { low: "No demand routing", high: "Active local support" },
   floor:   { low: "No store investment", high: "Strong floor support" },

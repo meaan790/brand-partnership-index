@@ -52,6 +52,8 @@ export default function BrandDashboardPage() {
   // Claim flow state
   const [claimQuery, setClaimQuery] = useState("");
   const [claimResults, setClaimResults] = useState<BrandSearchResult[]>([]);
+  const [claimSearching, setClaimSearching] = useState(false);
+  const [claimSearchDone, setClaimSearchDone] = useState(false);
   const [claiming, setClaiming] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -132,14 +134,24 @@ export default function BrandDashboardPage() {
   // Claim flow search
   function handleClaimSearch(q: string) {
     setClaimQuery(q);
+    setClaimSearchDone(false);
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    if (q.trim().length < 2) { setClaimResults([]); return; }
+    if (q.trim().length < 2) { setClaimResults([]); setClaimSearching(false); return; }
+    setClaimSearching(true);
     debounceRef.current = setTimeout(async () => {
-      const res = await fetch(`/api/brands?q=${encodeURIComponent(q)}`);
-      if (res.ok) {
-        const data = await res.json();
-        setClaimResults((data || []).slice(0, 8));
+      try {
+        const res = await fetch(`/api/brands?q=${encodeURIComponent(q)}`);
+        if (res.ok) {
+          const data = await res.json();
+          setClaimResults((data || []).slice(0, 8));
+        } else {
+          setClaimResults([]);
+        }
+      } catch {
+        setClaimResults([]);
       }
+      setClaimSearching(false);
+      setClaimSearchDone(true);
     }, 250);
   }
 
@@ -204,7 +216,7 @@ export default function BrandDashboardPage() {
         <div className="text-center mb-10">
           <span className="material-symbols-outlined text-accent mb-4" style={{ fontSize: 48, fontVariationSettings: "'FILL' 1" }}>corporate_fare</span>
           <h1 className="font-display-lg text-display-lg text-primary mb-3">Claim your brand</h1>
-          <p className="font-body-lg text-body-lg text-text-caption max-w-md mx-auto">
+          <p className="font-body-md text-body-md text-text-caption max-w-md mx-auto">
             Search for your brand below to claim it. You&apos;ll be able to see your scores, read retailer feedback, and manage public commitments.
           </p>
         </div>
@@ -213,7 +225,10 @@ export default function BrandDashboardPage() {
           <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-caption text-xl">search</span>
           <input type="text" value={claimQuery} onChange={(e) => handleClaimSearch(e.target.value)}
             placeholder="Search for your brand…" autoFocus
-            className="w-full rounded-xl pl-12 pr-4 py-4 font-body-md text-body-md text-text-main placeholder:text-text-caption bg-surface-card border border-border-hairline focus:ring-2 focus:ring-accent focus:outline-none" />
+            className="w-full rounded-xl pl-12 pr-10 py-4 font-body-md text-body-md text-text-main placeholder:text-text-caption bg-surface-card border border-border-hairline focus:ring-2 focus:ring-accent focus:outline-none" />
+          {claimSearching && (
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-text-caption animate-spin text-lg">progress_activity</span>
+          )}
 
           {claimResults.length > 0 && (
             <div className="absolute z-20 top-full mt-1 w-full bg-white border border-border-hairline rounded-xl shadow-xl max-h-80 overflow-y-auto">
@@ -230,6 +245,14 @@ export default function BrandDashboardPage() {
                   <span className="font-caption text-caption text-primary">Claim</span>
                 </button>
               ))}
+            </div>
+          )}
+
+          {claimSearchDone && claimResults.length === 0 && claimQuery.trim().length >= 2 && !claimSearching && (
+            <div className="absolute z-20 top-full mt-1 w-full bg-white border border-border-hairline rounded-xl shadow-xl px-4 py-6 text-center">
+              <span className="material-symbols-outlined text-text-caption mb-2" style={{ fontSize: 32 }}>search_off</span>
+              <p className="font-body-md text-body-md text-text-caption">No brands found matching &ldquo;{claimQuery.trim()}&rdquo;</p>
+              <p className="font-caption text-caption text-text-caption mt-1">Try a different search, or contact us to add your brand.</p>
             </div>
           )}
         </div>

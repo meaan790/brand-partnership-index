@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { SEED_BRANDS } from "@/lib/seed-data";
 import { DIMENSIONS } from "@/lib/constants";
-import { tierBg, tierBg100, changeClass } from "@/lib/scoring";
+import { tierBg, tierBg100, changeClass, hasHistoricalData } from "@/lib/scoring";
 import { BrandLogo } from "@/components/BrandLogo";
 import { useSignInModal } from "@/components/SignInModalProvider";
 import { createClient } from "@/lib/supabase/client";
@@ -118,11 +118,13 @@ export default function ComparePage() {
           >
             {brand.score}
           </span>
-          <span
-            className={`font-data-tabular text-data-tabular ${changeClass(brand.change)}`}
-          >
-            {brand.change} vs last year
-          </span>
+          {hasHistoricalData(brand.change, brand.spark) && (
+            <span
+              className={`font-data-tabular text-data-tabular ${changeClass(brand.change)}`}
+            >
+              {brand.change} vs prior quarter
+            </span>
+          )}
         </div>
       </div>
     );
@@ -155,11 +157,13 @@ export default function ComparePage() {
                 >
                   {brand3.score}
                 </span>
-                <span
-                  className={`font-data-tabular text-data-tabular ${changeClass(brand3.change)}`}
-                >
-                  {brand3.change} vs last year
-                </span>
+                {hasHistoricalData(brand3.change, brand3.spark) && (
+                  <span
+                    className={`font-data-tabular text-data-tabular ${changeClass(brand3.change)}`}
+                  >
+                    {brand3.change} vs prior quarter
+                  </span>
+                )}
               </div>
             </div>
           ) : (
@@ -183,11 +187,13 @@ export default function ComparePage() {
                 >
                   {brand4.score}
                 </span>
-                <span
-                  className={`font-data-tabular text-data-tabular ${changeClass(brand4.change)}`}
-                >
-                  {brand4.change} vs last year
-                </span>
+                {hasHistoricalData(brand4.change, brand4.spark) && (
+                  <span
+                    className={`font-data-tabular text-data-tabular ${changeClass(brand4.change)}`}
+                  >
+                    {brand4.change} vs prior quarter
+                  </span>
+                )}
               </div>
             </div>
           ) : (
@@ -511,7 +517,7 @@ export default function ComparePage() {
           <h1 className="font-display-lg text-display-lg text-white mb-4">
             Lay brands side by side
           </h1>
-          <p className="font-body-lg text-body-lg text-white/70 max-w-xl mx-auto">
+          <p className="font-body-md text-body-md text-white/70 max-w-xl mx-auto">
             Pick up to four brands. We&apos;ll show overall and per-dimension
             scores in a single view, with the best on each row highlighted.
           </p>
