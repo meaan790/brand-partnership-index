@@ -6,6 +6,7 @@ import { SEED_BRANDS } from "@/lib/seed-data";
 import { DIMENSIONS } from "@/lib/constants";
 import { tierBg, tierBg100, changeClass, hasHistoricalData } from "@/lib/scoring";
 import { BrandLogo } from "@/components/BrandLogo";
+import { BrandCombobox } from "@/components/BrandCombobox";
 import { useSignInModal } from "@/components/SignInModalProvider";
 import { createClient } from "@/lib/supabase/client";
 import type { BrandWithScores } from "@/lib/types";
@@ -36,17 +37,6 @@ export default function ComparePage() {
   const picked = slots.map((n) => (n ? getBrand(n) ?? null : null));
   const filled = picked.filter(Boolean) as BrandWithScores[];
 
-  const brandOptions = (selectedName: string | null) => (
-    <>
-      <option value="">— Select brand —</option>
-      {SEED_BRANDS.map((b) => (
-        <option key={b.name} value={b.name} selected={b.name === selectedName}>
-          {b.name}
-        </option>
-      ))}
-    </>
-  );
-
   const [isAuthed, setIsAuthed] = useState(false);
   useEffect(() => {
     try {
@@ -67,17 +57,16 @@ export default function ComparePage() {
     const brand = name ? getBrand(name) : null;
     if (!brand) {
       return (
-        <div className="border border-dashed border-border-hairline rounded bg-surface-card p-card-padding flex flex-col items-center justify-center gap-3 min-h-[160px]">
-          <span className="material-symbols-outlined text-text-caption text-[32px]">
+        <div className="border border-dashed border-border-hairline rounded bg-surface-card p-card-padding flex flex-col gap-3 min-h-[160px] justify-center">
+          <span className="material-symbols-outlined text-text-caption text-[32px] text-center">
             add_circle
           </span>
-          <select
-            className="border border-border-hairline rounded px-3 py-2 font-body-md focus:outline-none focus:border-primary"
-            value=""
-            onChange={(e) => updateSlot(slotIdx, e.target.value)}
-          >
-            {brandOptions(null)}
-          </select>
+          <BrandCombobox
+            brands={SEED_BRANDS}
+            value={null}
+            onChange={(val) => updateSlot(slotIdx, val)}
+            placeholder="Search brands\u2026"
+          />
         </div>
       );
     }
@@ -105,13 +94,11 @@ export default function ComparePage() {
         >
           {brand.name}
         </Link>
-        <select
-          className="border border-border-hairline rounded px-3 py-2 font-body-md focus:outline-none focus:border-primary"
+        <BrandCombobox
+          brands={SEED_BRANDS}
           value={brand.name}
-          onChange={(e) => updateSlot(slotIdx, e.target.value)}
-        >
-          {brandOptions(brand.name)}
-        </select>
+          onChange={(val) => updateSlot(slotIdx, val)}
+        />
         <div className="flex items-center justify-between border-t border-border-hairline pt-3">
           <span
             className={`${tierBg100(brand.score)} px-3 py-1 rounded font-data-tabular text-data-tabular`}

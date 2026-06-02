@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DIMENSIONS } from "@/lib/constants";
 import { SEED_BRANDS } from "@/lib/seed-data";
+import { SEED_REVIEWS } from "@/lib/seed-reviews";
 import { SignInLink } from "@/components/SignInLink";
 import {
   tierBg,
@@ -17,38 +18,23 @@ import { FollowButton } from "./follow-button";
 import { SelfReportTabs } from "./self-report-tabs";
 import type { BrandWithScores } from "@/lib/types";
 
-const REVIEW_TEMPLATES = [
-  {
-    retailer: "Runners Roost",
-    location: "Austin, TX",
-    ago: "2 weeks ago",
-    dimScores: [17, 18, 19, 20, 16],
-    quote:
-      "Best in class for shop floor support. Their tech reps are always available, and the training materials they provide make a noticeable difference in sell-through.",
-    response: {
-      ago: "1 week ago",
-      body: "Thank you. We invest heavily in our tech reps because we know the shop floor is where the magic happens.",
-    },
-  },
-  {
-    retailer: "Fleet Feet",
-    location: "Chicago, IL",
-    ago: "1 month ago",
-    dimScores: [15, 16, 14, 18, 13],
-    quote:
-      "MAP discipline is solid, but we\u2019ve seen some inventory routing prioritize their own DTC channel during the holiday rush. Still one of our strongest partners overall.",
-    response: undefined,
-  },
-  {
-    retailer: "Mountain Sports Shop",
-    location: "Boulder, CO",
-    ago: "6 weeks ago",
-    dimScores: [18, 17, 19, 19, 15],
-    quote:
-      "Their seasonal calendar is shared months ahead. Knowing exactly when promo windows hit lets us plan our open-to-buy with confidence \u2014 that\u2019s rare in this industry.",
-    response: undefined,
-  },
-];
+function getSeedReviewsForBrand(slug: string) {
+  return SEED_REVIEWS
+    .filter((r) => r.brand_slug === slug)
+    .map((r) => ({
+      retailer: r.store_name || r.city || "Verified Retailer",
+      location: [r.city, r.state].filter(Boolean).join(", ") || r.country,
+      ago: new Date(r.submitted_at).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+      dimScores: r.scores.map((s) => s * 4),
+      quote: r.pros || r.cons || "",
+      response: null as { ago: string; body: string } | null,
+    }))
+    .filter((r) => r.quote.length > 0);
+}
 
 const STATEMENT_TEMPLATES: Record<string, string> = {
   "DTC Site Standards":
@@ -190,7 +176,6 @@ export default async function BrandProfilePage({
   const realReviews = await getBrandReviews(slug);
   const hasRealReviews = realReviews.length > 0;
 
-  const target = brand.score / 5;
   const adjustedReviews = hasRealReviews
     ? realReviews.map((r) => ({
         retailer: r.store_city || "Anonymous",
@@ -200,14 +185,7 @@ export default async function BrandProfilePage({
         quote: r.pros || r.cons || "",
         response: null as { ago: string; body: string } | null,
       }))
-    : REVIEW_TEMPLATES.map((tpl) => {
-        const sourceAvg = tpl.dimScores.reduce((a, b) => a + b, 0) / tpl.dimScores.length;
-        const shift = target - sourceAvg;
-        return {
-          ...tpl,
-          dimScores: tpl.dimScores.map((s) => Math.max(1, Math.min(20, Math.round(s + shift)))),
-        };
-      });
+    : getSeedReviewsForBrand(slug);
 
   return (
     <div className="max-w-[1280px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
@@ -422,7 +400,7 @@ export default async function BrandProfilePage({
               BRAND UNCLAIMED
             </span>
             <h4 className="font-headline-md text-headline-md text-primary m-0">
-              {brand.name} hasn&rsquo;t claimed this brand yet.
+              {brand.name}{" "}hasn&rsquo;t claimed this brand yet.
             </h4>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-xl">
               Scores on this page come from verified retailer reviews.{" "}

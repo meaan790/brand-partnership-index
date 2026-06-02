@@ -77,9 +77,15 @@ export function Nav() {
         <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-[1280px] mx-auto">
           <Link
             href="/"
-            className="font-headline-md text-headline-md font-bold tracking-tight text-primary"
+            className="flex flex-col"
           >
-            Brand Partnership Index
+            <span className="font-headline-md text-headline-md font-bold tracking-tight text-primary">
+              Brand Partnership Index
+            </span>
+            <span className="flex items-center gap-1.5 mt-0.5">
+              <span className="text-[10px] tracking-wide uppercase text-on-surface-variant/60 font-medium">powered by</span>
+              <img src="/endvr-logo.webp" alt="ENDVR" className="h-[14px] w-auto" />
+            </span>
           </Link>
           <ul className="hidden md:flex gap-6 items-center">
             {NAV_LINKS.map((l) => {
@@ -168,10 +174,16 @@ export function Nav() {
         <div className="flex justify-between items-center px-margin-mobile py-4 border-b border-border-hairline">
           <Link
             href="/"
-            className="font-headline-md text-headline-md font-bold tracking-tight text-primary"
+            className="flex flex-col"
             onClick={() => setMobileOpen(false)}
           >
-            Brand Partnership Index
+            <span className="font-headline-md text-headline-md font-bold tracking-tight text-primary">
+              Brand Partnership Index
+            </span>
+            <span className="flex items-center gap-1.5 mt-0.5">
+              <span className="text-[10px] tracking-wide uppercase text-on-surface-variant/60 font-medium">powered by</span>
+              <img src="/endvr-logo.webp" alt="ENDVR" className="h-[14px] w-auto" />
+            </span>
           </Link>
           <button
             className="flex items-center justify-center w-10 h-10 text-primary"

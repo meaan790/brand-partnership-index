@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SEED_BRANDS } from "@/lib/seed-data";
+import { SEED_REVIEWS } from "@/lib/seed-reviews";
 import { DIMENSIONS } from "@/lib/constants";
 import { tierClass20, tierClass100, changeClass, hasHistoricalData } from "@/lib/scoring";
 import { LeaderboardTable } from "@/components/LeaderboardTable";
@@ -32,56 +33,41 @@ async function getBrands(): Promise<BrandWithScores[]> {
   return [...dbBrands, ...fillers].sort((a, b) => b.score - a.score);
 }
 
-const MOVER_NAMES = ["Hoka", "KEEN", "Brooks", "Patagonia"];
-const MOVER_BLURBS: Record<string, string> = {
-  Hoka: "Removed DTC site sale tab and increased margins on core models.",
-  KEEN: "Improved B2B inventory availability and enforced stricter MAP policies.",
-  Brooks: "Tightened MAP enforcement and expanded shop floor rep coverage.",
-  Patagonia: "Tightened pro-deal qualifications and improved local demand routing.",
-};
+function buildRecentReviews() {
+  const seen = new Set<string>();
+  const results: {
+    brand: string;
+    retailer: string;
+    location: string;
+    country: string;
+    ago: string;
+    dimScores: number[];
+    quote: string;
+  }[] = [];
 
-const RECENT_REVIEWS = [
-  {
-    brand: "YETI",
-    retailer: "Mountain Sports Shop",
-    location: "Boulder, CO",
-    country: "US",
-    ago: "2 hours ago",
-    dimScores: [18, 19, 16, 18, 15],
-    quote:
-      "Incredible MAP enforcement. We never have to worry about competing with massive online discounts. They respect the specialty retailer.",
-  },
-  {
-    brand: "Brooks",
-    retailer: "Runners Roost",
-    location: "Austin, TX",
-    country: "US",
-    ago: "5 hours ago",
-    dimScores: [17, 18, 19, 20, 16],
-    quote:
-      "Best in class for shop floor support. Their tech reps are always available and our staff loves selling their product because of the education.",
-  },
-  {
-    brand: "Salomon",
-    retailer: "Alpine Ascents",
-    location: "Seattle, WA",
-    country: "US",
-    ago: "1 day ago",
-    dimScores: [14, 15, 12, 16, 9],
-    quote:
-      "Great product but their pro-deal program is completely undisciplined. Half my local customers have a discount code from somewhere.",
-  },
-  {
-    brand: "Hoka",
-    retailer: "Footzone",
-    location: "Bend, OR",
-    country: "US",
-    ago: "2 days ago",
-    dimScores: [19, 18, 16, 15, 14],
-    quote:
-      "Massive improvement this year. They cleaned up their DTC sales tab and are finally routing online demand back to local shops effectively.",
-  },
-];
+  for (const r of SEED_REVIEWS) {
+    if (seen.has(r.brand_slug) || !r.pros || r.pros.length < 20) continue;
+    seen.add(r.brand_slug);
+
+    const location = [r.city, r.state].filter(Boolean).join(", ");
+    const dimScores = r.scores.map((s) => s * 4);
+
+    results.push({
+      brand: r.brand_name,
+      retailer: r.store_name || r.city || "Verified Retailer",
+      location: location || r.country,
+      country: r.country === "United States" ? "US" : r.country === "Canada" ? "CA" : r.country,
+      ago: new Date(r.submitted_at).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+      dimScores,
+      quote: r.pros,
+    });
+
+    if (results.length >= 4) break;
+  }
+  return results;
+}
+
+const RECENT_REVIEWS = buildRecentReviews();
 
 function getBrandByName(
   brands: BrandWithScores[],
@@ -96,9 +82,7 @@ export default async function HomePage() {
   const brands = await getBrands();
 
   const showHistorical = brands.some((b) => hasHistoricalData(b.change, b.spark));
-  const movers = showHistorical
-    ? (MOVER_NAMES.map((n) => getBrandByName(brands, n)).filter(Boolean) as BrandWithScores[])
-    : [];
+  const movers: BrandWithScores[] = [];
 
   const avgScore = brands.length > 0
     ? Math.round(brands.reduce((sum, b) => sum + b.score, 0) / brands.length)
@@ -220,7 +204,7 @@ export default async function HomePage() {
                   </span>
                 </div>
                 <p className="font-caption text-caption text-on-surface-variant mt-2 border-t border-border-hairline pt-3">
-                  {MOVER_BLURBS[b.name]}
+                  {b.description}
                 </p>
               </Link>
             ))}

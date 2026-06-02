@@ -96,14 +96,17 @@ export function BrandDirectoryClient({
 
   const categories = useMemo(() => ["All", ...allCategories(brands)], [brands]);
 
+  const effectiveCategory = isAuthed ? activeCategory : "All";
+  const effectiveSearch = isAuthed ? searchQuery : "";
+
   const filtered = useMemo(() => {
     let list = brands.slice();
 
-    if (activeCategory !== "All") {
-      list = list.filter((b) => b.categories.includes(activeCategory));
+    if (effectiveCategory !== "All") {
+      list = list.filter((b) => b.categories.includes(effectiveCategory));
     }
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
+    if (effectiveSearch) {
+      const q = effectiveSearch.toLowerCase();
       list = list.filter((b) => b.name.toLowerCase().includes(q));
     }
 
@@ -121,7 +124,7 @@ export function BrandDirectoryClient({
       list.sort((a, b) => a.name.localeCompare(b.name));
 
     return list;
-  }, [brands, activeCategory, searchQuery, sortMode]);
+  }, [brands, effectiveCategory, effectiveSearch, sortMode]);
 
   const gateLimit = isAuthed ? filtered.length : BRAND_GATE_LIMIT;
   const visible = filtered.slice(0, gateLimit);
@@ -157,25 +160,46 @@ export function BrandDirectoryClient({
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value.trim())}
-              className="w-full pl-10 pr-4 py-2 border border-border-hairline rounded bg-surface-card font-body-md text-body-md text-text-main focus:outline-none focus:border-primary transition-colors"
-              placeholder="Find a brand"
+              onChange={(e) => {
+                if (!isAuthed) {
+                  openSignIn({ view: "signup" });
+                  return;
+                }
+                setSearchQuery(e.target.value.trim());
+              }}
+              className={`w-full pl-10 pr-4 py-2 border border-border-hairline rounded bg-surface-card font-body-md text-body-md text-text-main focus:outline-none focus:border-primary transition-colors ${!isAuthed ? "cursor-pointer" : ""}`}
+              placeholder={isAuthed ? "Find a brand" : "Sign in to search brands"}
+              readOnly={!isAuthed}
+              onClick={() => { if (!isAuthed) openSignIn({ view: "signup" }); }}
             />
           </div>
           <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 hide-scrollbar">
             {categories.map((c) => {
+              const isAll = c === "All";
               const active = c === activeCategory;
+              const locked = !isAuthed && !isAll;
               return (
                 <button
                   key={c}
-                  onClick={() => setActiveCategory(c)}
-                  className={`px-4 py-1.5 rounded-full font-caption text-caption whitespace-nowrap cursor-pointer transition-colors ${
+                  onClick={() => {
+                    if (locked) {
+                      openSignIn({ view: "signup" });
+                    } else {
+                      setActiveCategory(c);
+                    }
+                  }}
+                  className={`px-4 py-1.5 rounded-full font-caption text-caption whitespace-nowrap cursor-pointer transition-colors flex items-center gap-1.5 ${
                     active
                       ? "bg-primary text-on-primary"
-                      : "border border-border-hairline text-text-main hover:bg-surface-variant"
+                      : locked
+                        ? "border border-border-hairline text-text-caption opacity-60"
+                        : "border border-border-hairline text-text-main hover:bg-surface-variant"
                   }`}
                 >
                   {c}
+                  {locked && (
+                    <span className="material-symbols-outlined text-[14px]">lock</span>
+                  )}
                 </button>
               );
             })}
