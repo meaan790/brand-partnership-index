@@ -49,12 +49,6 @@ const STATEMENT_TEMPLATES: Record<string, string> = {
     "Pro deals are limited to verified industry professionals at 40% off, capped at 4 units per category per year. We do not stack additional discounts through any third-party employee perk platform.",
 };
 
-const COMMITMENTS = [
-  "MAP Defense",
-  "Retail Investment Parity",
-  "Seasonal Calendar Sharing",
-  "DTC Firewall",
-];
 
 interface RealReview {
   id: string;
@@ -161,17 +155,7 @@ export default async function BrandProfilePage({
     }
   } catch { /* ignore */ }
 
-  let activeCount = 0;
-  if (claimed) {
-    if (brand.score >= 80) activeCount = 4;
-    else if (brand.score >= 70) activeCount = 3;
-    else if (brand.score >= 60) activeCount = 2;
-    else if (brand.score >= 50) activeCount = 1;
-  }
-
-  const commitmentsToShow = realCommitments.length > 0
-    ? realCommitments
-    : COMMITMENTS.map((c, i) => ({ text: c, active: i < activeCount }));
+  const commitmentsToShow = realCommitments;
 
   const realReviews = await getBrandReviews(slug);
   const hasRealReviews = realReviews.length > 0;
@@ -431,12 +415,15 @@ export default async function BrandProfilePage({
             <h3 className="font-headline-md text-headline-md text-primary m-0">
               Public Commitments
             </h3>
-            <span className="font-caption text-caption text-text-caption">
-              {commitmentsToShow.filter((c) => c.active).length} active
-            </span>
+            {commitmentsToShow.length > 0 && (
+              <span className="font-caption text-caption text-text-caption">
+                {commitmentsToShow.filter((c) => c.active).length} active
+              </span>
+            )}
           </div>
-          <div className="flex flex-col gap-3">
-            {commitmentsToShow.map((c) => (
+          {commitmentsToShow.length > 0 ? (
+            <div className="flex flex-col gap-3">
+              {commitmentsToShow.map((c) => (
                 <div
                   key={c.text}
                   className={`flex items-start gap-3 p-3 ${c.active ? "bg-surface-container-low" : "bg-background-paper opacity-60"} border border-border-hairline rounded`}
@@ -461,15 +448,28 @@ export default async function BrandProfilePage({
                   </div>
                 </div>
               ))}
-          </div>
-          {claimed && (
-            <button
-              type="button"
-              className="flex items-center gap-2 mt-3 px-3 py-2 border border-dashed border-border-hairline rounded text-primary font-caption text-caption hover:bg-surface-container-low transition-colors w-full justify-center cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-base">add</span>
-              Add a commitment
-            </button>
+              {claimed && (
+                <button
+                  type="button"
+                  className="flex items-center gap-2 mt-3 px-3 py-2 border border-dashed border-border-hairline rounded text-primary font-caption text-caption hover:bg-surface-container-low transition-colors w-full justify-center cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-base">add</span>
+                  Add a commitment
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="text-center py-6">
+              <span className="material-symbols-outlined text-text-caption text-[32px] mb-2">
+                handshake
+              </span>
+              <p className="font-body-md text-body-md text-text-caption">
+                No commitments yet.
+              </p>
+              <p className="font-caption text-caption text-text-caption mt-1">
+                When {brand.name} claims this profile, they can publish commitments to retailers here.
+              </p>
+            </div>
           )}
         </div>
       </section>
